@@ -1,5 +1,7 @@
 import { StatusCodes } from "http-status-codes";
 // import dbconnection from "../db/dbconfig.js";
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
 
 const login = async (req, res) => {
@@ -24,7 +26,7 @@ try {
       .json({ msg: "Invalid Credentials" });
   }
   const user = users[0];
-  
+
   //compare password
   const isPasswordCorrect = await bcrypt.compare(password, user.password);
 
@@ -33,6 +35,20 @@ try {
       .status(StatusCodes.UNAUTHORIZED)
       .json({ msg: "Invalid Credentials" });
   }
+
+  // generate token
+  const username = user.username;
+  const userid = user.userid;
+  const secret = process.env.JWT_SECRET;
+  const token = jwt.sign({ username, userid }, secret, {
+    expiresIn: "1d",
+  }); //creating token which expires in 1day 
+
+  
+
+
+
+
 } catch (error) {
   console.log("Login error:", error.message);
   return res
