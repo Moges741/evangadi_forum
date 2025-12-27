@@ -23,9 +23,16 @@ try {
       .status(StatusCodes.UNAUTHORIZED)
       .json({ msg: "Invalid Credentials" });
   }
-const user = users[0];
+  const user = users[0];
+  
+  //compare password
+  const isPasswordCorrect = await bcrypt.compare(password, user.password);
 
-
+  if (!isPasswordCorrect) {
+    return res
+      .status(StatusCodes.UNAUTHORIZED)
+      .json({ msg: "Invalid Credentials" });
+  }
 } catch (error) {
   console.log("Login error:", error.message);
   return res
