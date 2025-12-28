@@ -1,5 +1,5 @@
 import { StatusCodes } from "http-status-codes";
-import dbconnection from "../db/dbconfig.js";
+import dbconnection from "../DB/dbconfig.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
