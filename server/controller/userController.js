@@ -1,5 +1,5 @@
 import { StatusCodes } from "http-status-codes";
-import dbconnection from "../db/dbconfig.js";
+import dbconnection from "../DB/dbconfig.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
@@ -22,7 +22,7 @@ const login = async (req, res) => {
     if (users.length === 0) {
       return res
         .status(StatusCodes.UNAUTHORIZED)
-        .json({ msg: "Invalid Credentials" });
+        .json({ msg: "Invalid Credentials e" });
     }
     const user = users[0];
 

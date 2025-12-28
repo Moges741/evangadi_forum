@@ -7,9 +7,11 @@ const app = express();
 dotenv.config();
 const PORT = process.env.PORT || 3000;
 
+//json middleware 
+app.use(express.json());
+
 //userRoutes middleware
 app.use('/api',userRoutes)
-
 
 
 app.listen(PORT, () => {
