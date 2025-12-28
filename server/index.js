@@ -13,7 +13,7 @@ app.use(express.json());
 //userRoutes middleware
 app.use('/api',userRoutes)
 
-
+// postQuestionRoutes middleware
 
 app.listen(PORT, () => {
   console.log(`Server is running on port: http://localhost:${PORT}`);
