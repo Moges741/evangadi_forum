@@ -22,7 +22,7 @@ const login = async (req, res) => {
     if (users.length === 0) {
       return res
         .status(StatusCodes.UNAUTHORIZED)
-        .json({ msg: "Invalid Credentials e" });
+        .json({ msg: "Invalid Credentials" });
     }
     const user = users[0];
 
