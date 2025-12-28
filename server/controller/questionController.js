@@ -7,18 +7,18 @@ async function getAllQuestions(req, res) {
     // Get all questions from the database (updated to match your schema)
     const [questions] = await dbConnection.execute(
       `SELECT 
-        q.question_id,
+        q.questionid,
         q.title,
         q.description,
         q.tag,
-        q.created_at,
-        q.user_id,
-        u.user_name,
-        u.first_name,
-        u.last_name
-      FROM questionTable q 
-      JOIN userTable u ON q.user_id = u.user_id 
-      ORDER BY q.created_at DESC`
+        q.createdat,
+        q.userid,
+        u.username,
+        u.firstname,
+        u.lastname
+      FROM questions q 
+      JOIN users u ON q.userid = u.userid 
+      ORDER BY q.createdat DESC`
     );
 
     // Check if the questions array is empty
