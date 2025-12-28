@@ -39,9 +39,7 @@ const login = async (req, res) => {
     const username = user.username;
     const userid = user.userid;
     const secret = process.env.JWT_SECRET;
-    const token = jwt.sign({ username, userid }, secret, {
-      expiresIn: "1d",
-    }); //creating token which expires in 1day
+    const token = jwt.sign({ username, userid }, "secret", { expiresIn: "1d" }); //creating token which expires in 1day
 
     //success response
     return res.status(StatusCodes.OK).json({
