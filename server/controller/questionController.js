@@ -41,4 +41,48 @@ async function getAllQuestions(req, res) {
   }
 }
 
-export { getAllQuestions };
+// ====================================Muller Task=============================
+// get a single question
+
+async function getSingleQuestion(req, res) {
+  const { questionid } = req.params;
+  try {
+    const [question] = await dbConnection.execute(
+      `SELECT 
+        q.questionid,
+        q.title,
+        q.description,
+        q.tag,
+        q.created_at,
+        q.userid,
+        u.username,
+        u.firstname,
+        u.lastname
+      FROM questions q 
+      JOIN users u ON q.userid = u.userid 
+      WHERE q.questionid = ?`,
+      [questionid]
+    );
+    // if the questioon not found
+    if (question.length === 0) {
+      return res.status(StatusCodes.NOT_FOUND).json({
+        message: "Question not found.",
+      });
+    }
+
+    return res.status(StatusCodes.OK).json({
+      message: "Question retrieved successfully",
+      question: question[0],
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      message: "an error occured, try again",
+      error: error.message,
+    });
+  }
+}
+
+// ====================================Muller Task=============================
+
+export { getAllQuestions, getSingleQuestion };
