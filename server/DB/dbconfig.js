@@ -9,7 +9,7 @@ const dbconnection = mysql.createPool({
 
 try {
   await dbconnection.execute("SELECT 'test'");
-  console.log("Database connected..."); 
+  console.log("Database connected...");
 } catch (err) {
   console.log("Database connection failed: ", err.message);
 }

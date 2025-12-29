@@ -1,7 +1,8 @@
 import express from "express";
 import dotenv from "dotenv";
-import userRoutes from  './routes/userRoutes.js'
 import answerRoutes from "./routes/answerRoute.js";
+import userRoutes from "./routes/userRoutes.js";
+import questionRoutes from "./routes/questionRoute.js";
 
 const app = express();
 app.use(express.json());
@@ -12,10 +13,13 @@ const PORT = process.env.PORT || 3000;
 //json packing middleware
 app.use(express.json());
 
+// question routes midware
+app.use("/api/question", questionRoutes);
+
+
 //userRoutes middleware
 app.use('/api',userRoutes)
 app.use("/api", answerRoutes);
-
 
 
 app.listen(PORT, () => {
