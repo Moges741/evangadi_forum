@@ -1,5 +1,5 @@
 import { StatusCodes } from "http-status-codes";
-import dbconnection from "../DB/dbconfig.js";
+import dbConnection from "../DB/dbconfig.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
@@ -9,7 +9,7 @@ async function register(req, res) {
     return res.status(StatusCodes.BAD_REQUEST).json({ message: "All fields are required" });
     }
     try {
-    const [userExists] = await dbConnection.query("SELECT id FROM users WHERE email = ?", [email]);
+    const [userExists] = await dbConnection.query("SELECT userid FROM users WHERE email = ?", [email]);
     if (userExists.length > 0) {
         return res.status(StatusCodes.CONFLICT).json({ message: "User with this email already exists" });
     }
@@ -40,7 +40,7 @@ const login = async (req, res) => {
       .json({ msg: "Please provide all required values." });
   }
   try {
-    const [users] = await dbconnection.query(
+    const [users] = await dbConnection.query(
       "select username, email, userid, password, firstname, lastname from users where email = ? ",
       [email]
     );

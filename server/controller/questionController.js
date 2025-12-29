@@ -4,21 +4,20 @@ import { StatusCodes } from "http-status-codes";
 
 async function getAllQuestions(req, res) {
   try {
-    // Get all questions from the database (updated to match your schema)
+    // Get all questions from the database (updated to handle missing created_at column)
     const [questions] = await dbConnection.execute(
       `SELECT 
         q.questionid,
         q.title,
         q.description,
         q.tag,
-        q.created_at,
         q.userid,
         u.username,
         u.firstname,
         u.lastname
       FROM questions q 
       JOIN users u ON q.userid = u.userid 
-      ORDER BY q.created_at DESC`
+      ORDER BY q.questionid DESC`
     );
 
     // Check if the questions array is empty
@@ -53,7 +52,6 @@ async function getSingleQuestion(req, res) {
         q.title,
         q.description,
         q.tag,
-        q.created_at,
         q.userid,
         u.username,
         u.firstname,
