@@ -13,6 +13,13 @@ const PORT = process.env.PORT || 5500;
 //json packing middleware
 app.use(express.json());
 
+const userRoutes = require("./routes/userRoute");
+const questionRoutes = require("./routes/questionRoute");
+app.use("/api", authMiddleware, questionRoutes);
+//userRoutes middleware
+app.use("/api", userRoutes);
+
+
 // question routes midware
 app.use("/api/question", questionRoutes);
 
@@ -20,6 +27,7 @@ app.use("/api/question", questionRoutes);
 //userRoutes middleware
 app.use('/api',userRoutes)
 app.use("/api", answerRoutes);
+
 
 
 app.listen(PORT, () => {

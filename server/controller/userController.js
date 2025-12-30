@@ -82,5 +82,12 @@ const login = async (req, res) => {
       .json({ msg: "Error fetching user data" });
   }
 };
+const checkUser = async (req, res) => {
+  const username = req.user.username;
+  const userid = req.user.userid;
 
-export { login, register };
+  return res
+    .status(StatusCodes.OK)
+    .json({ message: "valid user", username, userid });
+};
+export { login, checkUser, register };
