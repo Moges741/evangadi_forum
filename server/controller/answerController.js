@@ -49,14 +49,13 @@ const [answers] = await dbConnection.query(
 const postAnswer = async (req, res) => {
 const { question_id, answer } = req.body;
 
-
-    // validate input
+  // validate input
 if (!question_id || !answer) {
     return res.status(StatusCodes.BAD_REQUEST).json({
     message: "question_id and answer are required",
     });
-
 }
+
 const questionIdNum = parseInt(question_id, 10);
 if (isNaN(questionIdNum)) {
     return res.status(StatusCodes.BAD_REQUEST).json({
@@ -76,12 +75,24 @@ try {
         message: "Question not found",
     });
     }
-}catch (error) {
-  console.error(error);
-  return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-    message: "Internal server error",
-  });
-}
 
+    // get logged-in user
+    const userId = req.user.userid;
+
+    // insert answer
+    await dbConnection.query(
+    "INSERT INTO answers (questionid, userid, answer) VALUES (?, ?, ?)",
+    [questionIdNum, userId, answer]
+    );
+
+    return res.status(StatusCodes.CREATED).json({
+    message: "Answer posted successfully",
+    });
+} catch (error) {
+    console.error(error);
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+    message: "Internal server error",
+    });
 }
+};
 export { getAnswers,postAnswer };
