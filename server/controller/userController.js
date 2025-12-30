@@ -9,7 +9,10 @@ async function register(req, res) {
     return res.status(StatusCodes.BAD_REQUEST).json({ message: "All fields are required" });
     }
     try {
-    const [userExists] = await dbConnection.query("SELECT id FROM users WHERE email = ?", [email]);
+    const [userExists] = await dbconnection.query(
+      "SELECT userid FROM users WHERE email = ?",
+      [email]
+    );
     if (userExists.length > 0) {
         return res.status(StatusCodes.CONFLICT).json({ message: "User with this email already exists" });
     }
@@ -19,7 +22,7 @@ async function register(req, res) {
     // Hash the password before storing
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
-    await dbConnection.query(
+    await dbconnection.query(
         "INSERT INTO users (username, firstname, lastname, email, password) VALUES (?, ?, ?, ?, ?)",
         [username, firstname, lastname, email, hashedPassword]
     );
