@@ -46,4 +46,10 @@ const [answers] = await dbConnection.query(
     }
 };
 
-export { getAnswers };
+// Add initial postAnswer function structure 
+
+const postAnswer = async (req, res) => {
+  const { question_id, answer } = req.body;
+
+}
+export { getAnswers,postAnswer };
