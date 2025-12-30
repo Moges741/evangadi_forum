@@ -3,12 +3,13 @@ const router = Router();
 import {
   getAllQuestions,
   getSingleQuestion,
+  postQuestion
 } from "../controller/questionController.js";
 
 router.get("/", getAllQuestions);
 
-// ===================================Muller Task=============================
 // get a single question
+router.post("/", postQuestion);
 router.get("/:questionid", getSingleQuestion);
-// ===================================Muller Task=============================
+
 export default router;
