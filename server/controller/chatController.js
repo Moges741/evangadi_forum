@@ -15,8 +15,7 @@ export const getChatResponse = async (req, res) => {
     return res.status(400).json({ error: "userid and prompt are required." });
   }
 
-  // const {userid} = req.user;
-  const userid = "2234";
+  const {userid} = req.user;
 
   try {
     const [history] = await db.execute(
@@ -35,14 +34,14 @@ export const getChatResponse = async (req, res) => {
       content: "You are a direct, high-efficiency AI assistant. No fluff.",
     };
 
-    // 3. Construct the message array
+    
     const messages = [
       SYSTEM_PROMPT,
       ...conversationContext,
       { role: "user", content: prompt },
     ];
 
-    // 4. Call Groq API
+
     const completion = await client.chat.completions.create({
       messages,
       model: "llama-3.3-70b-versatile",
