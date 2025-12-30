@@ -14,6 +14,7 @@ CREATE TABLE questions (
     title VARCHAR(50) NOT NULL,
     description VARCHAR(200) NOT NULL,
     tag VARCHAR(20),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (questionid),
     FOREIGN KEY (userid) REFERENCES users(userid)
 );
@@ -23,6 +24,7 @@ CREATE TABLE answers (
     userid INT(20) NOT NULL,
     questionid INT(20) NOT NULL,
     answer VARCHAR(200) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (answerid),
     FOREIGN KEY (questionid) REFERENCES questions(questionid),
     FOREIGN KEY (userid) REFERENCES users(userid)
