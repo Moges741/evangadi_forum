@@ -9,7 +9,10 @@ async function register(req, res) {
     return res.status(StatusCodes.BAD_REQUEST).json({ message: "All fields are required" });
     }
     try {
-    const [userExists] = await dbconnection.query("SELECT userid FROM users WHERE email = ?", [email]);
+    const [userExists] = await dbconnection.query(
+      "SELECT userid FROM users WHERE email = ?",
+      [email]
+    );
     if (userExists.length > 0) {
         return res.status(StatusCodes.CONFLICT).json({ message: "User with this email already exists" });
     }
@@ -61,7 +64,7 @@ const login = async (req, res) => {
         .status(StatusCodes.UNAUTHORIZED)
         .json({ msg: "Invalid Credentials" });
     }
-
+    
     // generate token
     const username = user.username;
     const userid = user.userid;

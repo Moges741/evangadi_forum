@@ -4,7 +4,7 @@ CREATE TABLE users (
     firstname VARCHAR(20) NOT NULL,
     lastname VARCHAR(20) NOT NULL,
     email VARCHAR(40) NOT NULL,
-    password VARCHAR(255) NOT NULL,
+    password VARCHAR(250) NOT NULL,
     PRIMARY KEY (userid)
 );
 
@@ -28,4 +28,14 @@ CREATE TABLE answers (
     PRIMARY KEY (answerid),
     FOREIGN KEY (questionid) REFERENCES questions(questionid),
     FOREIGN KEY (userid) REFERENCES users(userid)
+);
+
+CREATE TABLE chat_history (
+    chatid INT(20) NOT NULL AUTO_INCREMENT,
+    userid INT(20) NOT NULL,
+    role ENUM('system', 'user', 'assistant') NOT NULL,
+    content TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (chatid),
+    FOREIGN KEY (userid) REFERENCES users(userid) ON DELETE CASCADE
 );

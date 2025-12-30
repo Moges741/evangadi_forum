@@ -46,4 +46,53 @@ const [answers] = await dbConnection.query(
     }
 };
 
-export { getAnswers };
+const postAnswer = async (req, res) => {
+const { question_id, answer } = req.body;
+
+  // validate input
+if (!question_id || !answer) {
+    return res.status(StatusCodes.BAD_REQUEST).json({
+    message: "question_id and answer are required",
+    });
+}
+
+const questionIdNum = parseInt(question_id, 10);
+if (isNaN(questionIdNum)) {
+    return res.status(StatusCodes.BAD_REQUEST).json({
+    message: "Invalid question_id",
+    });
+}
+
+try {
+    // check if question exists
+    const [question] = await dbConnection.query(
+    "SELECT questionid FROM questions WHERE questionid = ?",
+    [questionIdNum]
+    );
+
+    if (question.length === 0) {
+    return res.status(StatusCodes.NOT_FOUND).json({
+        message: "Question not found",
+    });
+    }
+
+    // get logged-in user
+    const userId = req.user.userid;
+
+    // insert answer
+    await dbConnection.query(
+    "INSERT INTO answers (questionid, userid, answer) VALUES (?, ?, ?)",
+    [questionIdNum, userId, answer]
+    );
+
+    return res.status(StatusCodes.CREATED).json({
+    message: "Answer posted successfully",
+    });
+} catch (error) {
+    console.error(error);
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+    message: "Internal server error",
+    });
+}
+};
+export { getAnswers,postAnswer };
