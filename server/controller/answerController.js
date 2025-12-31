@@ -87,7 +87,7 @@ const getAnswerSummary = async (req, res) => {
            // 2. Prepare the payload for AI
     // Prepare answers payload for AI summarization
     const allAnswersText = answers
-    .map((a, i) => Answer ${i + 1}: ${a.answer}).join("\n\n");
+    .map((a, i) => `Answer ${i + 1}: ${a.answer}`).join("\n\n");
 
     const prompt = `
     You are an expert forum moderator. Below is a question and a list of answers.
@@ -122,7 +122,6 @@ const getAnswerSummary = async (req, res) => {
       .json({ message: "Failed to summarize answers" });
   }
 };
-
 
 const postAnswer = async (req, res) => {
 const { question_id, answer } = req.body;
