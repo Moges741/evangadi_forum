@@ -46,6 +46,17 @@ const [answers] = await dbConnection.query(
     }
 };
 
+// Prepare OpenAI Connection
+dotenv.config();
+const client = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY,
+  baseURL: "https://api.groq.com/openai/v1",
+});
+
+
+
+
+
 const postAnswer = async (req, res) => {
 const { question_id, answer } = req.body;
 
