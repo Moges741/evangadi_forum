@@ -48,13 +48,14 @@ const [answers] = await dbConnection.query(
     }
 };
 
-// Prepare OpenAI Connection
+//1. Prepare OpenAI Connection
 dotenv.config();
 const client = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
   baseURL: "https://api.groq.com/openai/v1",
 });
 
+// Extracts question_id from the URL params
 const getAnswerSummary = async (req, res) => {
     const { question_id } = req.params;
  
@@ -64,22 +65,30 @@ const getAnswerSummary = async (req, res) => {
           "SELECT title, description FROM questions WHERE question_id = ?",
           [question_id]
         );
-
+// Fetch answer from answers
         const [answers] = await dbConnection.query(
             "SELECT answer FROM answers WHERE question_id = ?",
             [question_id]
           );
+        //   insert error response if question not found
 
           if (question.length === 0) {
             return res
               .status(StatusCodes.NOT_FOUND)
               .json({ message: "Question not found" });
           }
+        //   insert error response if there is no answer
           if (answers.length === 0) {
             return res
               .status(StatusCodes.OK)
               .json({ summary: "No answers yet to summarize." });
           }
+
+           // 2. Prepare the payload for AI
+    const allAnswersText = answers
+    .map((a, i) => Answer ${i + 1}: ${a.answer})
+    .join("\n\n");
+
 
 
 const postAnswer = async (req, res) => {
