@@ -110,7 +110,12 @@ const getAnswerSummary = async (req, res) => {
 
   const summaryText = completion.choices[0].message.content;
 
-  
+//   4. Return the summary
+    return res.status(StatusCodes.OK).json({
+      summary: summaryText,
+      answerCount: answers.length,
+    });
+  }
 
 
 const postAnswer = async (req, res) => {
