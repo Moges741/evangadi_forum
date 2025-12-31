@@ -4,6 +4,7 @@ import ChatHeader from "../../components/Chatbot/ChatHeader/ChatHeader";
 import ChatInput from "../../components/Chatbot/ChatInput/ChatInput";
 import ChatMessages from "../../components/Chatbot/ChatMessages/ChatMessages";
 import ChatError from "../../components/Chatbot/ChatError/ChatError";
+import TypingIndicator from "../../components/Chatbot/TypingIndicator/TypingIndicator";
 
 function ChatBot() {
   const { sendMessage, messages } = useChatbot();
@@ -17,6 +18,7 @@ function ChatBot() {
       <ChatHeader isBotTyping={true} />
       <ChatMessages messages={messages} />
       <ChatError onRetry={() => {}} />
+      <TypingIndicator />
       <ChatInput />
     </div>
   );
