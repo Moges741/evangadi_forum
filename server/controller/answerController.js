@@ -52,7 +52,14 @@ const client = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
   baseURL: "https://api.groq.com/openai/v1",
 });
-
+const getAnswerSummary = async (req, res) => {
+    const { question_id } = req.params;
+    try {
+        // Fetch Question details and its Answers from question asked by question id
+        const [question] = await dbConnection.query(
+          "SELECT title, description FROM questions WHERE question_id = ?",
+          [question_id]
+        );
 
 
 
