@@ -115,7 +115,13 @@ const getAnswerSummary = async (req, res) => {
       summary: summaryText,
       answerCount: answers.length,
     });
+  } catch (error) {
+    console.error("Summarization Error:", error);
+    return res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json({ message: "Failed to summarize answers" });
   }
+};
 
 
 const postAnswer = async (req, res) => {
