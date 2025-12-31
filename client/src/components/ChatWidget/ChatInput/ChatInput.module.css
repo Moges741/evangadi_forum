@@ -66,11 +66,6 @@
   cursor: not-allowed;
 }
 
-.disclaimer {
-  text-align: center;
-  margin-top: 10px;
-}
-
 .disclaimer p {
   font-size: 10px;
   color: #718096;

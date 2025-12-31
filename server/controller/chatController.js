@@ -63,9 +63,10 @@ export const getChatHistory = async (req, res) => {
   const { userid } = req.user;
   try {
     const [rows] = await db.execute(
-      "SELECT role, content FROM chat_history WHERE userid = ? ORDER BY chatid ASC LIMIT 20",
+      "SELECT role, content FROM chat_history WHERE userid = ? ORDER BY chatid DESC LIMIT 20",
       [userid]
     );
+    rows.reverse();
 
     const formattedHistory = [];
     for (let i = 0; i < rows.length; i++) {

@@ -1,12 +1,13 @@
-import React from 'react'
-import ChatBot from './Pages/ChatBot/ChatBot'
+import React from "react";
+import ChatBot from "./components/ChatWidget/ChatBot/ChatBot";
+import ChatWidget from "./components/ChatWidget/ChatWidget";
 
 function App() {
   return (
     <div>
-      <ChatBot />
+      <ChatWidget />
     </div>
-  )
+  );
 }
 
-export default App
+export default App;

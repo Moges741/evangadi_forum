@@ -1,13 +1,13 @@
 import { useRef, useEffect } from "react";
 import styles from "./ChatBot.module.css";
-import { useChatbot } from "../../hooks/useChatbot";
-import ChatMessages from "../../components/Chatbot/ChatMessages/ChatMessages";
-import TypingIndicator from "../../components/Chatbot/TypingIndicator/TypingIndicator";
-import ChatInput from "../../components/Chatbot/ChatInput/ChatInput";
-import ChatHeader from "../../components/Chatbot/ChatHeader/ChatHeader";
-import ChatError from "../../components/Chatbot/ChatError/ChatError";
+import { useChatbot } from "../../../hooks/useChatbot";
+import ChatMessages from "../ChatMessages/ChatMessages";
+import TypingIndicator from "../TypingIndicator/TypingIndicator";
+import ChatInput from "../ChatInput/ChatInput";
+import ChatHeader from "../ChatHeader/ChatHeader";
+import ChatError from "../ChatError/ChatError";
 
-function ChatBot() {
+function ChatBot({ onClose }) {
   const {
     messages,
     isBotTyping,
@@ -30,7 +30,7 @@ function ChatBot() {
     <div className={styles.pageWrapper}>
       <div className={styles.mainCard}>
         {/* Pass isBotTyping to show the "Thinking" status in header */}
-        <ChatHeader isBotTyping={isBotTyping} />
+        <ChatHeader isBotTyping={isBotTyping} onClose={onClose} />
 
         <div ref={scrollRef} className={styles.chatBody}>
           {isLoadingHistory ? (

@@ -1,6 +1,6 @@
 .header {
   background-color: #ffffff;
-  border-bottom: 1px solid #e5e7eb; /* Light gray border like your question cards */
+  border-bottom: 1px solid #e5e7eb;
   padding: 1rem 1.25rem;
   display: flex;
   align-items: center;
@@ -8,7 +8,7 @@
   position: sticky;
   top: 0;
   z-index: 10;
-  border-top-left-radius: 8px; /* Assuming it's a popup */
+  border-top-left-radius: 8px;
   border-top-right-radius: 8px;
 }
 
@@ -16,6 +16,9 @@
   position: relative;
   width: 10px;
   height: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .statusDot {
@@ -54,17 +57,37 @@
 
 .info h2 {
   font-weight: 600;
-  color: #1a202c; /* Dark text for readability */
+  color: #1a202c;
   font-size: 0.9rem;
   margin: 0;
-  font-family: inherit; /* Uses your forum's font */
+  font-family: inherit;
 }
 
 .info p {
   font-size: 11px;
-  color: #718096; /* Gray text like your usernames */
+  color: #718096;
   margin: 0;
   font-weight: 400;
+}
+
+/* Updated Close Button Styling */
+.closeBtn {
+  margin-left: auto; /* This pushes the button to the far right */
+  background: none;
+  border: none;
+  color: #94a3b8; /* Slate-400 */
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+  border-radius: 50%; /* Rounded hover effect */
+  transition: all 0.2s ease;
+}
+
+.closeBtn:hover {
+  background-color: #f1f5f9;
+  color: #4b6bfb; /* Changes to blue on hover */
 }
 
 @keyframes ping {

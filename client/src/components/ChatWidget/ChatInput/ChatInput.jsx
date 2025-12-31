@@ -64,10 +64,6 @@ function ChatInput({ onSubmit, isBotTyping }) {
           </button>
         </div>
       </form>
-
-      <div className={styles.disclaimer}>
-        <p>AI can make mistakes. Please verify important information.</p>
-      </div>
     </div>
   );
 }
