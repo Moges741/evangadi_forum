@@ -3,6 +3,7 @@ import { useChatbot } from "../../hooks/useChatbot";
 import ChatHeader from "../../components/Chatbot/ChatHeader/ChatHeader";
 import ChatInput from "../../components/Chatbot/ChatInput/ChatInput";
 import ChatMessages from "../../components/Chatbot/ChatMessages/ChatMessages";
+import ChatError from "../../components/Chatbot/ChatError/ChatError";
 
 function ChatBot() {
   const { sendMessage, messages } = useChatbot();
@@ -11,11 +12,14 @@ function ChatBot() {
   //   sendMessage("what is tailwind").then((res) => console.log(res));
   // }, []); 
 
-  return <div>
-    <ChatHeader isBotTyping={true} />
-    <ChatMessages messages={messages}/>
-    <ChatInput />
-  </div>;
+  return (
+    <div>
+      <ChatHeader isBotTyping={true} />
+      <ChatMessages messages={messages} />
+      <ChatError onRetry={() => {}} />
+      <ChatInput />
+    </div>
+  );
 }
 
 export default ChatBot;

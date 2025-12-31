@@ -1,0 +1,73 @@
+.errorContainer {
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+  margin: 1rem 0;
+  animation: slideUp 0.3s ease-out;
+}
+
+.iconWrapper {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: #fee2e2; /* Light red/pink */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border: 1px solid #fecaca;
+  margin-top: 4px;
+}
+
+.icon {
+  color: #ef4444; /* Alert red */
+}
+
+.contentWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-width: 80%;
+}
+
+.messageBubble {
+  padding: 0.75rem 1rem;
+  background-color: #fff1f2; /* Very soft pink */
+  border: 1px solid #ffe4e6;
+  border-radius: 16px;
+  border-top-left-radius: 2px;
+  color: #991b1b; /* Dark red for readability */
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.retryButton {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  color: #64748b; /* Gray */
+  background: none;
+  border: none;
+  padding: 0.25rem 0.5rem;
+  cursor: pointer;
+  width: fit-content;
+  transition: color 0.2s ease;
+}
+
+.retryButton:hover {
+  color: #1e293b; /* Darker slate */
+}
+
+.retryButton:hover .refreshIcon {
+  transform: rotate(180deg);
+}
+
+.refreshIcon {
+  transition: transform 0.5s ease;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
