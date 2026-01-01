@@ -5,7 +5,7 @@ import Landing from '../../Pages/Landing/Landing';
 function Layout() {
   return (
     <Routes>
-      <Route path="auth/:mode" element={<Landing />} />
+      <Route path="/:mode" element={<Landing />} />
     </Routes>
   );
 }
