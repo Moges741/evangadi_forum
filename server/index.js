@@ -28,7 +28,7 @@ dotenv.config();
 const PORT = process.env.PORT || 5500;
 
 // question routes middleware
-app.use("/api/question", questionRoutes);
+app.use("/api/question", authMiddleware, questionRoutes);
 
 // userRoutes middleware
 app.use("/api/user", userRoutes);

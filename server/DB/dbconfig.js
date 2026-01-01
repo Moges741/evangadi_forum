@@ -1,8 +1,7 @@
 import mysql from "mysql2/promise";
-import express from "express";
 import dotenv from "dotenv";
 dotenv.config();
-const app = express();
+
 const dbconnection = mysql.createPool({
   host: process.env.HOST,
   user: process.env.USER,
