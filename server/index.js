@@ -10,11 +10,16 @@ import dbconnection from "./DB/dbconfig.js";
 
 const app = express();
 
-// CORS configuration
-app.use(cors({
+// CORS configuration - Enhanced
+const corsOptions = {
   origin: ["http://localhost:3000", "http://localhost:5173", "http://localhost:4173"],
-  credentials: true
-}));
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'Accept'],
+  optionsSuccessStatus: 200
+};
+
+app.use(cors(corsOptions));
 
 app.use(express.json());
 
@@ -33,12 +38,18 @@ app.use("/api/chat", authMiddleware, chatRoutes);
 // answerRoutes middleware
 app.use("/api/answer", authMiddleware, answerRoutes);
 
+// Test endpoint
+app.get("/", (req, res) => {
+  res.json({ message: "Server is running!" });
+});
+
 async function startServer() {
   try {
     await dbconnection.execute("SELECT 'test'");
     console.log("Database connected...");
-    app.listen(PORT);
-    console.log(`Server running on: http://localhost:${PORT}`);
+    app.listen(PORT, () => {
+      console.log(`Server running on: http://localhost:${PORT}`);
+    });
   } catch (error) {
     console.log("Database connection failed: ", error.message);
   }
