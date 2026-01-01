@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 import { createContext, useState } from "react";
 import Layout from "./components/Layout/Layout";
 
@@ -15,18 +15,3 @@ function App() {
 }
 
 export default App;
-=======
-import { useState } from 'react'
-import Layout from './components/Layout/Layout'
-
-function App() {
-
-  return (
-    <>
-    <Layout/>
-    </>
-  )
-}
-
-export default App
->>>>>>> main
