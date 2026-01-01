@@ -1,11 +1,12 @@
 import mysql from "mysql2/promise";
-import express from "express";
-const app = express();
+import dotenv from "dotenv";
+dotenv.config();
+
 const dbconnection = mysql.createPool({
-  host: "localhost",
-  user: "evangadi-admin",
-  password: ".lK*iGiDC92S@QxN",
-  database: "evangadi_forum",
+  host: process.env.HOST,
+  user: process.env.USER,
+  password: process.env.PASSWORD,
+  database: process.env.DATABASE,
   connectionLimit: 11,
 });
 
