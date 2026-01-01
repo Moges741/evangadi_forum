@@ -21,7 +21,7 @@ export const getChatResponse = async (req, res) => {
     const [history] = await db.execute(
       `SELECT role, content FROM chat_history 
        WHERE userid = ? 
-       ORDER BY chatid DESC LIMIT 10`,
+       ORDER BY chatid DESC LIMIT 30`,
       [userid]
     );
 
