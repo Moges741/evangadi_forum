@@ -30,7 +30,8 @@ const PORT = process.env.PORT || 5500;
 app.use("/api/question", authMiddleware, questionRoutes);
 
 // userRoutes middleware
-app.use("/api/user", userRoutes);
+// app.use("/api/user", userRoutes);
+app.use("/user", userRoutes);
 
 // chatRoutes middleware
 app.use("/api/chat", authMiddleware, chatRoutes);
