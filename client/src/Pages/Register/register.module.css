@@ -4,8 +4,8 @@
 }
 .registerPage{
     margin-top: 100px;
-    background-image: url('../../assets/download.svg');
-    background-repeat: no-repeat;
+    /* background-image: url('../../assets/download.svg');
+    background-repeat: no-repeat; */
     width: cover;
 }
 /* PAGE SECTION */

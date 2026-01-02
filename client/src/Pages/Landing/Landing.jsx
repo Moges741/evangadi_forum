@@ -3,14 +3,16 @@ import { useParams, Navigate } from "react-router-dom";
 import style from "./Landing.module.css";
 import Register from "../Register/Register";
 import Login from "../Login/Login";
+import NotFound from "../NotFound/NotFound";
 // import About from '../About/About'
 
 function Landing() {
   const { mode } = useParams();
 
-  // if (mode !== "signin" && mode !== "signup") {
-  //   return <Navigate to="/signin" replace />;
-  // }
+  if (mode !== "signin" && mode !== "signup") {
+    return <Navigate to="/404" replace />;
+    // return <NotFound/>
+  }
 
   const isSignup = mode === "signup";
 

@@ -38,7 +38,7 @@ function App() {
 
   return (
     <AppState.Provider value={{ user, setUser }}>
-      <div>
+      {/* <div> */}
      <Layout/>
         {/* <Routes> */}
           {/* Public Route */}
@@ -49,7 +49,7 @@ function App() {
           {/* <Route path="/*" element={<Layout />} /> */}
         {/* </Routes> */}
       
-      </div>
+      {/* </div> */}
     </AppState.Provider>
   );
 }
