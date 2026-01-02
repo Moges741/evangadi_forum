@@ -119,3 +119,6 @@
 .form_container p:last-child {
   margin-top: 10px;
 }
+.error {
+  color: red !important;
+}
