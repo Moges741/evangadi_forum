@@ -42,7 +42,7 @@ const [passwordVisible, setPasswordVisible] = useState(false);
             // navigate('/login');
             
         } catch (error) {
-            console.log(error.response)
+            console.log(error.message)
 
             
         }
