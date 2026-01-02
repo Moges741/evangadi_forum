@@ -51,7 +51,10 @@ async function getSingleQuestion(req, res) {
         q.description,
         q.tag,
         q.userid,
-        u.username,
+        u.username,0
+ 
+ 
+
         u.firstname,
         u.lastname
       FROM questions q 
