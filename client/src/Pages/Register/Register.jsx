@@ -33,8 +33,8 @@ const [passwordVisible, setPasswordVisible] = useState(false);
         try {
             await axios.post('/user/register', {
                 username: userNameValue,
-                firstName: firstNameValue,
-                lastName: lastNameValue,
+                firstname: firstNameValue,
+                lastname: lastNameValue,
                 email: emailValue,
                 password: passwordValue
             });
