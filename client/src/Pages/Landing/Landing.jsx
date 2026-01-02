@@ -1,12 +1,13 @@
 import React from "react";
 import { useParams, Navigate } from "react-router-dom";
 import style from "./Landing.module.css";
+// import About from '../About/About'
 
 function Landing() {
   const { mode } = useParams();
 
   if (mode !== "signin" && mode !== "signup") {
-    return <Navigate to="/auth/signin" replace />;
+    return <Navigate to="/signin" replace />;
   }
 
   const isSignup = mode === "signup";
@@ -22,16 +23,18 @@ function Landing() {
             }}
           >
             <div className={style.formPane} aria-hidden={isSignup}>
-              {/* <SignIn /> */}
+              {/* <Login /> */}
               signin
             </div>
             <div className={style.formPane} aria-hidden={!isSignup}>
-              {/* <SignUp /> */}
+              {/* <Register /> */}
               signup
             </div>
           </div>
         </div>
-        <div className={style.about}>{/* <About /> */} about</div>
+        <div className={style.about}>
+          {/* <About/> */} about
+        </div>
       </div>
     </section>
   );

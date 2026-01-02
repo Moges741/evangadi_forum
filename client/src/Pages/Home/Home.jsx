@@ -5,13 +5,13 @@
 import React, { useContext, useEffect, useState } from "react";
 
 // Global app context
-import { AppState } from "../../App";
+// import { AppState } from "../../App";
 
 // Routing utilities
 import { Link, useNavigate } from "react-router-dom";
 
 // Axios instance
-import axios from "../../Api/axiosConfig";
+// import axios from "../../Api/axiosConfig";
 
 // CSS module
 import classes from "./home.module.css";
