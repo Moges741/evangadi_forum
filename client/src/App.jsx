@@ -1,3 +1,8 @@
+
+import { createContext, useState } from "react";
+import Layout from "./components/Layout/Layout";
+
+export const AppState = createContext();
 import { useEffect } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import Layout from "./components/Layout/Layout";
@@ -6,6 +11,7 @@ import Login from "./Pages/Login/Login";
 import axios from "./Api/axiosConfig";
 
 function App() {
+  
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
 
@@ -33,7 +39,9 @@ function App() {
   }, []);
 
   return (
-    <div>
+    
+     <AppState.Provider value={{ user, setUser }}>
+  <div>
       <Routes>
         {/* Public Route */}
         <Route path="/login" element={<Login />} />
@@ -43,6 +51,9 @@ function App() {
         <Route path="/*" element={<Layout />} />
       </Routes>
     </div>
+    </AppState.Provider>
+    
+  
   );
 }
 
