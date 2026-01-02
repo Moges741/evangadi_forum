@@ -1,5 +1,3 @@
-
-
 // ===================== Desalegn Tsega — Implement Home Page Start =====================
 // React core hooks
 import React, { useContext, useEffect, useState } from "react";
@@ -19,7 +17,6 @@ import classes from "./home.module.css";
 // Icons
 import { MdEdit, MdDelete } from "react-icons/md";
 import { IoIosContact } from "react-icons/io";
-
 
 const Home = () => {
   // Get logged-in user from global state

@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 import { Route, Routes } from "react-router-dom";
 import Landing from '../../Pages/Landing/Landing';
 import SharedLayout from './SharedLayout';
@@ -19,4 +19,4 @@ function Layout() {
   );
 }
 
-export default Layout
+export default Layout;
