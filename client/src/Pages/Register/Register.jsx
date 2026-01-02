@@ -48,7 +48,8 @@ const [passwordVisible, setPasswordVisible] = useState(false);
         }
     };
   return (
-    <section className={styles.registerSection}>
+<section className={styles.registerPage}>
+ <section className={styles.registerSection}>
         
         <form className={styles.form_container} onSubmit={handleSubmit}>
             <h3>Join The Network</h3>
@@ -90,6 +91,9 @@ const [passwordVisible, setPasswordVisible] = useState(false);
         </form>
       
     </section>
+</section>
+
+   
   );
 }
 
