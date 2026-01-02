@@ -23,3 +23,13 @@ dist-ssr
 *.sln
 *.sw?
 *.env
+node_modules
+dist
+.env
+.DS_Store
+.vscode
+.idea
+npm-debug.log
+yarn-error.log
+coverage
+.cache
