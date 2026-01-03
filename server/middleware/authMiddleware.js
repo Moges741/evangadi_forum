@@ -1,6 +1,5 @@
 import { StatusCodes } from "http-status-codes";
 import jwt from "jsonwebtoken";
-
 async function authMiddleware(req, res, next) {
   const authHeader = req.headers.authorization;
 

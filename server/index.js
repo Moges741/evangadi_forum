@@ -10,16 +10,18 @@ import dbconnection from "./DB/dbconfig.js";
 
 const app = express();
 
-// CORS configuration - Enhanced
-const corsOptions = {
-  origin: ["http://localhost:3000", "http://localhost:5173", "http://localhost:4173"],
-  credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'Accept'],
-  optionsSuccessStatus: 200
-};
-
-app.use(cors(corsOptions));
+// CORS configuration
+app.use(
+  cors({
+    origin: [
+      "http://localhost:3000",
+      "http://localhost:5173",
+      "http://localhost:4173",
+      "http://localhost:5174",
+    ],
+    credentials: true,
+  })
+);
 
 app.use(express.json());
 

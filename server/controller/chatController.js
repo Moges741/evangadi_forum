@@ -1,5 +1,5 @@
 import OpenAI from "openai";
-import db from "../DB/dbconfig.js"; 
+import db from "../DB/dbconfig.js";
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -15,7 +15,7 @@ export const getChatResponse = async (req, res) => {
     return res.status(400).json({ error: "userid and prompt are required." });
   }
 
-  const {userid} = req.user;
+  const { userid } = req.user;
 
   try {
     const [history] = await db.execute(
@@ -25,7 +25,7 @@ export const getChatResponse = async (req, res) => {
       [userid]
     );
 
-    console.log("history", history)
+    console.log("history", history);
 
     const conversationContext = history.reverse();
 
@@ -34,13 +34,11 @@ export const getChatResponse = async (req, res) => {
       content: "You are a direct, high-efficiency AI assistant. No fluff.",
     };
 
-    
     const messages = [
       SYSTEM_PROMPT,
       ...conversationContext,
       { role: "user", content: prompt },
     ];
-
 
     const completion = await client.chat.completions.create({
       messages,
