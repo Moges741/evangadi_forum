@@ -1,7 +1,7 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 import Header from "../Header/Header"; // Adjust path if needed
-
+import Register from "../../Pages/Register/Register";
 function Layout() {
   return (
     <>
