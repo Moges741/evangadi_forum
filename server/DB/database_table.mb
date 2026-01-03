@@ -47,3 +47,8 @@ CREATE TABLE chat_history (
     PRIMARY KEY (chatid),
     FOREIGN KEY (userid) REFERENCES users(userid) ON DELETE CASCADE
 );
+
+
+
+
+password = Z_EZqcheqDsXajL@
