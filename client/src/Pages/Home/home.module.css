@@ -1,0 +1,273 @@
+
+section {
+  background: #fff;
+  padding: 20px 10px;
+}
+
+.main-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Welcome Section */
+.welcome-section {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  gap: 10px;
+}
+
+.ask-question-btn {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  text-decoration: none;
+  text-align: center;
+}
+
+.ask-question-btn:hover {
+  background-color: #0056b3;
+}
+
+.welcome-message {
+  padding-right: 0;
+  text-align: right;
+  font-size: 14px;
+  flex: 1;
+}
+
+.username {
+  font-weight: bold;
+  color: #ff5b5b;
+}
+
+/* Search Bar */
+.search-bar {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.search-input {
+  width: 100%;
+  max-width: 600px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+/* Questions List */
+.questions-list {
+  margin-top: 20px;
+  text-decoration: none;
+  color: #333;
+}
+
+.question-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  border-bottom: 1px solid #ddd;
+  border-top: 1px solid #ddd;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  gap: 10px;
+}
+
+.user-avatar {
+  width: 50px;
+  height: 50px;
+  background: #f0f0f0;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  margin-right: 15px;
+}
+
+.user {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.question-text {
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+}
+
+.arrow {
+  font-size: 20px;
+  color: #007bff;
+  cursor: pointer;
+}
+
+.arrow:hover {
+  color: #0056b3;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .welcome-section {
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: center;
+  }
+
+  .ask-question-btn {
+    width: 100%;
+    text-align: center;
+  }
+
+  .search-bar {
+    margin-bottom: 15px;
+  }
+
+  .search-input {
+    width: 100%;
+    font-size: 14px;
+  }
+
+  .question-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .user-info {
+    gap: 5px;
+  }
+
+  .question-text {
+    font-size: 14px;
+  }
+
+  .arrow {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  .welcome-message {
+    text-align: left;
+    font-size: 12px;
+  }
+
+  .ask-question-btn {
+    font-size: 14px;
+    padding: 8px 16px;
+  }
+
+  .search-input {
+    font-size: 12px;
+    padding: 8px;
+  }
+
+  .question-text {
+    font-size: 12px;
+  }
+
+  .arrow {
+    font-size: 16px;
+  }
+}
+
+.success-message {
+  background-color: #28a745; /* Green background */
+  color: white;
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.error-message {
+  background-color: #dc3545; /* Red background */
+  color: white;
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.confirmation-prompt {
+  background-color: #f8f9fa;
+  border: 1px solid #ccc;
+  padding: 15px;
+  margin-top: 15px;
+  text-align: center;
+}
+
+.confirmation-prompt button {
+  margin: 5px;
+}
+/* Style for the container of the sort dropdown */
+.sort-dropdown {
+  margin-top: 10px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+/* Style for the select dropdown itself */
+.sort-select {
+  padding: 10px 15px;
+  font-size: 16px;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  background-color: #fff;
+  color: #333;
+  transition: all 0.3s ease;
+  width: 200px; /* Adjust the width as needed */
+}
+
+/* Hover effect on the select dropdown */
+.sort-select:hover {
+  border-color: #007bff;
+  cursor: pointer;
+}
+
+/* Focus effect on the select dropdown */
+.sort-select:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+/* Style for the dropdown options */
+.sort-select option {
+  padding: 10px;
+  font-size: 16px;
+  background-color: #fff;
+  color: #333;
+  border: none;
+}
+
+/* Hover effect for the options */
+.sort-select option:hover {
+  background-color: #f1f1f1;
+}
+
+/* Adjust the width on smaller screens */
+@media (max-width: 600px) {
+  .sort-select {
+    width: 100%;
+  }
+}
+
