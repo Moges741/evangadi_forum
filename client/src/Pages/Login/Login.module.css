@@ -1,4 +1,4 @@
-.login-container {
+.login_container {
   width: 360px;
   margin: 80px auto;
   padding: 30px;
@@ -8,7 +8,7 @@
   font-family: Arial, sans-serif;
 }
 
-h2 {
+.title {
   text-align: center;
   margin-bottom: 8px;
 }
@@ -25,11 +25,11 @@ h2 {
   cursor: pointer;
 }
 
-.input-group {
+.input_group {
   margin-bottom: 15px;
 }
 
-.input-group input {
+.input_field {
   width: 100%;
   padding: 12px;
   border-radius: 6px;
@@ -37,11 +37,11 @@ h2 {
   font-size: 16px;
 }
 
-.password-group {
+.password_group {
   position: relative;
 }
 
-.toggle-password {
+.toggle_password {
   position: absolute;
   right: 12px;
   top: 50%;
@@ -60,7 +60,7 @@ h2 {
   cursor: pointer;
 }
 
-button {
+.submit_btn {
   width: 100%;
   padding: 12px;
   background: #2f80ed;
@@ -71,10 +71,18 @@ button {
   cursor: pointer;
 }
 
-button:hover {
+.submit_btn:hover {
   background: #2563eb;
 }
-.error {
+
+.error_container {
+  min-height: 20px; 
+  margin-bottom: 10px;
+}
+
+.error_text {
   color: red;
   text-align: center;
+  font-size: 14px;
+  margin: 0;
 }
