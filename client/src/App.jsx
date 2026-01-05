@@ -8,7 +8,7 @@ import axios from "./Api/axiosConfig";
 import Footer from "./components/Footer/Footer";
 import Header from "./components/Header/Header";
 
-export const AppState = createContext();
+
 function App() {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
