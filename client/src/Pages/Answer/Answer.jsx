@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "../../Api/axiosConfig";
+import styles from './answer.module.css'
 
 function Answer() {
   // How React knows WHICH question to load
@@ -10,7 +11,7 @@ function Answer() {
   //
   const token = localStorage.getItem("token");
 
-  const [answer, setAnswers] = useState([]);
+  const [answers, setAnswers] = useState([]);
   const [loading, setLoading] = useState(false);
   const [answerText, setAnswerText] = useState("");
   const [error, setError] = useState(null);

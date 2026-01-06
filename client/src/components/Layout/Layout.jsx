@@ -4,7 +4,7 @@ import Header from "../Header/Header"; // Adjust path if needed
 import Askquestion from "../../Pages/Askquestion/Askquestion.jsx";
 
 import About from "../../Pages/About/About";
-// import Answer from "../../Pages/Answer/Answer.jsx";
+import Answer from "../../Pages/Answer/Answer.jsx";
 
 function Layout() {
   return (
