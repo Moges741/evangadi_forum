@@ -1,46 +1,46 @@
-import React, { useEffect, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
-import axios from '../../Api/axiosConfig';
+import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import axios from "../../Api/axiosConfig";
 
 function Answer() {
-    // How React knows WHICH question to load
-const {question_id}= useParams();
-// for use of redirecting
-const navigate = useNavigate();
-// 
-const token = localStorage.getItem("token");
+  // How React knows WHICH question to load
+  const { question_id } = useParams();
+  // for use of redirecting
+  const navigate = useNavigate();
+  //
+  const token = localStorage.getItem("token");
 
-const [answer, setAnswers]= useState([]);
-const [loading, setLoading]= useState(false);
-const [answerText, setAnswerText]= useState("");
-const [error, setError]=useState(null);
+  const [answer, setAnswers] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [answerText, setAnswerText] = useState("");
+  const [error, setError] = useState(null);
 
-//1. Fetch answers
-useEffect(() => {
-        const fetchAnswers = async () => {
-          try {
-            setLoading(true);
-            const res = await axios.get(`/answer/${question_id}`, {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            });
-            setAnswers(res.data.answers);
-          } catch (err) {
-            if (err.response?.status === 404) {
-              setError("Question not found.");
-            } else {
-              setError("Failed to load answers.");
-            }
-          } finally {
-            setLoading(false);
-          }
-        };
-    
-        fetchAnswers();
-      }, [question_id, token]);
+  //1. Fetch answers
+  useEffect(() => {
+    const fetchAnswers = async () => {
+      try {
+        setLoading(true);
+        const res = await axios.get(`/answer/${question_id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setAnswers(res.data.answers);
+      } catch (err) {
+        if (err.response?.status === 404) {
+          setError("Question not found.");
+        } else {
+          setError("Failed to load answers.");
+        }
+      } finally {
+        setLoading(false);
+      }
+    };
 
-    //   2. Submit answer
+    fetchAnswers();
+  }, [question_id, token]);
+
+  //   2. Submit answer
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -64,7 +64,7 @@ useEffect(() => {
         }
       );
 
-       // 3. Refresh answers
+      // 3. Refresh answers
       const res = await axios.get(`/answer/${question_id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -83,16 +83,16 @@ useEffect(() => {
 
   return (
     <div className={styles.container}>
-//       <h2>Answers</h2>
+      <h2>Answers</h2>
 
-//       {error && <p className={styles.error}>{error}</p>}
-//       {loading && <p>Loading...</p>}
+      {error && <p className={styles.error}>{error}</p>}
+      {loading && <p>Loading...</p>}
 
-//       {answers?.length === 0 && !loading && (
+      {answers?.length === 0 && !loading && (
         <p className={styles.no_answers}>No answers yet. Be the first!</p>
       )}
-        <div className={styles.answer_list}>
-//         {answers?.map((ans) => (
+      <div className={styles.answer_list}>
+        {answers?.map((ans) => (
           <div key={ans.answer_id} className={styles.answer_card}>
             <p className={styles.content}>{ans.content}</p>
             <div className={styles.meta}>
@@ -102,20 +102,35 @@ useEffect(() => {
           </div>
         ))}
       </div>
-  )
+      <form onSubmit={handleSubmit} className={styles.answer_form}>
+        <h3>Your Answer</h3>
+        <textarea
+          rows="6"
+          value={answerText}
+          onChange={(e) => setAnswerText(e.target.value)}
+          placeholder="Write your answer here..."
+          disabled={loading}
+        />
+        <button type="submit" disabled={loading}>
+          {loading ? "Posting..." : "Post Answer"}
+        </button>
+      </form>
+    </div>
+  );
 }
 
-export default Answer
+export default Answer;
 
-
-
-{/* // import React, { useEffect, useState } from "react";
+{
+  /* // import React, { useEffect, useState } from "react";
 // import styles from "./answer.module.css";
 // import axios from "../../Api/axiosConfig";
 // import { useParams, useNavigate } from "react-router-dom";
 
-// function Answer() { */}
-{/* //   const { question_id } = useParams();
+// function Answer() { */
+}
+{
+  /* //   const { question_id } = useParams();
 //   const navigate = useNavigate();
 //   const token = localStorage.getItem("token");
 
@@ -125,7 +140,8 @@ export default Answer
 //   const [error, setError] = useState(null);
 
 //   // Redirect if not logged in
-//   useEffect(() => { */}
+//   useEffect(() => { */
+}
 //     if (!token) {
 //       navigate("/login", { state: { from: `/question/${question_id}` } });
 //     }
