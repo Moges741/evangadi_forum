@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import Layout from "./components/Layout/Layout";
 import axios from "./Api/axiosConfig";
 
-
 export const AppState = createContext();
 
 function App() {
