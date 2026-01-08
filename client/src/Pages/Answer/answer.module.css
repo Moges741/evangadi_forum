@@ -17,12 +17,12 @@
 }
 .arrow {
   margin-right: 5px; /* space between arrow and text */
-  color: #007bff; /* optional arrow color */
+  color: #037cfe; /* optional arrow color */
   padding-left: 30px;
 }
 
 .text {
-  border-bottom: 2px solid #007bff; /* underline only under text */
+  border-bottom: 2px solid #677bdc; /* underline only under text */
   padding-bottom: 2px;
   font-weight: bold; /* optional */
   padding-left: 5px;
@@ -112,7 +112,7 @@
 .answer_form button {
   width: 120px;
   padding: 8px 0;
-  background-color: #2563eb;
+  background-color: #516CF0;
   color: #fff;
   border: none;
   border-radius: 6px;
