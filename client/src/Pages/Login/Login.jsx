@@ -43,7 +43,7 @@ function Login() {
 
       <p className={classes.subtitle}>
         Don’t have an account?
-        <span onClick={() => navigate("/signup")}> Create a new account</span>
+        <span onClick={() => navigate("/register")}> Create a new account</span>
       </p>
 
       <form onSubmit={handleSubmit}>
