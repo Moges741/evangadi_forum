@@ -116,11 +116,11 @@ const Home = () => {
       );
 
       // Show success message
-      setSuccessMessage(t("home.deleteSuccess"));
+      setSuccessMessage(("home.deleteSuccess"));
       setTimeout(() => setSuccessMessage(""), 3000);
     } catch {
       // Show error message
-      setErrorMessage(t("home.deleteError"));
+      setErrorMessage(("home.deleteError"));
       setTimeout(() => setErrorMessage(""), 3000);
     } finally {
       // Close confirmation dialog
@@ -135,11 +135,11 @@ const Home = () => {
         {/* Header section */}
         <div className={classes["welcome-section"]}>
           <Link to="/ask" className={classes["ask-question-btn"]}>
-            {t("home.askQuestion")}
+            {("home.askQuestion")}
           </Link>
 
           <div className={classes["welcome-message"]}>
-            {t("home.welcome")} :
+            {("home.welcome")} :
             <span className={classes["username"]}> {user?.username}</span>
           </div>
         </div>
@@ -150,7 +150,7 @@ const Home = () => {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className={classes["search-input"]}
-            placeholder={t("home.searchPlaceholder")}
+            placeholder={("home.searchPlaceholder")}
           />
         </div>
 
@@ -161,10 +161,10 @@ const Home = () => {
             onChange={(e) => setSortOption(e.target.value)}
             className={classes["sort-select"]}
           >
-            <option value="Most Recent">{t("home.mostRecent")}</option>
-            <option value="Most Popular">{t("home.mostPopular")}</option>
-            <option value="By Questions">{t("home.byQuestions")}</option>
-            <option value="By Date">{t("home.byDate")}</option>
+            <option value="Most Recent">{("home.mostRecent")}</option>
+            <option value="Most Popular">{("home.mostPopular")}</option>
+            <option value="By Questions">{("home.byQuestions")}</option>
+            <option value="By Date">{("home.byDate")}</option>
           </select>
         </div>
 
@@ -179,15 +179,15 @@ const Home = () => {
         {/* Delete confirmation */}
         {confirmDeleteId !== null && (
           <div className={classes["confirmation-prompt"]}>
-            <p>{t("home.confirmDelete")}</p>
+            <p>{("home.confirmDelete")}</p>
             <button className="btn btn-danger" onClick={handleConfirmDelete}>
-              {t("home.yesDelete")}
+              {("home.yesDelete")}
             </button>
             <button
               className="btn btn-secondary"
               onClick={() => setConfirmDeleteId(null)}
             >
-              {t("home.cancel")}
+              {("home.cancel")}
             </button>
           </div>
         )}
@@ -237,7 +237,7 @@ const Home = () => {
             </div>
           ))
         ) : (
-          <p>{t("home.noQuestions")}</p>
+          <p>{("home.noQuestions")}</p>
         )}
       </div>
     </section>

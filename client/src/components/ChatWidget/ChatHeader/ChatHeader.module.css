@@ -1,0 +1,97 @@
+.header {
+  background-color: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+  padding: 1rem 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+.indicatorWrapper {
+  position: relative;
+  width: 10px;
+  height: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.statusDot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  transition: all 0.5s ease;
+}
+
+
+.idle {
+  background-color: #4b6bfb; 
+  box-shadow: 0 0 8px rgba(75, 107, 251, 0.3);
+}
+
+.typing {
+  background-color: #10b981; /* Emerald green for active state */
+  box-shadow: 0 0 8px rgba(16, 185, 129, 0.3);
+}
+
+.ping {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  opacity: 0.3;
+  animation: ping 1.5s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+}
+
+.info h2 {
+  font-weight: 600;
+  color: #1a202c;
+  font-size: 0.9rem;
+  margin: 0;
+  font-family: inherit;
+}
+
+.info p {
+  font-size: 11px;
+  color: #718096;
+  margin: 0;
+  font-weight: 400;
+}
+
+.closeBtn {
+  margin-left: auto; 
+  background: none;
+  border: none;
+  color: #94a3b8; 
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+  border-radius: 50%; 
+  transition: all 0.2s ease;
+}
+
+.closeBtn:hover {
+  background-color: #f1f5f9;
+  color: #4b6bfb; 
+}
+
+@keyframes ping {
+  75%, 100% {
+    transform: scale(2.5);
+    opacity: 0;
+  }
+}
