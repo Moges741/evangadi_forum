@@ -45,7 +45,8 @@ function Answer() {
         const responses = await axios.get(`/answer/${question_id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
-        setAnswers(responses.data.answers);
+        
+        setAnswers(responses.data.answers.reverse());
 
         // 3. Fetch answer Summary
         const summaryResponse = await axios.get(
@@ -100,7 +101,7 @@ function Answer() {
 
       //   console.log("Answers response:", Answers.data);
 
-      setAnswers(responses.data.answers);
+      setAnswers(responses.data.answers.reverse());
       setAnswerText("");
       setError(null);
 
