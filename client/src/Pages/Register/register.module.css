@@ -1,19 +1,28 @@
 * {
   margin: 0;
 }
-
+/* 
 .registerPage {
   margin-top: 100px;
-  background-image: url('../../assets/download.svg');
-  background-repeat: no-repeat;
-  width: 100%; 
+  } */
+.registerPage {
+  margin-top: 2rem;
+  background-color: transparent;
+  width: 100%;
 }
-
+/* PAGE SECTION */
 .registerSection {
   min-height: 100vh;
   display: flex;
   align-items: center;
-  padding-left: 80px;
+  background-color: transparent;
+  /* pushes form from left like screenshot */
+  /* background: linear-gradient(
+    135deg,
+    #c6d7ff 0%,
+    #f5f7ff 50%,
+    #ffffff 100%
+  ); */
 }
 
 .form_container {
@@ -26,9 +35,8 @@
   flex-direction: column;
 }
 
-
 .error_container {
-  min-height: 20px; 
+  min-height: 20px;
   margin-bottom: 5px;
   text-align: center;
 }

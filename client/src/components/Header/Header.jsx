@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AppState } from "../../App";
-import logo from "../../../public/EvangadiLogo.jpeg";
+import logo from "../../assets/EvangadiLogo.jpeg";
 import styles from "./header.module.css";
 
 const Header = () => {
@@ -44,7 +44,7 @@ const Header = () => {
             </Link>
 
             <Link
-              to="/how-it-works"
+              to="/howitworks"
               className={styles.navLink}
               onClick={() => setIsOpen(false)}
             >
@@ -56,7 +56,7 @@ const Header = () => {
                 LOG OUT
               </button>
             ) : (
-              <Link to="/login" onClick={() => setIsOpen(false)}>
+              <Link to="/signin" onClick={() => setIsOpen(false)}>
                 <button className={styles.nav_butn}>SIGN IN</button>
               </Link>
             )}

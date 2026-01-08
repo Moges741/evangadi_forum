@@ -1,6 +1,6 @@
 import dbConnection from "../DB/dbconfig.js";
 import { StatusCodes } from "http-status-codes";
-import xss from 'xss'
+import xss from "xss";
 
 async function getAllQuestions(req, res) {
   try {
@@ -51,10 +51,7 @@ async function getSingleQuestion(req, res) {
         q.description,
         q.tag,
         q.userid,
-        u.username,0
- 
- 
-
+        u.username,
         u.firstname,
         u.lastname
       FROM questions q 
@@ -83,41 +80,40 @@ async function getSingleQuestion(req, res) {
 }
 
 const postQuestion = async (req, res) => {
-    try{
-        const {title , description , tag } = req.body;
-        const userId = req.user?.userid;
+  try {
+    const { title, description, tag } = req.body;
+    const userId = req.user?.userid;
 
-        if(!title || !description || !userId) {
-            return res.status(StatusCodes.BAD_REQUEST).json({
-                message: "Title, Description and userId required",
-            });
-        }
-        // Validate tag length 
-        if(tag && tag.length > 20){
-            return res.status(StatusCodes.BAD_REQUEST).json({
-                message: "Tag must be less than 20 characters",
-            }); 
-        }
-        // Sanitize inputs to prevent XSS
-        const sanitizedTitle = xss(title);
-        const sanitizedDescription = xss(description);
-        const sanitizedTag = tag ? xss(tag) : null;
-
-        const [result] = await dbConnection.query(
-            "INSERT INTO questions(title, description, tag, userid)  VALUES (? , ? , ? , ?)",
-            [sanitizedTitle, sanitizedDescription, sanitizedTag, userId]
-        );
-        res.status(StatusCodes.CREATED).json({
-            message: "Question Posted Successfully!",
-            questionId: result.insertId,     
-            
-        });      
-    }catch(error){
-        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-            message: "Error posting question",
-            error: error.message,
-        });
+    if (!title || !description || !userId) {
+      return res.status(StatusCodes.BAD_REQUEST).json({
+        message: "Title, Description and userId required",
+      });
     }
-}
+    // Validate tag length
+    if (tag && tag.length > 20) {
+      return res.status(StatusCodes.BAD_REQUEST).json({
+        message: "Tag must be less than 20 characters",
+      });
+    }
+    // Sanitize inputs to prevent XSS
+    const sanitizedTitle = xss(title);
+    const sanitizedDescription = xss(description);
+    const sanitizedTag = tag ? xss(tag) : null;
+
+    const [result] = await dbConnection.query(
+      "INSERT INTO questions(title, description, tag, userid)  VALUES (? , ? , ? , ?)",
+      [sanitizedTitle, sanitizedDescription, sanitizedTag, userId]
+    );
+    res.status(StatusCodes.CREATED).json({
+      message: "Question Posted Successfully!",
+      questionId: result.insertId,
+    });
+  } catch (error) {
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      message: "Error posting question",
+      error: error.message,
+    });
+  }
+};
 
 export { getAllQuestions, getSingleQuestion, postQuestion };

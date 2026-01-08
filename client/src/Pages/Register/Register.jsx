@@ -4,7 +4,7 @@ import { useState, useRef } from "react";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 import { useNavigate } from "react-router-dom";
-
+import { Link } from "react-router-dom";
 const Register = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [error, setError] = useState("");
@@ -60,6 +60,7 @@ const Register = () => {
     <section className={styles.registerPage}>
       <section className={styles.registerSection}>
         <form className={styles.form_container} onSubmit={handleSubmit}>
+        
           {/* Error container preserves space */}
           <div className={styles.error_container}>
             {error && <p className={styles.error_text}>{error}</p>}
@@ -68,9 +69,9 @@ const Register = () => {
           <h3 className={styles.form_title}>Join The Network</h3>
           <p className={styles.form_text}>
             Already have an account?{" "}
-            <a className={styles.form_link} href="/login">
+            <Link className={styles.form_link} to="/signin">
               Sign in
-            </a>
+            </Link>
           </p>
 
           <div>
@@ -145,9 +146,9 @@ const Register = () => {
             </a>
           </p>
           <p className={styles.form_text}>
-            <a className={styles.form_link} href="/login">
+            <Link className={styles.form_link} to="/signin">
               Already have an account?
-            </a>
+            </Link>
           </p>
         </form>
       </section>
