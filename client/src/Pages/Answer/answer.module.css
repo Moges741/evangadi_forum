@@ -7,7 +7,7 @@
 }
 .arrow {
   margin-right: 5px; /* space between arrow and text */
-  color: #506BED; /* optional arrow color */
+  color: #506bed; /* optional arrow color */
   padding-left: 30px;
 }
 
@@ -112,7 +112,7 @@
 }
 
 .answer_form button:hover {
-  background-color: #506BED;
+  background-color: #506bed;
 }
 
 .answer_form button:disabled {
@@ -134,7 +134,7 @@
   margin-bottom: 32px;
   padding-top: 70px;
 }
-.big_title{
+.big_title {
   padding-bottom: 20px;
 }
 /* QUESTION SECTION */
@@ -168,10 +168,9 @@
 }
 
 .readMore {
-  color: #506BED;
+  color: #506bed;
   cursor: pointer;
   font-weight: 500;
   margin-top: 6px;
   display: inline-block;
 }
-
