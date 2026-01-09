@@ -16,7 +16,11 @@ function Answer() {
   const [answers, setAnswers] = useState([]);
   const [summary, setSummary] = useState("");
   const [summaryExpanded, setSummaryExpanded] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [questionLoading, setQuestionLoading] = useState(true);
+  const [answersLoading, setAnswersLoading] = useState(true);
+  const [summaryLoading, setSummaryLoading] = useState(true);
+  const [posting, setPosting] = useState(false);
+
   const [answerText, setAnswerText] = useState("");
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
@@ -32,38 +36,32 @@ function Answer() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        setLoading(true);
+        setQuestionLoading(true);
+        setAnswersLoading(true);
+        setSummaryLoading(true);
 
-        // 1. Fetch question
-        const response = await axios.get(`/question/${question_id}`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-
-        setQuestion(response.data.question);
-
-        // 2. Fetch answers
-        const responses = await axios.get(`/answer/${question_id}`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        
-        setAnswers(responses.data.answers.reverse());
-
-        // 3. Fetch answer Summary
-        const summaryResponse = await axios.get(
-          `/answer/${question_id}/summary`,
-          {
+        const [questionRes, answersRes, summaryRes] = await Promise.all([
+          axios.get(`/question/${question_id}`, {
             headers: { Authorization: `Bearer ${token}` },
-          });
+          }),
+          axios.get(`/answer/${question_id}`, {
+            headers: { Authorization: `Bearer ${token}` },
+          }),
+          axios.get(`/answer/${question_id}/summary`, {
+            headers: { Authorization: `Bearer ${token}` },
+          }),
+        ]);
 
-        setSummary(summaryResponse.data.summary);
+        setQuestion(questionRes.data.question);
+        setAnswers(answersRes.data.answers.reverse());
+        setSummary(summaryRes.data.summary);
+        
       } catch (err) {
-        if (err.response?.status === 404) {
-          setError("Question not found.");
-        } else {
-          setError("Failed to load answers.");
-        }
+        setError("Failed to load data.");
       } finally {
-        setLoading(false);
+        setQuestionLoading(false);
+        setAnswersLoading(false);
+        setSummaryLoading(false);
       }
     };
 
@@ -80,7 +78,7 @@ function Answer() {
     }
 
     try {
-      setLoading(true);
+      setPosting(true);
       await axios.post(
         "/answer",
         {
@@ -110,11 +108,10 @@ function Answer() {
 
       // set timeout
       setTimeout(() => setSuccess(null), 3000);
-
     } catch (err) {
       setError("Failed to post answer. Please try again.");
     } finally {
-      setLoading(false);
+      setPosting(false);
     }
   };
   if (!question) return <p>Loading question...</p>;
@@ -123,12 +120,14 @@ function Answer() {
     <div className={styles.container}>
       {/* Question Section */}
 
+      {/* {success && <div className={styles.toast}>✅ {success}</div>} */}
+
       {question && (
         <div className={styles.question_summary_wrapper}>
           {/* Question */}
           <div className={styles.question_section}>
             <h2 className={styles.big_title}>QUESTION</h2>
-            <h2 className={styles.tag}>
+            <h2 className={styles.question}>
               <span className={styles.arrow}>➤</span>
               <span className={styles.text}>{question.title}</span>
             </h2>
@@ -161,11 +160,11 @@ function Answer() {
       {/* Answers List */}
       <div className={styles.answers_section}>
         <h3>Answer From The Community</h3>
-        {loading && <p>Loading answers...</p>}
+        {answersLoading && <p>Loading answers...</p>}
 
         {error && <p className={styles.error}>{error}</p>}
 
-        {!loading && answers.length === 0 && (
+        {!answersLoading && answers.length === 0 && (
           <p>No answers yet. Be the first!</p>
         )}
 
@@ -190,10 +189,10 @@ function Answer() {
             setAnswerText(e.target.value);
             if (error) setError(null);
           }}
-          disabled={loading}
+          disabled={posting}
         />
-        <button type="submit" disabled={loading}>
-          {loading ? "Posting..." : "Post Answer"}
+        <button type="submit" disabled={posting}>
+          {posting ? "Posting..." : "Post Answer"}
         </button>
       </form>
     </div>
