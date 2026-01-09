@@ -139,7 +139,7 @@ const Home = () => {
           </Link>
 
           <div className={classes["welcome-message"]}>
-            {("home.welcome")} :
+            {("welcome")} :
             <span className={classes["username"]}> {user?.username}</span>
           </div>
         </div>
@@ -161,10 +161,10 @@ const Home = () => {
             onChange={(e) => setSortOption(e.target.value)}
             className={classes["sort-select"]}
           >
-            <option value="Most Recent">{("home.mostRecent")}</option>
-            <option value="Most Popular">{("home.mostPopular")}</option>
-            <option value="By Questions">{("home.byQuestions")}</option>
-            <option value="By Date">{("home.byDate")}</option>
+            <option value="Most Recent">{("mostRecent")}</option>
+            <option value="Most Popular">{("mostPopular")}</option>
+            <option value="By Questions">{("byQuestions")}</option>
+            <option value="By Date">{("byDate")}</option>
           </select>
         </div>
 
@@ -198,7 +198,7 @@ const Home = () => {
             <div className={classes["questions-list"]} key={q.questionid}>
               <div className={classes["question-item"]}>
                 <Link
-                  to={`/question/${q.questionid}`}
+                  to={`/answer/${q.questionid}`}
                   className={classes["question-link"]}
                 >
                   <div className={classes["user-info"]}>
