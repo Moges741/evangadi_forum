@@ -1,10 +1,10 @@
 import axios from "../../axiosConfig";
 import styles from "./register.module.css";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
-import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 const Register = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [error, setError] = useState("");
@@ -23,6 +23,7 @@ const Register = () => {
     const lastNameValue = lastNameDom.current.value;
     const emailValue = emailDom.current.value;
     const passwordValue = passwordDom.current.value;
+
     if (
       !userNameValue ||
       !firstNameValue ||
@@ -33,77 +34,121 @@ const Register = () => {
       setError("All fields are required");
       return;
     }
+
     try {
-      await axios.post("/user/register", {
+      await axios.post("/user/signup", {
         username: userNameValue,
         firstname: firstNameValue,
         lastname: lastNameValue,
         email: emailValue,
         password: passwordValue,
       });
+
+      const { data } = await axios.post("/user/login", {
+        email: emailValue,
+        password: passwordValue,
+      });
+      localStorage.setItem("token", data.token);
       navigate("/");
     } catch (error) {
-      console.log(error.response);
-      console.log(error.response.message)
-      setError(error.response?.data.message);
+      const errorMessage = error?.response?.data?.message || error.message;
+      setError(errorMessage);
     }
   };
+
   return (
     <section className={styles.registerPage}>
       <section className={styles.registerSection}>
         <form className={styles.form_container} onSubmit={handleSubmit}>
-          {error && <p className={styles.error}>{error}</p>}
-          <h3>Join The Network</h3>
-          <p>
-            Already have an account? <a href="/login">Sign in</a>
+        
+          {/* Error container preserves space */}
+          <div className={styles.error_container}>
+            {error && <p className={styles.error_text}>{error}</p>}
+          </div>
+
+          <h3 className={styles.form_title}>Join The Network</h3>
+          <p className={styles.form_text}>
+            Already have an account?{" "}
+            <Link className={styles.form_link} to="/signin">
+              Sign in
+            </Link>
           </p>
+
           <div>
-            <input type="text" placeholder="username" ref={userNameDom} />
+            <input
+              className={styles.input_field}
+              type="text"
+              placeholder="username"
+              ref={userNameDom}
+            />
           </div>
           <br />
           <div className={styles.first_last}>
-            <div>
-              <input type="text" placeholder="first name" ref={firstNameDom} />
+            <div className={styles.first_last_item}>
+              <input
+                className={styles.input_field}
+                type="text"
+                placeholder="first name"
+                ref={firstNameDom}
+              />
             </div>
-            <div>
-              <input type="text" placeholder="last name" ref={lastNameDom} />
+            <div className={styles.first_last_item}>
+              <input
+                className={styles.input_field}
+                type="text"
+                placeholder="last name"
+                ref={lastNameDom}
+              />
             </div>
           </div>
 
           <br />
           <div>
-            <input type="email" placeholder="email" ref={emailDom} />
+            <input
+              className={styles.input_field}
+              type="email"
+              placeholder="email"
+              ref={emailDom}
+            />
           </div>
           <br />
-          <div>
-            <div className={styles.password}>
-              <input
-                type={passwordVisible ? "text" : "password"}
-                placeholder="password"
-                ref={passwordDom}
-              />
-              <div
-                className={styles.password_toggle}
-                onClick={() => setPasswordVisible(!passwordVisible)}
-                style={{ cursor: "pointer" }}
-              >
-                {passwordVisible ? (
-                  <VisibilityOffOutlinedIcon />
-                ) : (
-                  <VisibilityOutlinedIcon />
-                )}
-              </div>
+          <div className={styles.password_wrapper}>
+            <input
+              className={styles.input_field}
+              type={passwordVisible ? "text" : "password"}
+              placeholder="password"
+              ref={passwordDom}
+            />
+            <div
+              className={styles.password_toggle}
+              onClick={() => setPasswordVisible(!passwordVisible)}
+            >
+              {passwordVisible ? (
+                <VisibilityOffOutlinedIcon />
+              ) : (
+                <VisibilityOutlinedIcon />
+              )}
             </div>
           </div>
+
           <button className={styles.register_button} type="submit">
             Agree and Join
           </button>
-          <p>
-            I agree to the <a href="">privacy policy</a> and{" "}
-            <a href="">terms of service.</a>
+
+          <p className={styles.form_text}>
+            I agree to the{" "}
+            <a className={styles.form_link} href="">
+              privacy policy
+            </a>{" "}
+            and{" "}
+            <a className={styles.form_link} href="">
+              terms of service.
+            </a>
           </p>
-          <p>
-            <a href="">Already have an account?</a>
+          <p className={styles.form_text}>
+            <Link className={styles.form_link} to="/signin">
+              Already have an account?
+            </Link>
           </p>
         </form>
       </section>

@@ -1,15 +1,14 @@
-import React from "react";
-import "./footer.css";
+import classes from "./Footer.module.css";
 import logo from "../../assets/10002.png";
 import { FaFacebookF, FaInstagram, FaYoutube } from "react-icons/fa";
 
 function Footer() {
   return (
-    <footer className="footer">
-      <div className="footer-container">
-        <div className="footer-section">
-          <img src={logo} alt="Evangadi Logo" className="footer-logo" />
-          <div className="social-icons">
+    <footer className={classes.footer}>
+      <div className={classes.footer_container}>
+        <div className={classes.footer_section}>
+          <img src={logo} alt="Evangadi Logo" className={classes.footer_logo} />
+          <div className={classes.social_icons_container}>
             <a href="#">
               <FaFacebookF />
             </a>
@@ -21,31 +20,45 @@ function Footer() {
             </a>
           </div>
         </div>
-        <div className="footer-section">
-          <h4>Useful Links</h4>
-          <ul>
-            <li>
-              <a href="#">How it Works</a>
+
+        <div className={classes.footer_section}>
+          <h4 className={classes.section_title}>Useful Links</h4>
+          <ul className={classes.list_reset}>
+            <li className={classes.list_item}>
+              <a href="#" className={classes.link}>
+                How it Works
+              </a>
             </li>
-            <li>
-              <a href="#">Terms of Service</a>
+            <li className={classes.list_item}>
+              <a href="#" className={classes.link}>
+                Terms of Service
+              </a>
             </li>
-            <li>
-              <a href="#">Privacy Policy</a>
+            <li className={classes.list_item}>
+              <a href="#" className={classes.link}>
+                Privacy Policy
+              </a>
             </li>
           </ul>
         </div>
-        <div className="footer-section">
-          <h4>Contact Info</h4>
-          <ul>
-            <li>
-              <a href="#">Evangadi Networks</a>
+
+        <div className={classes.footer_section}>
+          <h4 className={classes.section_title}>Contact Info</h4>
+          <ul className={classes.list_reset}>
+            <li className={classes.list_item}>
+              <a href="#" className={classes.link}>
+                Evangadi Networks
+              </a>
             </li>
-            <li>
-              <a href="mailto:support@evangadi.com">support@evangadi.com</a>
+            <li className={classes.list_item}>
+              <a href="mailto:support@evangadi.com" className={classes.link}>
+                support@evangadi.com
+              </a>
             </li>
-            <li>
-              <a href="tel:+12023862702">+1-202-386-2702</a>
+            <li className={classes.list_item}>
+              <a href="tel:+12023862702" className={classes.link}>
+                +1-202-386-2702
+              </a>
             </li>
           </ul>
         </div>

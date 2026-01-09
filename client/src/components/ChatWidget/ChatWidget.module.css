@@ -1,0 +1,43 @@
+.triggerWrapper {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 205;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.floatingButton {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: #4b6bfb;
+  color: white;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 10px 15px -3px rgba(75, 107, 251, 0.4);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.floatingButton:hover {
+  transform: scale(1.1);
+  background-color: #3b5bdb;
+}
+
+.windowContainer {
+  position: absolute;
+  bottom: 80px;
+  right: 0;
+  width: 400px;
+  max-width: 90vw;
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(20px) scale(0.95); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}

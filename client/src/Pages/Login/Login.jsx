@@ -1,7 +1,7 @@
-import React, { useRef, useState } from "react";
+import { useRef, useState } from "react";
 import axios from "../../Api/axiosConfig";
 import { useNavigate } from "react-router-dom";
-import "./Login.css";
+import classes from "./Login.module.css";
 
 function Login() {
   const navigate = useNavigate();
@@ -12,7 +12,6 @@ function Login() {
 
   async function handleSubmit(e) {
     e.preventDefault();
-
     const email = emailDom.current.value;
     const password = passwordDom.current.value;
 
@@ -29,48 +28,58 @@ function Login() {
       localStorage.setItem("token", data.token);
       navigate("/");
     } catch (error) {
-      console.log(error.response.data.msg);
-      setError(error.response.data.msg);
-      console.error(error.response?.data || error.message);
+      const errorMessage = error?.response?.data?.msg || error.message;
+      setError(errorMessage);
     }
   }
 
   return (
-    <section className="login-container">
-      {error && <p className="error">{error}</p>}
-      <h2>Login to your account</h2>
+    <section className={classes.login_container}>
+      <div className={classes.error_container}>
+        {error && <p className={classes.error_text}>{error}</p>}
+      </div>
 
-      <p className="subtitle">
+      <h2 className={classes.title}>Login to your account</h2>
+
+      <p className={classes.subtitle}>
         Don’t have an account?
-        <span onClick={() => navigate("/signup")}> Create a new account</span>
+        <span onClick={() => navigate("/register")}> Create a new account</span>
       </p>
 
       <form onSubmit={handleSubmit}>
-        <div className="input-group">
-          <input ref={emailDom} type="email" placeholder="Email address" />
+        <div className={classes.input_group}>
+          <input
+            className={classes.input_field}
+            ref={emailDom}
+            type="email"
+            placeholder="Email address"
+          />
         </div>
 
-        <div className="input-group password-group">
+        <div className={`${classes.input_group} ${classes.password_group}`}>
           <input
+            className={classes.input_field}
             ref={passwordDom}
             type={showPassword ? "text" : "password"}
             placeholder="Password"
           />
           <span
-            className="toggle-password"
+            className={classes.toggle_password}
             onClick={() => setShowPassword(!showPassword)}
           >
             👁
           </span>
         </div>
 
-        <div className="forgot">
+        <div className={classes.forgot}>
           <span onClick={() => navigate("/forgot-password")}>
             Forgot password?
           </span>
         </div>
 
-        <button type="submit">Login</button>
+        <button className={classes.submit_btn} type="submit">
+          Login
+        </button>
       </form>
     </section>
   );

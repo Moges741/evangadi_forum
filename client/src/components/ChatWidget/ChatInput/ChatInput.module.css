@@ -1,0 +1,73 @@
+.container {
+  padding: 1rem;
+  background-color: #ffffff;
+  border-top: 1px solid #e5e7eb;
+}
+
+.form {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.textarea {
+  width: 100%;
+  background-color: #f9fafb;
+  color: #1a202c;
+  border-radius: 24px;
+  padding: 12px 50px 12px 20px;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  outline: none;
+  border: 1px solid #e2e8f0;
+  transition: all 0.2s ease;
+  resize: none;
+  font-family: inherit;
+}
+
+.textarea:focus {
+  border-color: #4b6bfb;
+  background-color: #ffffff;
+  box-shadow: 0 0 0 3px rgba(75, 107, 251, 0.1);
+}
+
+.buttonWrapper {
+  position: absolute;
+  right: 6px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.sendButton {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.activeButton {
+  background-color: #4b6bfb;
+  color: #ffffff;
+}
+
+.activeButton:hover {
+  background-color: #3b5bdb;
+  transform: scale(1.05);
+}
+
+.disabledButton {
+  background-color: #edf2f7;
+  color: #a0aec0;
+  cursor: not-allowed;
+}
+
+.disclaimer p {
+  font-size: 10px;
+  color: #718096;
+  font-weight: 500;
+}

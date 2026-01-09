@@ -1,0 +1,95 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  background-color: #ffffff;
+}
+
+.messageRow {
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-end;
+  width: 100%;
+}
+
+.userRow {
+  flex-direction: row-reverse;
+}
+
+/* Avatar Styling */
+.avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border: 1px solid #e5e7eb;
+}
+
+.userAvatar {
+  background-color: #f0f4ff;
+  border-color: #4b6bfb; /* Evangadi Blue */
+  color: #4b6bfb;
+}
+
+.botAvatar {
+  background-color: #f8fafc;
+  border-color: #e2e8f0;
+  color: #64748b;
+}
+
+/* Bubble Styling */
+.bubble {
+  padding: 0.75rem 1rem;
+  border-radius: 16px;
+  max-width: 80%;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.userBubble {
+  background-color: #4b6bfb; 
+  color: #ffffff;
+  border-bottom-right-radius: 2px;
+}
+
+
+.botBubble {
+  background-color: #f1f5f9; 
+  color: #1e293b; 
+  border: 1px solid #e2e8f0;
+  border-bottom-left-radius: 2px;
+}
+
+.botBubble p, 
+.botBubble li, 
+.botBubble code {
+  color: #1e293b !important;
+}
+
+.userBubble p, 
+.userBubble li {
+  color: #ffffff !important;
+}
+
+/* Landing Screen */
+.landing {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #64748b;
+  gap: 1rem;
+  padding: 4rem 1rem;
+  background-color: #ffffff;
+}
+
+.landingIcon {
+  background-color: #f8fafc;
+  padding: 1.5rem;
+  border-radius: 50%;
+  border: 1px solid #e2e8f0;
+}

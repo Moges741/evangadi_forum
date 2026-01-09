@@ -1,29 +1,30 @@
-
-*{
-    margin: 0;
+* {
+  margin: 0;
 }
-.registerPage{
-    margin-top: 100px;
-    background-image: url('../../assets/download.svg');
-    background-repeat: no-repeat;
-    width: cover;
+/* 
+.registerPage {
+  margin-top: 100px;
+  } */
+.registerPage {
+  margin-top: 2rem;
+  background-color: transparent;
+  width: 100%;
 }
 /* PAGE SECTION */
 .registerSection {
   min-height: 100vh;
   display: flex;
   align-items: center;
-  padding-left: 80px; /* pushes form from left like screenshot */
+  background-color: transparent;
+  /* pushes form from left like screenshot */
   /* background: linear-gradient(
     135deg,
     #c6d7ff 0%,
     #f5f7ff 50%,
     #ffffff 100%
   ); */
-
 }
 
-/* FORM CARD */
 .form_container {
   width: 420px;
   background: #ffffff;
@@ -34,30 +35,39 @@
   flex-direction: column;
 }
 
-/* TITLE */
-.form_container h3 {
+.error_container {
+  min-height: 20px;
+  margin-bottom: 5px;
+  text-align: center;
+}
+
+.error_text {
+  color: red !important;
+  font-size: 14px;
+  margin: 0;
+}
+
+.form_title {
   text-align: center;
   margin-bottom: 8px;
   font-size: 22px;
   font-weight: 600;
 }
 
-/* SUBTITLE */
-.form_container p {
+.form_text {
   text-align: center;
   font-size: 14px;
   color: #6b7280;
   margin-bottom: 16px;
 }
 
-.form_container a {
+.form_link {
   color: #ff7a00;
   text-decoration: none;
   font-weight: 500;
 }
 
-/* INPUTS */
-.form_container input {
+.input_field {
   width: 100%;
   height: 44px;
   border-radius: 6px;
@@ -65,40 +75,37 @@
   padding: 0 12px;
   font-size: 14px;
   outline: none;
+  box-sizing: border-box;
 }
 
-.form_container input:focus {
+.input_field:focus {
   border-color: #5570f5;
 }
 
-/* FIRST & LAST NAME */
 .first_last {
   display: flex;
   gap: 30px;
 }
 
-/* PASSWORD */
-.password {
+.first_last_item {
+  flex: 1;
+}
+
+.password_wrapper {
   position: relative;
 }
 
-.password input {
-  padding-right: 42px;
-  margin-right: -10px;
-  padding-right: 10px;
-}
-
-/* PASSWORD TOGGLE */
 .password_toggle {
   position: absolute;
-  right: -5px;
+  right: 12px;
   top: 50%;
   transform: translateY(-50%);
   color: #9ca3af;
   cursor: pointer;
+  display: flex;
+  align-items: center;
 }
 
-/* BUTTON */
 .register_button {
   margin-top: 16px;
   height: 44px;

@@ -1,0 +1,42 @@
+/* Full page container */
+.container {
+  width: 100%;
+  min-height: 80vh;
+  display: grid;
+  place-items: center;
+ background: url("../../assets/bg.jpeg") no-repeat center center fixed;
+  background-size: cover;
+}
+
+/* Wrapper for slider + About */
+.containerContent {
+  max-width: 58rem;
+  display: grid;
+  place-items: center;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+}
+/* Slider container */
+.sliderContainer {
+  width: 100%;
+  overflow: hidden;
+}
+/* Slider wrapper (SignIn + SignUp) */
+.sliderWrapper {
+  display: flex;
+  width: 200%;
+  transition: transform 0.5s ease-in-out;
+}
+
+/* Each panel */
+.formPane {
+  width: 50%;
+}
+
+@media (max-width: 768px) {
+  .containerContent {
+    grid-template-columns: 1fr;
+    width: auto;
+
+  }
+}
