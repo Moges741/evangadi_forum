@@ -38,7 +38,7 @@ const Register = () => {
     }
 
     try {
-      await axios.post("/user/register", {
+      await axios.post("/user/signup", {
         username: userNameValue,
         firstname: firstNameValue,
         lastname: lastNameValue,
