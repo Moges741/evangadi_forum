@@ -120,7 +120,6 @@ function Answer() {
 
   return (
     <div className={styles.container}>
-
       {question && (
         <div className={styles.question_summary_wrapper}>
           {/* Question */}
@@ -174,6 +173,15 @@ function Answer() {
               <span>{ans.user_name}</span>
             </div>
             <p className={styles.content}>{ans.content}</p>
+            {/* PERMISSION CHECK */}
+            {/* {currentUser?.id === ans.user_id && (
+              <div className={styles.actions}>
+                <button onClick={() => handleEdit(ans)}>✏️ Edit</button>
+                <button onClick={() => handleDelete(ans.answer_id)}>
+                  🗑 Delete
+                </button>
+              </div>
+            )} */}
           </div>
         ))}
       </div>

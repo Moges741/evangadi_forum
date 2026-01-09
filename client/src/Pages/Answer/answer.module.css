@@ -1,9 +1,11 @@
 /* -------------------- Container -------------------- */
 .container {
   max-width: 1150px;
-  margin: 40px auto;
-  padding: 0 50px;
+  margin: 50px auto;
+  padding: 0 60px;
   font-family: "Inter", sans-serif;
+  background-color: #FAFAFA;
+
 }
 
 /* -------------------- Question Section -------------------- */
@@ -142,13 +144,15 @@
 
 /* -------------------- Summary Section -------------------- */
 .summary_section {
-  flex: 1;
+  flex: 2;
   background: #d88b39;
   border: 1px solid #e5e7eb;
   border-radius: 8px;
   padding: 16px;
   margin-top: 20px;
   margin-left: 150px;
+  position: sticky;
+  top: 20px
 }
 
 .summaryText {
@@ -187,7 +191,9 @@
   margin-bottom: 32px;
   padding-top: 20px;
 }
-
+.question_section{
+  flex: 3;
+}
 @media screen and (max-width: 900px) {
   .question_summary_wrapper {
     flex-direction: column;
