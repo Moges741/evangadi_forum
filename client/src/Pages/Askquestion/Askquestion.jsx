@@ -1,8 +1,10 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./ask.module.css";
 import axios from "../../Api/axiosConfig.js";
 import KeywordExtractor from "keyword-extractor";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Askquestion() {
   const token = localStorage.getItem("token");
@@ -14,6 +16,7 @@ function Askquestion() {
   const [tag, setTag] = useState("");
   const [formErrors, setFormErrors] = useState({});
   const navigate = useNavigate();
+  const [stepsCollapsed, setStepsCollapsed] = useState(true);
 
   // Check authentication on component mount
   useEffect(() => {
@@ -21,7 +24,10 @@ function Askquestion() {
       navigate("/login", { state: { from: "/ask" } });
     }
   }, [token, navigate]);
-
+  // Toggle steps function - MOVED OUTSIDE generateTag
+  const toggleSteps = () => {
+    setStepsCollapsed(!stepsCollapsed);
+  };
   // Generate tag from title whenever title changes
   useEffect(() => {
     if (title.trim().length > 3) {
@@ -72,8 +78,8 @@ function Askquestion() {
       errors.description = "Description is required";
     } else if (description.trim().length < 20) {
       errors.description = "Description must be at least 20 characters long";
-    } else if (description.trim().length > 5000) {
-      errors.description = "Description cannot exceed 5000 characters";
+    } else if (description.trim().length > 2000) {
+      errors.description = "Description cannot exceed 2000 characters";
     }
 
     setFormErrors(errors);
@@ -83,13 +89,15 @@ function Askquestion() {
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // Clear previous errors
     setError(null);
     setFormErrors({});
 
-    // Validate form
-    if (!validateForm()) {
+    if (!validateForm()) return;
+    if (tag && tag.length > 20) {
+      setFormErrors((prev) => ({
+        ...prev,
+        tag: "Tag must be less than 20 characters",
+      }));
       return;
     }
 
@@ -111,26 +119,26 @@ function Askquestion() {
         }
       );
 
-      // Update questions state with the new question
-      setQuestions((prev) => [response.data, ...prev]);
+      setQuestions((prev) => [
+        {
+          questionId: response.data.questionId,
+          title,
+          description,
+          tag,
+          createdAt: new Date().toISOString(),
+        },
+        ...prev,
+      ]);
 
-      // Show success message
-      alert("Your question has been posted successfully!");
-
-      // Reset form
+      toast.success("Question Posted Successfully!");
       setTitle("");
       setDescription("");
       setTag("");
-
-      // Navigate to home or question page
-      //   navigate("/", { replace: true });
-      // Alternatively, navigate to the question detail page:
-      navigate(`/question/${response.data.questionId}`);
+      //  navigate(`/question/${response.data.questionId}`);
+      navigate("/");
     } catch (error) {
       console.error("Error posting question:", error);
-
       if (error.response) {
-        // Server responded with an error status
         if (error.response.status === 401) {
           setError("Your session has expired. Please login again.");
           localStorage.removeItem("token");
@@ -148,10 +156,8 @@ function Askquestion() {
           );
         }
       } else if (error.request) {
-        // Request was made but no response received
         setError("Network error. Please check your connection and try again.");
       } else {
-        // Other errors
         setError("An unexpected error occurred. Please try again.");
       }
     } finally {
@@ -181,7 +187,12 @@ function Askquestion() {
 
   return (
     <div className={styles.container}>
-      <div className={styles.steps_toFollow}>
+      <div
+        className={`${styles.steps_toFollow} ${
+          stepsCollapsed ? styles.collapsed : ""
+        }`}
+        onClick={toggleSteps}
+      >
         <h2>Steps for writing a good question</h2>
         <ul>
           <li>Summarize your question in a one-line title.</li>
@@ -193,7 +204,7 @@ function Askquestion() {
 
       <div className={styles.question_form}>
         <div className={styles.question_title}>
-          <h2>Ask Your Question to the Community</h2>
+          <h2>Post your Question</h2>
         </div>
 
         {error && (
@@ -204,11 +215,11 @@ function Askquestion() {
 
         <form onSubmit={handleSubmit}>
           <div className={styles.form_group}>
-            <label htmlFor="title">Title</label>
+            {/* <label htmlFor="title">Title</label> */}
             <input
               id="title"
               type="text"
-              placeholder="Be specific and imagine you're asking another person"
+              placeholder="Question Title"
               value={title}
               onChange={handleTitleChange}
               className={formErrors.title ? styles.error_input : ""}
@@ -227,10 +238,10 @@ function Askquestion() {
           </div>
 
           <div className={styles.form_group}>
-            <label htmlFor="description">Description</label>
+            {/* <label htmlFor="description">Description</label> */}
             <textarea
               id="description"
-              placeholder="Include all the information someone would need to answer your question"
+              placeholder="Question detail..."
               value={description}
               onChange={handleDescriptionChange}
               className={formErrors.description ? styles.error_input : ""}
@@ -245,7 +256,7 @@ function Askquestion() {
             <div className={styles.input_help}>
               {description.length > 0 && (
                 <span className={description.length < 20 ? styles.warning : ""}>
-                  {description.length}/5000 characters
+                  {description.length}/2000 characters
                 </span>
               )}
             </div>
@@ -257,11 +268,13 @@ function Askquestion() {
               id="tag"
               type="text"
               value={tag}
-              readOnly
+              onChange={(e) => setTag(e.target.value)}
               className={styles.tag_input}
+              disabled={loading}
             />
             <div className={styles.input_help}>
-              This tag is auto-generated from your title.
+              This tag is auto-generated from your title. You can edit it if
+              needed.
             </div>
           </div>
 
@@ -271,7 +284,7 @@ function Askquestion() {
               disabled={loading}
               className={loading ? styles.loading_button : ""}
             >
-              {loading ? "Posting..." : "Post Your Question"}
+              {loading ? "Posting..." : "Post "}
             </button>
             <button
               type="button"

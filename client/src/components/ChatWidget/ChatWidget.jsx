@@ -6,6 +6,7 @@ import ChatBot from './ChatBot/ChatBot.jsx'
 function ChatWidget() {
   const [isOpen, setIsOpen] = useState(false);
   const widgetRef = useRef(null);
+  const isAuthenticated = () => !!localStorage.getItem("token");
 
   // >=> Close when clicking outside
   useEffect(() => {
@@ -21,22 +22,26 @@ function ChatWidget() {
   }, [isOpen]);
 
   return (
-    <div className={styles.triggerWrapper} ref={widgetRef}>
-      {/* The Chat Window */}
-      {isOpen && (
-        <div className={styles.windowContainer}>
-          <ChatBot onClose={() => setIsOpen(false)} />
+    <>
+      {isAuthenticated() && (
+        <div className={styles.triggerWrapper} ref={widgetRef}>
+          {/* The Chat Window */}
+          {isOpen && (
+            <div className={styles.windowContainer}>
+              <ChatBot onClose={() => setIsOpen(false)} />
+            </div>
+          )}
+
+          {/* The Toggle Button */}
+          <button
+            className={styles.floatingButton}
+            onClick={() => setIsOpen(!isOpen)}
+          >
+            {isOpen ? <X size={28} /> : <MessageCircle size={28} />}
+          </button>
         </div>
       )}
-
-      {/* The Toggle Button */}
-      <button
-        className={styles.floatingButton}
-        onClick={() => setIsOpen(!isOpen)}
-      >
-        {isOpen ? <X size={28} /> : <MessageCircle size={28} />}
-      </button>
-    </div>
+    </>
   );
 }
 

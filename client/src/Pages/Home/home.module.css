@@ -1,5 +1,5 @@
 
-section {
+/* section {
   background: #fff;
   padding: 20px 10px;
 }
@@ -8,10 +8,10 @@ section {
   max-width: 1000px;
   margin: 0 auto;
   padding: 20px;
-}
+} */
 
 /* Welcome Section */
-.welcome-section {
+/* .welcome-section {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
@@ -45,10 +45,10 @@ section {
 .username {
   font-weight: bold;
   color: #ff5b5b;
-}
+} */
 
 /* Search Bar */
-.search-bar {
+/* .search-bar {
   margin-bottom: 20px;
   display: flex;
   justify-content: center;
@@ -61,10 +61,10 @@ section {
   border: 1px solid #ddd;
   border-radius: 4px;
   font-size: 16px;
-}
+} */
 
 /* Questions List */
-.questions-list {
+/* .questions-list {
   margin-top: 20px;
   text-decoration: none;
   color: #333;
@@ -120,10 +120,10 @@ section {
 
 .arrow:hover {
   color: #0056b3;
-}
+} */
 
 /* Responsive Design */
-@media (max-width: 768px) {
+/* @media (max-width: 768px) {
   .welcome-section {
     flex-direction: column;
     align-items: flex-start;
@@ -185,48 +185,48 @@ section {
   .arrow {
     font-size: 16px;
   }
-}
+} */
 
-.success-message {
-  background-color: #28a745; /* Green background */
+/* .success-message {
+  background-color: #28a745; 
   color: white;
   padding: 10px;
   margin-bottom: 15px;
   border-radius: 5px;
   text-align: center;
-}
+} */
 
-.error-message {
-  background-color: #dc3545; /* Red background */
-  color: white;
+/* .error-message { */
+  /* background-color: #dc3545; Red background */
+  /* color: white;
   padding: 10px;
   margin-bottom: 15px;
   border-radius: 5px;
   text-align: center;
-}
-
+} */
+/* 
 .confirmation-prompt {
   background-color: #f8f9fa;
   border: 1px solid #ccc;
   padding: 15px;
   margin-top: 15px;
   text-align: center;
-}
+} */
 
-.confirmation-prompt button {
+/* .confirmation-prompt button {
   margin: 5px;
-}
+} */
 /* Style for the container of the sort dropdown */
-.sort-dropdown {
+/* .sort-dropdown {
   margin-top: 10px;
   margin-bottom: 20px;
   display: flex;
   justify-content: flex-end;
   align-items: center;
-}
+} */
 
 /* Style for the select dropdown itself */
-.sort-select {
+/* .sort-select {
   padding: 10px 15px;
   font-size: 16px;
   border: 2px solid #ccc;
@@ -235,39 +235,165 @@ section {
   color: #333;
   transition: all 0.3s ease;
   width: 200px; /* Adjust the width as needed */
-}
+/* } */
 
 /* Hover effect on the select dropdown */
-.sort-select:hover {
+/* .sort-select:hover {
   border-color: #007bff;
   cursor: pointer;
-}
+} */
 
 /* Focus effect on the select dropdown */
-.sort-select:focus {
+/* .sort-select:focus {
   outline: none;
   border-color: #007bff;
   box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-}
+} */
 
 /* Style for the dropdown options */
-.sort-select option {
+/* .sort-select option {
   padding: 10px;
   font-size: 16px;
   background-color: #fff;
   color: #333;
   border: none;
-}
+} */
 
 /* Hover effect for the options */
-.sort-select option:hover {
+/* .sort-select option:hover {
   background-color: #f1f1f1;
-}
+} */
 
 /* Adjust the width on smaller screens */
-@media (max-width: 600px) {
+/* @media (max-width: 600px) {
   .sort-select {
     width: 100%;
   }
+} */
+
+
+
+/* main container for the home page  */
+.home__container__wrap {
+  width: 80%;
+  margin: 0 auto;
+  /* height: 65vmax; */
+  margin-bottom: 20px;
+}
+.home_container {
+  padding-top: 60px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  /* overflow-y: hidden; */
+  /* z-index: 500; */
+}
+/* container for button and user greeting  */
+.btn_container {
+  display: flex;
+  margin-bottom: 15px;
+  justify-content: space-between;
+}
+/* link styles in button container  */
+.btn_container a {
+  padding: 7px;
+  margin-left: 10%;
+}
+/* styles for ask question button  */
+.ask_blue {
+  background-color: var(--primary-button);
+  color: white;
+  border: none;
+  cursor: pointer;
+  padding: 7px;
+  border-radius: 5px;
 }
 
+.btn_container p {
+  margin-right: 25%;
+}
+/* highlighted user span  */
+.btn_container p span {
+  color: #fe8091;
+}
+/* search input styles  */
+.search_container input {
+  margin-left: 10%;
+  padding: 12px 20px;
+  margin-bottom: 20px;
+  width: 70%;
+  border: 1.5px solid #ccc;
+  outline: none;
+  border-radius: 5px;
+}
+
+/* user detail container  */
+.user_container {
+  margin-bottom: 8px;
+  display: flex;
+  flex-direction: column;
+  margin-left: 9%;
+}
+/* user icon styles  */
+.user_icon svg {
+  display: flex;
+  align-items: center;
+  font-size: 60px;
+  color: #3b455a;
+}
+/* user icon and name container  */
+.user_icon {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+}
+/* padding for user name  */
+.user_icon p {
+  padding-left: 12px;
+}
+/* profile container for user and question  */
+.profile_container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-right: 16%;
+}
+/* chevron icon size  */
+.angle_icon svg {
+  font-size: 40px;
+}
+/* style for horizontal lines  */
+.horizontal_line {
+  margin-right: 12%;
+  margin-left: 10%;
+}
+/* styles for question text  */
+.question {
+  /* margin-top: 35px; */
+  /* padding-right: 40%; */
+}
+
+.link {
+  text-decoration: none;
+  color: #24334b;
+}
+
+/* .home__QuestionCard_box {
+  width: 100%;
+  margin: 0 auto;
+  height: 50vh;
+  overflow: scroll;
+  z-index: 1;
+} */
+
+.home__QuestionCard_box::-webkit-scrollbar {
+  overflow: hidden;
+}
+
+.question {
+  width: 60%;
+
+  /* padding-top: 20px; */
+  /* text-align: center; */
+}

@@ -7,6 +7,7 @@ import HowItWorks from "../../Pages/HowItWorks/HowItWorks";
 import NotFound from "../../Pages/NotFound/NotFound";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import Askquestion from "../../Pages/Askquestion/Askquestion.jsx";
+import Answer from "../../Pages/Answer/Answer.jsx";
 
 function Layout() {
   return (
@@ -31,7 +32,7 @@ function Layout() {
             </ProtectedRoute>
           }
         />
-{/* protected route for ask question page */}
+        {/* protected route for ask question page */}
         <Route
           path="ask"
           element={
@@ -40,7 +41,15 @@ function Layout() {
             </ProtectedRoute>
           }
         />
-
+        {/* protected route for answer page */}
+        <Route
+          path="answer/:question_id"
+          element={
+            <ProtectedRoute>
+              <Answer />
+            </ProtectedRoute>
+          }
+        />
         {/* Landing page for signin/signup */}
         <Route path=":mode" element={<Landing />} />
 

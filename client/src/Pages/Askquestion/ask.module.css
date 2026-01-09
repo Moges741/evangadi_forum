@@ -14,9 +14,10 @@
   min-height: calc(100vh - 80px);
 }
 
-/* Steps Section */
+/* Steps Section - UPDATED with collapsible functionality */
 .steps_toFollow {
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  /* background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); */
+  background: #f6ba74;
   padding: 30px;
   border-radius: 12px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -27,21 +28,58 @@
   flex-direction: column;
   align-items: center;
   margin-top: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
 .steps_toFollow h2 {
   color: #2c3e50;
-  margin-bottom: 20px;
+  /* margin-bottom: 20px; */
   font-size: 1.8rem;
   border-bottom: 2px solid #3498db;
   padding-bottom: 10px;
   text-align: center;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.steps_toFollow h2:hover {
+  color: #3498db;
+}
+
+/* Chevron icon for collapsible */
+.steps_toFollow h2::after {
+  content: "▼";
+  font-size: 1rem;
+  margin-left: 10px;
+  transition: transform 0.3s ease;
+  color: #3498db;
+}
+
+/* Rotate chevron when steps are collapsed */
+.steps_toFollow.collapsed h2::after {
+  transform: rotate(-90deg);
 }
 
 .steps_toFollow ul {
   list-style-type: none;
   padding-left: 0;
   width: 100%;
+  overflow: hidden;
+  transition: all 0.4s ease;
+  max-height: 500px; /* Adjust based on content height */
+}
+
+/* When collapsed, hide the content */
+.steps_toFollow.collapsed ul {
+  max-height: 0;
+  opacity: 0;
+  margin-bottom: 0;
+  pointer-events: none;
 }
 
 .steps_toFollow li {
@@ -50,6 +88,16 @@
   position: relative;
   line-height: 1.6;
   color: #34495e;
+  transition: all 0.3s ease;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* When collapsed, hide list items */
+.steps_toFollow.collapsed li {
+  opacity: 0;
+  transform: translateY(-10px);
+  margin-bottom: 0;
 }
 
 .steps_toFollow li:before {
@@ -84,7 +132,7 @@
 
 .question_title h2 {
   color: #2c3e50;
-  margin-bottom: 30px;
+  margin-bottom: 10px;
   font-size: 2rem;
   text-align: center;
 }
@@ -268,8 +316,12 @@
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 /* Recent Questions */
@@ -352,11 +404,11 @@
     grid-template-columns: 1fr;
     gap: 30px;
   }
-  
+
   .steps_toFollow {
     position: static;
   }
-  
+
   .question_form {
     width: 100%;
     margin: 0 auto;
@@ -367,33 +419,33 @@
   .container {
     padding: 15px;
   }
-  
+
   .question_form {
     padding: 25px;
   }
-  
+
   .form_actions {
     flex-direction: column;
   }
-  
+
   .form_actions button,
   .question_form button {
     width: 100%;
   }
-  
+
   .steps_toFollow,
   .question_form {
     padding: 20px;
   }
-  
+
   .steps_toFollow h2 {
     font-size: 1.5rem;
   }
-  
+
   .question_title h2 {
     font-size: 1.6rem;
   }
-  
+
   .question_form button {
     width: 100%;
   }
@@ -404,11 +456,11 @@
     margin-top: 20px;
     padding: 20px;
   }
-  
+
   .steps_toFollow h2 {
     font-size: 1.4rem;
   }
-  
+
   .question_form {
     width: 100%;
     padding: 20px;
@@ -420,7 +472,7 @@
     width: 100%;
     padding: 0;
   }
-  
+
   .form_actions button,
   .question_form button {
     width: 100%;
@@ -432,18 +484,18 @@
   .container {
     padding: 10px;
   }
-  
+
   .question_form {
     padding: 15px;
   }
-  
+
   .form_group input[type="text"],
   .form_group textarea,
   .question_form input,
   .question_form textarea {
     padding: 12px;
   }
-  
+
   .form_actions button,
   .question_form button {
     padding: 12px 20px;
