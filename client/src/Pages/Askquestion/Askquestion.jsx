@@ -1,8 +1,10 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import styles from "./ask.module.css";
 import axios from "../../Api/axiosConfig.js";
 import KeywordExtractor from "keyword-extractor";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Askquestion() {
   const token = localStorage.getItem("token");
@@ -15,13 +17,17 @@ function Askquestion() {
   const [formErrors, setFormErrors] = useState({});
   const navigate = useNavigate();
   const [stepsCollapsed, setStepsCollapsed] = useState(false);
+
   // Check authentication on component mount
   useEffect(() => {
     if (!token) {
       navigate("/login", { state: { from: "/ask" } });
     }
   }, [token, navigate]);
-
+  // Toggle steps function - MOVED OUTSIDE generateTag
+  const toggleSteps = () => {
+    setStepsCollapsed(!stepsCollapsed);
+  };
   // Generate tag from title whenever title changes
   useEffect(() => {
     if (title.trim().length > 3) {
@@ -56,10 +62,6 @@ function Askquestion() {
     }
   };
 
-  const toggleSteps = () => {
-    setStepsCollapsed(!stepsCollapsed);
-  };
-
   // Validate form inputs
   const validateForm = () => {
     const errors = {};
@@ -76,8 +78,8 @@ function Askquestion() {
       errors.description = "Description is required";
     } else if (description.trim().length < 20) {
       errors.description = "Description must be at least 20 characters long";
-    } else if (description.trim().length > 250) {
-      errors.description = "Description cannot exceed 250 characters";
+    } else if (description.trim().length > 5000) {
+      errors.description = "Description cannot exceed 5000 characters";
     }
 
     setFormErrors(errors);
@@ -87,13 +89,15 @@ function Askquestion() {
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // Clear previous errors
     setError(null);
     setFormErrors({});
 
-    // Validate form
-    if (!validateForm()) {
+    if (!validateForm()) return;
+    if (tag && tag.length > 20) {
+      setFormErrors((prev) => ({
+        ...prev,
+        tag: "Tag must be less than 20 characters",
+      }));
       return;
     }
 
@@ -115,27 +119,26 @@ function Askquestion() {
         }
       );
 
-      // Update questions state with the new question
-      setQuestions((prev) => [response.data, ...prev]);
-      console.log("Posted question response:", response.data);
+      setQuestions((prev) => [
+        {
+          questionId: response.data.questionId,
+          title,
+          description,
+          tag,
+          createdAt: new Date().toISOString(),
+        },
+        ...prev,
+      ]);
 
-      // Show success message
-      alert("Your question has been posted successfully!");
-
-      // Reset form
+      toast.success("Question Posted Successfully!");
       setTitle("");
       setDescription("");
       setTag("");
-
-      // Navigate to home or question page
-      navigate("/", { replace: true });
-      // Alternatively, navigate to the question detail page:
-      //   navigate(`/question/${response.data.questionId}`);
+      //  navigate(`/question/${response.data.questionId}`);
+      navigate("/");
     } catch (error) {
       console.error("Error posting question:", error);
-
       if (error.response) {
-        // Server responded with an error status
         if (error.response.status === 401) {
           setError("Your session has expired. Please login again.");
           localStorage.removeItem("token");
@@ -153,10 +156,8 @@ function Askquestion() {
           );
         }
       } else if (error.request) {
-        // Request was made but no response received
         setError("Network error. Please check your connection and try again.");
       } else {
-        // Other errors
         setError("An unexpected error occurred. Please try again.");
       }
     } finally {
@@ -183,6 +184,7 @@ function Askquestion() {
       setFormErrors((prev) => ({ ...prev, description: "" }));
     }
   };
+
   return (
     <div className={styles.container}>
       <div
@@ -229,7 +231,7 @@ function Askquestion() {
             <div className={styles.input_help}>
               {title.length > 0 && (
                 <span className={title.length < 10 ? styles.warning : ""}>
-                  {title.length}/50 characters
+                  {title.length}/200 characters
                 </span>
               )}
             </div>
@@ -254,7 +256,7 @@ function Askquestion() {
             <div className={styles.input_help}>
               {description.length > 0 && (
                 <span className={description.length < 20 ? styles.warning : ""}>
-                  {description.length}/200 characters
+                  {description.length}/5000 characters
                 </span>
               )}
             </div>
@@ -292,7 +294,8 @@ function Askquestion() {
             </button>
           </div>
         </form>
-        {/* {questions.length > 0 && (
+
+        {questions.length > 0 && (
           <div className={styles.recent_questions}>
             <h3>Your Recently Posted Questions</h3>
             {questions.map((question) => (
@@ -312,16 +315,7 @@ function Askquestion() {
               </div>
             ))}
           </div>
-        )} */}
-        <div className="posted_questions">
-          {questions.map((question) => (
-            <div key={question.questionId}>
-              <h3>{question.title}</h3>
-              <p>{question.description}</p>
-              <p>{question.tag}</p>
-            </div>
-          ))}
-        </div>
+        )}
       </div>
     </div>
   );

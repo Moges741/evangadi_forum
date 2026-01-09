@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Layout from "./components/Layout/Layout";
 import axios from "./Api/axiosConfig";
+import { ToastContainer } from "react-toastify";
 
 export const AppState = createContext();
 
@@ -39,6 +40,7 @@ function App() {
   return (
     <AppState.Provider value={{ user, setUser }}>
       <Layout />
+      <ToastContainer position="top-right" autoClose={2000} />
     </AppState.Provider>
   );
 }
