@@ -3,10 +3,10 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const dbconnection = mysql.createPool({
-  host: "localhost",
-  user: "forum@User",
-  password: "Forum@User123!",
-  database: "FORUM_DB",
+  host: process.env.HOST,
+  user: process.env.USER,
+  password: process.env.PASSWORD,
+  database: process.env.DATABASE,
   connectionLimit: 11,
 });
 
