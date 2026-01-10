@@ -4,7 +4,7 @@
   min-height: 80vh;
   display: grid;
   place-items: center;
- background: url("../../assets/bg.jpeg") no-repeat center center fixed;
+  background: url("../../assets/bg.jpeg") no-repeat center center fixed;
   background-size: cover;
 }
 
@@ -35,27 +35,32 @@
 }
 
 @media (max-width: 768px) {
-  .container{
-  place-items: start center; 
+  .container {
+    place-items: start center;
     padding-top: 1rem;
   }
   .containerContent {
     grid-template-columns: 1fr;
+    width: auto;
   }
- 
-  .sliderWrapper{
-  height: 100vh; 
+
+  .sliderWrapper {
+    height: 100vh;
   }
-  
+
   .formPane {
     width: 100%;
-    height: auto;
+  }
+  /*  conditional style for wrapper of the login component */
+  .login {
+    margin: -6rem 0rem;
   }
   .formPane:first-child {
- margin: 3rem 2.5rem 0;
+    margin: 3rem 3em 1rem;
+  }
+
+  .formPane:last-child {
+    margin-right: 2rem;
+    margin-top: 1.5rem;
+  }
 }
-.formPane:last-child{
-  margin-right: 2rem;
-  margin-top: 1.5rem;
-}
-} 
