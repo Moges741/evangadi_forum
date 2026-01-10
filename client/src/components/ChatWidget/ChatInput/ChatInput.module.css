@@ -18,15 +18,15 @@
   padding: 12px 50px 12px 20px;
   font-size: 0.9rem;
   line-height: 1.4;
-  outline: none;
-  border: 1px solid #e2e8f0;
+  border: none;
+  outline: 1px solid #e2e8f0;
   transition: all 0.2s ease;
   resize: none;
   font-family: inherit;
 }
 
 .textarea:focus {
-  border-color: #4b6bfb;
+  outline-color: #4b6bfb;
   background-color: #ffffff;
   box-shadow: 0 0 0 3px rgba(75, 107, 251, 0.1);
 }
@@ -42,7 +42,7 @@
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  display: flex;
+  display: grid;
   align-items: center;
   justify-content: center;
   border: none;
