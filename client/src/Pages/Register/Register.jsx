@@ -1,4 +1,4 @@
-import axios from "../../axiosConfig";
+import axios from '../../Api/axiosConfig.js'
 import styles from "./register.module.css";
 import { useState, useRef } from "react";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
@@ -36,7 +36,7 @@ const Register = () => {
     }
 
     try {
-      await axios.post("/user/signup", {
+      await axios.post("/user/register", {
         username: userNameValue,
         firstname: firstNameValue,
         lastname: lastNameValue,
