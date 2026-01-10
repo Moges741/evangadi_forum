@@ -24,7 +24,7 @@ function Askquestion() {
       navigate("/login", { state: { from: "/askquestion" } });
     }
   }, [token, navigate]);
-  // Toggle steps function - MOVED OUTSIDE generateTag
+  // Toggle steps function for writing a good question
   const toggleSteps = () => {
     setStepsCollapsed(!stepsCollapsed);
   };
