@@ -1,12 +1,13 @@
+import dotenv from "dotenv";
+dotenv.config();
 import express from "express";
 import cors from "cors";
-import dotenv from "dotenv";
 import answerRoutes from "./routes/answerRoute.js";
 import userRoutes from "./routes/userRoutes.js";
 import questionRoutes from "./routes/questionRoute.js";
-import authMiddleware from "./middleware/authMiddleware.js";
 import chatRoutes from "./routes/chatRoutes.js";
 import dbconnection from "./DB/dbconfig.js";
+import authMiddleware from "./middleware/authMiddleware.js";
 
 const app = express();
 
@@ -25,7 +26,6 @@ app.use(
 
 app.use(express.json());
 
-dotenv.config();
 const PORT = process.env.PORT || 5500;
 
 // question routes middleware

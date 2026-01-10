@@ -18,6 +18,9 @@ import classes from "./home.module.css";
 import { MdEdit, MdDelete } from "react-icons/md";
 import { IoIosContact } from "react-icons/io";
 
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 const Home = () => {
   // Get logged-in user from global state
   const { user } = useContext(AppState);
@@ -42,6 +45,7 @@ const Home = () => {
       const { data } = await axios.get("/question", {
         headers: { Authorization: `Bearer ${token}` },
       });
+      console.log(data);
 
       // Save questions to state
       setQuestions(data?.questions || []);
@@ -106,7 +110,7 @@ const Home = () => {
   // Confirm deletion
   const handleConfirmDelete = async () => {
     try {
-      await axios.delete(`/questions/delete-question/${confirmDeleteId}`, {
+      await axios.delete(`/question/${confirmDeleteId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -116,16 +120,23 @@ const Home = () => {
       );
 
       // Show success message
-      // setSuccessMessage(t("home.deleteSuccess"));
+      // setSuccessMessage("Question deleted successfully");
+      toast.success("Question Deleted Successfully!");
       setTimeout(() => setSuccessMessage(""), 3000);
-    } catch {
+    } catch (error) {
       // Show error message
-      setErrorMessage("home.deleteError");
+      console.error("Delete failed:", error);
+      setErrorMessage("Failed to delete question");
       setTimeout(() => setErrorMessage(""), 3000);
     } finally {
       // Close confirmation dialog
       setConfirmDeleteId(null);
     }
+  };
+
+  // ===================== EDIT NAVIGATION =====================
+  const handleEdit = (id) => {
+    navigate(`/edit-question/${id}`);
   };
 
   // ===================== UI =====================
@@ -139,7 +150,7 @@ const Home = () => {
           </Link>
 
           <div className={classes["welcome-message"]}>
-            {"home.welcome"} :
+            {"welcome"} :
             <span className={classes["username"]}> {user?.username}</span>
           </div>
         </div>
@@ -150,7 +161,7 @@ const Home = () => {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className={classes["search-input"]}
-            placeholder={"home.searchPlaceholder"}
+            placeholder={"search"}
           />
         </div>
 
@@ -161,10 +172,10 @@ const Home = () => {
             onChange={(e) => setSortOption(e.target.value)}
             className={classes["sort-select"]}
           >
-            <option value="Most Recent">{"home.mostRecent"}</option>
-            <option value="Most Popular">{"home.mostPopular"}</option>
-            <option value="By Questions">{"home.byQuestions"}</option>
-            <option value="By Date">{"home.byDate"}</option>
+            <option value="Most Recent">Most Recent</option>
+            <option value="Most Popular">Most Popular</option>
+            <option value="By Questions">By Question</option>
+            <option value="By Date">By Date</option>
           </select>
         </div>
 
@@ -177,22 +188,23 @@ const Home = () => {
         )}
 
         {/* Delete confirmation */}
-        {confirmDeleteId !== null && (
+        {confirmDeleteId && (
           <div className={classes["confirmation-prompt"]}>
-            <p>{"home.confirmDelete"}</p>
+            <p>Are you sure you want to delete this question?</p>
             <button className="btn btn-danger" onClick={handleConfirmDelete}>
-              {"home.yesDelete"}
+              Yes
             </button>
             <button
               className="btn btn-secondary"
               onClick={() => setConfirmDeleteId(null)}
             >
-              {"home.cancel"}
+              Cancel
             </button>
           </div>
         )}
 
         {/* Questions list */}
+        {/* Questions List */}
         {filteredQuestions.length > 0 ? (
           filteredQuestions.map((q) => (
             <div className={classes["questions-list"]} key={q.questionid}>
@@ -203,41 +215,49 @@ const Home = () => {
                 >
                   <div className={classes["user-info"]}>
                     <div className={classes["user"]}>
-                      <IoIosContact size={80} />
-                      <p>{q.username}</p>
+                      <IoIosContact size={50} />
+                      <p>{q?.username}</p>
                     </div>
-                    <div className={classes["question-text"]}>{q.title}</div>
+                    <div className={classes["question-text"]}>{q?.title}</div>
                   </div>
                 </Link>
 
-                {/* Metadata and owner actions */}
+                {/* Owner actions */}
                 <div className={classes["info-and-actions"]}>
-                  <span className={classes["timestamp"]}>
-                    {new Date(q.created_at).toLocaleString()}
-                  </span>
+                  <div className={classes["date-and-actions"]}>
+                    <span className={classes["timestamp"]}>
+                      {/* {new Date(q.created_at).toLocaleString()} */}
+                      {/* {new Date(q.created_at).toLocaleDateString()} */}
+                      {new Date(q.created_at).toLocaleDateString("en-US", {
+                        year: "numeric",
+                        month: "short",
+                        day: "numeric",
+                      })}
+                    </span>
 
-                  {user?.username === q.username && (
-                    <div className={classes["action-icons"]}>
-                      <MdEdit
-                        size={24}
-                        color="blue"
-                        onClick={() =>
-                          navigate(`/edit-question/${q.questionid}`)
-                        }
-                      />
-                      <MdDelete
-                        size={24}
-                        color="red"
-                        onClick={() => handleDelete(q.questionid)}
-                      />
-                    </div>
-                  )}
+                    {user?.username === q?.username && (
+                      <div className={classes["action_icons"]}>
+                        <MdEdit
+                          size={24}
+                          title="Edit"
+                          color="blue"
+                          onClick={() => handleEdit(q.questionid)}
+                        />
+                        <MdDelete
+                          size={24}
+                          title="Delete"
+                          color="red"
+                          onClick={() => handleDelete(q.questionid)}
+                        />
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
           ))
         ) : (
-          <p>{"home.noQuestions"}</p>
+          <p>No questions found</p>
         )}
       </div>
     </section>

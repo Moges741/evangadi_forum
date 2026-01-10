@@ -6,29 +6,33 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-function Askquestion() {
+const Askquestion = () => {
   const token = localStorage.getItem("token");
+  const navigate = useNavigate();
+
+  // ===================== STATE =====================
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [questions, setQuestions] = useState([]);
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false);
   const [tag, setTag] = useState("");
   const [formErrors, setFormErrors] = useState({});
-  const navigate = useNavigate();
+  const [error, setError] = useState(null);
+  const [successMessage, setSuccessMessage] = useState("");
+  const [loading, setLoading] = useState(false);
   const [stepsCollapsed, setStepsCollapsed] = useState(true);
 
-  // Check authentication on component mount
+  // ===================== AUTH CHECK =====================
   useEffect(() => {
     if (!token) {
       navigate("/login", { state: { from: "/askquestion" } });
     }
   }, [token, navigate]);
-  // Toggle steps function for writing a good question
+
+  // ===================== TOGGLE STEPS =====================
   const toggleSteps = () => {
     setStepsCollapsed(!stepsCollapsed);
   };
-  // Generate tag from title whenever title changes
+
+  // ===================== AUTO-GENERATE TAG =====================
   useEffect(() => {
     if (title.trim().length > 3) {
       const generatedTag = generateTag(title);
@@ -38,7 +42,6 @@ function Askquestion() {
     }
   }, [title]);
 
-  // Function to generate tags using keyword-extractor
   const generateTag = (title) => {
     try {
       const extractionResult = KeywordExtractor.extract(title, {
@@ -48,21 +51,18 @@ function Askquestion() {
         remove_duplicates: true,
       });
 
-      // Filter out very short keywords and use the most relevant one
-      const validKeywords = extractionResult.filter(
-        (keyword) => keyword.length > 2
-      );
+      const validKeywords = extractionResult.filter((k) => k.length > 2);
 
       return validKeywords.length > 0
         ? validKeywords[0].toLowerCase()
         : "general";
-    } catch (error) {
-      console.error("Error generating tag:", error);
+    } catch (err) {
+      console.error("Error generating tag:", err);
       return "general";
     }
   };
 
-  // Validate form inputs
+  // ===================== VALIDATION =====================
   const validateForm = () => {
     const errors = {};
 
@@ -86,7 +86,7 @@ function Askquestion() {
     return Object.keys(errors).length === 0;
   };
 
-  // Handle form submission
+  // ===================== SUBMIT FORM =====================
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null);
@@ -94,10 +94,7 @@ function Askquestion() {
 
     if (!validateForm()) return;
     if (tag && tag.length > 20) {
-      setFormErrors((prev) => ({
-        ...prev,
-        tag: "Tag must be less than 20 characters",
-      }));
+      setFormErrors({ tag: "Tag must be less than 20 characters" });
       return;
     }
 
@@ -112,51 +109,41 @@ function Askquestion() {
           tag: tag || "general",
         },
         {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
+          headers: { Authorization: `Bearer ${token}` },
         }
       );
+      // setSuccessMessage("Question posted successfully!");
+        toast.success("Question Posted Successfully!");
+      setTimeout(() => {
+        setSuccessMessage("");
+        setTitle("");
+        setDescription("");
+        setTag("");
+        navigate("/"); // Redirect to Home
+      }, 2000);
+    } catch (err) {
+      console.error("Error posting question:", err);
 
-      setQuestions((prev) => [
-        {
-          questionId: response.data.questionId,
-          title,
-          description,
-          tag,
-          createdAt: new Date().toISOString(),
-        },
-        ...prev,
-      ]);
-
-      toast.success("Question Posted Successfully!");
-      setTitle("");
-      setDescription("");
-      setTag("");
-      //  navigate(`/question/${response.data.questionId}`);
-      navigate("/");
-    } catch (error) {
-      console.error("Error posting question:", error);
-      if (error.response) {
-        if (error.response.status === 401) {
-          setError("Your session has expired. Please login again.");
-          localStorage.removeItem("token");
-          navigate("/login");
-        } else if (error.response.status === 400) {
-          setError("Invalid input. Please check your question and try again.");
-        } else if (error.response.status === 429) {
-          setError(
-            "Too many requests. Please wait a moment before trying again."
-          );
-        } else {
-          setError(
-            error.response.data?.message ||
-              "Failed to post question. Please try again."
-          );
+      if (err.response) {
+        switch (err.response.status) {
+          case 401:
+            setError("Your session has expired. Please login again.");
+            localStorage.removeItem("token");
+            navigate("/login");
+            break;
+          case 400:
+            setError(
+              "Invalid input. Please check your question and try again."
+            );
+            break;
+          case 429:
+            setError("Too many requests. Please wait a moment and try again.");
+            break;
+          default:
+            setError(err.response.data?.message || "Failed to post question.");
         }
-      } else if (error.request) {
-        setError("Network error. Please check your connection and try again.");
+      } else if (err.request) {
+        setError("Network error. Check your connection and try again.");
       } else {
         setError("An unexpected error occurred. Please try again.");
       }
@@ -164,27 +151,23 @@ function Askquestion() {
       setLoading(false);
     }
   };
-  // Handle input changes with debounced validation
-  const handleTitleChange = (e) => {
-    const value = e.target.value;
-    setTitle(value);
 
-    // Clear title error when user starts typing
-    if (formErrors.title && value.trim().length >= 10) {
+  // ===================== INPUT HANDLERS =====================
+  const handleTitleChange = (e) => {
+    setTitle(e.target.value);
+    if (formErrors.title && e.target.value.trim().length >= 10) {
       setFormErrors((prev) => ({ ...prev, title: "" }));
     }
   };
 
   const handleDescriptionChange = (e) => {
-    const value = e.target.value;
-    setDescription(value);
-
-    // Clear description error when user starts typing
-    if (formErrors.description && value.trim().length >= 20) {
+    setDescription(e.target.value);
+    if (formErrors.description && e.target.value.trim().length >= 20) {
       setFormErrors((prev) => ({ ...prev, description: "" }));
     }
   };
 
+  // ===================== JSX =====================
   return (
     <div className={styles.container}>
       <div
@@ -193,7 +176,7 @@ function Askquestion() {
         }`}
         onClick={toggleSteps}
       >
-        <h2>Steps for writing a good question</h2>
+        <h2>Steps for Writing a Good Question</h2>
         <ul>
           <li>Summarize your question in a one-line title.</li>
           <li>Describe your problem in more detail.</li>
@@ -203,19 +186,16 @@ function Askquestion() {
       </div>
 
       <div className={styles.question_form}>
-        <div className={styles.question_title}>
-          <h2>Post your Question</h2>
-        </div>
+        <h2>Post Your Question</h2>
 
-        {error && (
-          <div className={styles.error_message}>
-            <p>{error}</p>
-          </div>
+        {error && <div className={styles.error_message}>{error}</div>}
+        {successMessage && (
+          <div className={styles.success_message}>{successMessage}</div>
         )}
 
         <form onSubmit={handleSubmit}>
+          {/* Title */}
           <div className={styles.form_group}>
-            {/* <label htmlFor="title">Title</label> */}
             <input
               id="title"
               type="text"
@@ -237,8 +217,8 @@ function Askquestion() {
             </div>
           </div>
 
+          {/* Description */}
           <div className={styles.form_group}>
-            {/* <label htmlFor="description">Description</label> */}
             <textarea
               id="description"
               placeholder="Question detail..."
@@ -246,7 +226,7 @@ function Askquestion() {
               onChange={handleDescriptionChange}
               className={formErrors.description ? styles.error_input : ""}
               disabled={loading}
-              rows="10"
+              rows={10}
             />
             {formErrors.description && (
               <span className={styles.error_text}>
@@ -262,6 +242,7 @@ function Askquestion() {
             </div>
           </div>
 
+          {/* Tag */}
           <div className={styles.form_group}>
             <label htmlFor="tag">Suggested Tag</label>
             <input
@@ -278,13 +259,14 @@ function Askquestion() {
             </div>
           </div>
 
+          {/* Actions */}
           <div className={styles.form_actions}>
             <button
               type="submit"
               disabled={loading}
               className={loading ? styles.loading_button : ""}
             >
-              {loading ? "Posting..." : "Post "}
+              {loading ? "Posting..." : "Post"}
             </button>
             <button
               type="button"
@@ -296,31 +278,9 @@ function Askquestion() {
             </button>
           </div>
         </form>
-
-        {questions.length > 0 && (
-          <div className={styles.recent_questions}>
-            <h3>Your Recently Posted Questions</h3>
-            {questions.map((question) => (
-              <div key={question.questionId} className={styles.question_card}>
-                <h4>{question.title}</h4>
-                <p className={styles.question_excerpt}>
-                  {question.description.length > 150
-                    ? `${question.description.substring(0, 150)}...`
-                    : question.description}
-                </p>
-                <div className={styles.question_meta}>
-                  <span className={styles.tag}>{question.tag}</span>
-                  <span className={styles.date}>
-                    {new Date(question.createdAt).toLocaleDateString()}
-                  </span>
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
       </div>
     </div>
   );
-}
+};
 
 export default Askquestion;

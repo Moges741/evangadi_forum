@@ -123,9 +123,9 @@ const Register = () => {
               onClick={() => setPasswordVisible(!passwordVisible)}
             >
               {passwordVisible ? (
-                <VisibilityOffOutlinedIcon />
-              ) : (
                 <VisibilityOutlinedIcon />
+              ) : (
+                <VisibilityOffOutlinedIcon />
               )}
             </div>
           </div>

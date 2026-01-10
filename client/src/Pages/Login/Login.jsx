@@ -2,7 +2,8 @@ import { useRef, useState } from "react";
 import axios from "../../Api/axiosConfig";
 import { useNavigate } from "react-router-dom";
 import classes from "./Login.module.css";
-import { GoEyeClosed, GoEye } from "react-icons/go";
+import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
+import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 
 function Login() {
   const navigate = useNavigate();
@@ -68,7 +69,11 @@ function Login() {
             className={classes.toggle_password}
             onClick={() => setShowPassword(!showPassword)}
           >
-            {showPassword ? <GoEye /> : <GoEyeClosed />}
+            {showPassword ? (
+              <VisibilityOutlinedIcon />
+            ) : (
+              <VisibilityOffOutlinedIcon />
+            )}
           </span>
         </div>
 

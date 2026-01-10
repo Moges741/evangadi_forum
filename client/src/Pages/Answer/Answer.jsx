@@ -1,14 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "../../Api/axiosConfig";
 import styles from "./answer.module.css";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { AppState } from "../../App";
+import { MdEdit, MdDelete } from "react-icons/md";
+import { IoIosContact } from "react-icons/io";
 
 function Answer() {
-  // How React knows WHICH question to load
   const { question_id } = useParams();
-  //   console.log("Question ID from URL:", question_id);
-
-  // for use of redirecting
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
 
@@ -18,30 +19,24 @@ function Answer() {
   const [summaryExpanded, setSummaryExpanded] = useState(false);
   const [answerText, setAnswerText] = useState("");
 
-  const [questionLoading, setQuestionLoading] = useState(true);
   const [answersLoading, setAnswersLoading] = useState(true);
-  const [summaryLoading, setSummaryLoading] = useState(true);
   const [posting, setPosting] = useState(false);
+  const [confirmDeleteAnswerId, setConfirmDeleteAnswerId] = useState(null);
 
   const [error, setError] = useState(null);
-  const [success, setSuccess] = useState(null);
+  const { user } = useContext(AppState);
 
   // Redirect if not logged in
   useEffect(() => {
-    if (!token) {
-      navigate("/login", { state: { from: "/ans" } });
-    }
+    if (!token) navigate("/login", { state: { from: "/ans" } });
   }, [token, navigate]);
 
-  //    // Fetch question, answers, and AI summary
+  // Fetch question, answers, summary
   useEffect(() => {
     const fetchData = async () => {
       try {
-        setQuestionLoading(true);
         setAnswersLoading(true);
-        setSummaryLoading(true);
-
-        const [questionRes, answersRes, summaryRes] = await Promise.all([
+        const [qRes, aRes, sRes] = await Promise.all([
           axios.get(`/question/${question_id}`, {
             headers: { Authorization: `Bearer ${token}` },
           }),
@@ -53,65 +48,58 @@ function Answer() {
           }),
         ]);
 
-        setQuestion(questionRes.data.question);
-        setAnswers(answersRes.data.answers.reverse());
-        setSummary(summaryRes.data.summary);
+        setQuestion(qRes.data.question);
+        setAnswers(aRes.data.answers.reverse());
+        setSummary(sRes.data.summary);
       } catch (err) {
         setError("Failed to load data.");
       } finally {
-        setQuestionLoading(false);
         setAnswersLoading(false);
-        setSummaryLoading(false);
       }
     };
 
     fetchData();
   }, [question_id, token]);
 
-  //   2. Submit/post answer
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    if (!answerText.trim()) {
-      setError("Please provide an answer.");
-      return;
-    }
+    if (!answerText.trim()) return setError("Please provide an answer.");
 
     try {
       setPosting(true);
       await axios.post(
         "/answer",
-        {
-          question_id: Number(question_id),
-          answer: answerText.trim(),
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+        { question_id: Number(question_id), answer: answerText.trim() },
+        { headers: { Authorization: `Bearer ${token}` } }
       );
 
-      // Refresh answers
-      const responses = await axios.get(`/answer/${question_id}`, {
+      const res = await axios.get(`/answer/${question_id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
-
-      //   console.log("Answers response:", Answers.data);
-
-      setAnswers(responses.data.answers.reverse());
+      setAnswers(res.data.answers.reverse());
       setAnswerText("");
       setError(null);
-
-      // message success
-      setSuccess("Answer posted successfully ✅");
-
-      // set timeout
-      setTimeout(() => setSuccess(null), 3000);
-    } catch (err) {
-      setError("Failed to post answer. Please try again.");
+      toast.success("Answer Posted Successfully!");
+    } catch {
+      setError("Failed to post answer. Try again.");
     } finally {
       setPosting(false);
+    }
+  };
+
+  const handleConfirmDeleteAnswer = async () => {
+    try {
+      await axios.delete(`/answer/${confirmDeleteAnswerId}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setAnswers((prev) =>
+        prev.filter((a) => a.answer_id !== confirmDeleteAnswerId)
+      );
+      toast.success("Answer deleted");
+    } catch {
+      toast.error("Failed to delete answer");
+    } finally {
+      setConfirmDeleteAnswerId(null);
     }
   };
 
@@ -119,7 +107,6 @@ function Answer() {
     <div className={styles.container}>
       {question && (
         <div className={styles.question_summary_wrapper}>
-          {/* Question */}
           <div className={styles.question_section}>
             <h3 className={styles.big_title}>QUESTION</h3>
             <h2 className={styles.question}>
@@ -129,7 +116,6 @@ function Answer() {
             <p className={styles.description}>{question.description}</p>
           </div>
 
-          {/* Summary */}
           {summary && (
             <div className={styles.summary_section}>
               <h3>Answer Summary</h3>
@@ -140,7 +126,6 @@ function Answer() {
               >
                 {summary}
               </p>
-
               <span
                 className={styles.readMore}
                 onClick={() => setSummaryExpanded(!summaryExpanded)}
@@ -152,33 +137,67 @@ function Answer() {
         </div>
       )}
 
-      {/* Answers List */}
       <div className={styles.answers_section}>
-        <h3 className={styles.big_title}>Answer From The Community</h3>
+        <h3 className={styles.big_title}>Answers from the Community</h3>
         {answersLoading && <p>Loading answers...</p>}
-
         {error && <p className={styles.error}>{error}</p>}
+        {!answersLoading && answers.length === 0 && <p>No answers yet!</p>}
 
-        {!answersLoading && answers.length === 0 && (
-          <p>No answers yet. Be the first!</p>
+        {confirmDeleteAnswerId && (
+          <div className={styles.confirm_box}>
+            <p>Delete this answer?</p>
+            <button onClick={handleConfirmDeleteAnswer}>Yes</button>
+            <button onClick={() => setConfirmDeleteAnswerId(null)}>
+              Cancel
+            </button>
+          </div>
         )}
 
         {answers.map((ans) => (
           <div key={ans.answer_id} className={styles.answer_card}>
             <div className={styles.user_info}>
-              <div className={styles.avatar}>👤</div>
+              <div className={styles.avatar}>
+                <IoIosContact size={80} />
+              </div>
+
               <span>{ans.user_name}</span>
             </div>
-            <p className={styles.content}>{ans.content}</p>
+
+            <div className={styles.content}>{ans.content}</div>
+
+            <div className={styles.answer_footer}>
+              <span className={styles.timestamp}>
+                {new Date(ans.created_at).toLocaleDateString("en-US", {
+                  year: "numeric",
+                  month: "short",
+                  day: "numeric",
+                })}
+              </span>
+
+              {user?.userid === ans.userid && (
+                <div className={styles.action_icons}>
+                  <MdEdit
+                    title="Edit"
+                    size={22}
+                    color="blue"
+                    onClick={() => navigate(`/edit-answer/${ans.answer_id}`)}
+                  />
+                  <MdDelete
+                    title="Delete"
+                    size={22}
+                    color="red"
+                    onClick={() => setConfirmDeleteAnswerId(ans.answer_id)}
+                  />
+                </div>
+              )}
+            </div>
           </div>
         ))}
       </div>
-      {success && <p className={styles.success}>{success}</p>}
 
-      {/* Answer Form */}
       <form onSubmit={handleSubmit} className={styles.answer_form}>
         <textarea
-          placeholder="Your answer ..."
+          placeholder="Your answer..."
           rows={6}
           value={answerText}
           onChange={(e) => {

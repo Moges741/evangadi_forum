@@ -8,6 +8,8 @@ import NotFound from "../../Pages/NotFound/NotFound";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import Askquestion from "../../Pages/Askquestion/Askquestion.jsx";
 import Answer from "../../Pages/Answer/Answer.jsx";
+import EditQuestion from "../../Pages/Askquestion/EditQuestion.jsx";
+import EditAnswer from "../../Pages/Answer/EditAnswer.jsx";
 
 function Layout() {
   return (
@@ -58,6 +60,23 @@ function Layout() {
         {/* catch-all redirect for any unknown route */}
         <Route path="*" element={<Navigate to="/404" replace />} />
       </Route>
+      <Route
+        path="/edit-question/:id"
+        element={
+          <ProtectedRoute>
+            <EditQuestion />
+          </ProtectedRoute>
+        }
+      />{" "}
+      <Route
+        path="/edit-answer/:answerid"
+        element={
+          <ProtectedRoute>
+            <EditAnswer />
+          </ProtectedRoute>
+        }
+      />{" "}
+      {/* THIS */}
       <Route path="/404" element={<NotFound />} />
     </Routes>
   );

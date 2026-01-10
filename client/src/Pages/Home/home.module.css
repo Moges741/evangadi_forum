@@ -42,6 +42,13 @@ section {
   font-size: 14px;
   flex: 1;
 }
+.user {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+}
 
 .username {
   font-weight: bold;
@@ -82,11 +89,41 @@ section {
   gap: 10px;
 }
 
+.question-item a{
+  color: inherit;
+  text-decoration: none;
+}
+.question-item a:hover{
+  color: #007bff;
+
+}
+
 .user-info {
   display: flex;
   align-items: center;
   flex: 1;
   gap: 10px;
+}
+.date-and-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  gap: 10px;
+}
+
+.action_icons > * {
+  transition: 0.2s ease;
+}
+.action_icons> :last-child:hover {
+  fill: rgb(173, 20, 20);
+  transform: scale(1.2);
+  cursor: pointer;
+}
+.action_icons > :first-child:hover {
+  fill: rgb(12, 12, 143);   /* edit icon turns blue */
+  transform: scale(1.2);
+  cursor: pointer;
 }
 
 .user-avatar {
@@ -98,12 +135,6 @@ section {
   align-items: center;
   justify-content: center;
   font-size: 24px;
-}
-
-.user {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
 }
 
 .question-text {
@@ -293,5 +324,64 @@ section {
 
   .arrow {
     font-size: 16px;
+  }
+}
+
+/* Delete Confirmation Prompt */
+.confirmation-prompt {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  padding: 2rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  z-index: 1000;
+}
+
+.confirmation-prompt p {
+  font-size: 1rem;
+  margin-bottom: 1.5rem;
+  color: #333;
+}
+
+.confirmation-prompt button {
+  padding: 0.5rem 1rem;
+  margin: 0 0.5rem;
+  font-size: 0.9rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.confirmation-prompt .btn-danger {
+  background-color: #e74c3c;
+  color: #fff;
+}
+
+.confirmation-prompt .btn-danger:hover {
+  background-color: #c0392b;
+}
+
+.confirmation-prompt .btn-secondary {
+  background-color: #bdc3c7;
+  color: #2c3e50;
+}
+
+.confirmation-prompt .btn-secondary:hover {
+  background-color: #95a5a6;
+}
+
+/* Optional fade-in animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -60%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
   }
 }
