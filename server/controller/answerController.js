@@ -59,7 +59,7 @@ const client = new OpenAI({
 // Extracts question_id from the URL params
 const getAnswerSummary = async (req, res) => {
   const { question_id } = req.params;
-
+  
   try {
     // Fetch Question details and its Answers from question asked by question id
     const [question] = await dbConnection.query(

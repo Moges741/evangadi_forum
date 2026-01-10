@@ -24,7 +24,7 @@ export const getChatResponse = async (req, res) => {
        ORDER BY chatid DESC LIMIT 30`,
       [userid]
     );
-
+    
     const conversationContext = history.reverse();
 
     const SYSTEM_PROMPT = {
