@@ -5,6 +5,8 @@ CREATE TABLE users (
     lastname VARCHAR(20) NOT NULL,
     email VARCHAR(40) NOT NULL,
     password VARCHAR(250) NOT NULL,
+     reset_token VARCHAR(255),
+ reset_token_expires DATETIME;
     PRIMARY KEY (userid)
 );
 
