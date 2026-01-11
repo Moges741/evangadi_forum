@@ -3,6 +3,9 @@ import dbConnection from "../DB/dbconfig.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
+import multer from "multer";
+import path from "path";
+import fs from "fs";
 dotenv.config();
 
 async function register(req, res) {
@@ -99,8 +102,139 @@ const checkUser = async (req, res) => {
   const username = req.user.username;
   const userid = req.user.userid;
 
-  return res
-    .status(StatusCodes.OK)
-    .json({ message: "valid user", username, userid });
+  try {
+    // Get user profile picture from database
+    const [users] = await dbConnection.query(
+      "SELECT COALESCE(profile_picture, '') as profile_picture FROM users WHERE userid = ?",
+      [userid]
+    );
+    
+    const profile_picture = users[0]?.profile_picture || "";
+
+    return res
+      .status(StatusCodes.OK)
+      .json({ message: "valid user", username, userid, profile_picture });
+  } catch (error) {
+    console.error("Error fetching user data:", error);
+    return res
+      .status(StatusCodes.OK)
+      .json({ message: "valid user", username, userid, profile_picture: "" });
+  }
 };
-export { login, checkUser, register };
+
+// Configure multer for file uploads
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    const uploadPath = "uploads/profile-pictures/";
+    // Create directory if it doesn't exist
+    if (!fs.existsSync(uploadPath)) {
+      fs.mkdirSync(uploadPath, { recursive: true });
+    }
+    cb(null, uploadPath);
+  },
+  filename: (req, file, cb) => {
+    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
+    cb(null, `profile-${req.user.userid}-${uniqueSuffix}${path.extname(file.originalname)}`);
+  },
+});
+
+const upload = multer({
+  storage: storage,
+  limits: {
+    fileSize: 5 * 1024 * 1024, // 5MB limit
+  },
+  fileFilter: (req, file, cb) => {
+    const allowedTypes = /jpeg|jpg|png|gif/;
+    const extname = allowedTypes.test(path.extname(file.originalname).toLowerCase());
+    const mimetype = allowedTypes.test(file.mimetype);
+
+    if (mimetype && extname) {
+      return cb(null, true);
+    } else {
+      cb(new Error("Only image files are allowed"));
+    }
+  },
+});
+
+// Upload profile picture
+const uploadProfilePicture = async (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(StatusCodes.BAD_REQUEST).json({
+        message: "No file uploaded",
+      });
+    }
+
+    const userid = req.user.userid;
+    const profilePictureUrl = `/uploads/profile-pictures/${req.file.filename}`;
+
+    // Get current profile picture to delete old one
+    const [currentUser] = await dbConnection.query(
+      "SELECT profile_picture FROM users WHERE userid = ?",
+      [userid]
+    );
+
+    // Update database with new profile picture URL
+    await dbConnection.query(
+      "UPDATE users SET profile_picture = ? WHERE userid = ?",
+      [profilePictureUrl, userid]
+    );
+
+    // Delete old profile picture file if it exists
+    if (currentUser[0]?.profile_picture) {
+      const oldFilePath = `uploads/profile-pictures/${path.basename(currentUser[0].profile_picture)}`;
+      if (fs.existsSync(oldFilePath)) {
+        fs.unlinkSync(oldFilePath);
+      }
+    }
+
+    res.status(StatusCodes.OK).json({
+      message: "Profile picture uploaded successfully",
+      profilePictureUrl: profilePictureUrl,
+    });
+  } catch (error) {
+    console.error("Error uploading profile picture:", error);
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      message: "Error uploading profile picture",
+      error: error.message,
+    });
+  }
+};
+
+// Remove profile picture
+const removeProfilePicture = async (req, res) => {
+  try {
+    const userid = req.user.userid;
+
+    // Get current profile picture
+    const [currentUser] = await dbConnection.query(
+      "SELECT profile_picture FROM users WHERE userid = ?",
+      [userid]
+    );
+
+    // Update database to remove profile picture
+    await dbConnection.query(
+      "UPDATE users SET profile_picture = NULL WHERE userid = ?",
+      [userid]
+    );
+
+    // Delete profile picture file if it exists
+    if (currentUser[0]?.profile_picture) {
+      const filePath = `uploads/profile-pictures/${path.basename(currentUser[0].profile_picture)}`;
+      if (fs.existsSync(filePath)) {
+        fs.unlinkSync(filePath);
+      }
+    }
+
+    res.status(StatusCodes.OK).json({
+      message: "Profile picture removed successfully",
+    });
+  } catch (error) {
+    console.error("Error removing profile picture:", error);
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      message: "Error removing profile picture",
+      error: error.message,
+    });
+  }
+};
+export { login, checkUser, register, upload, uploadProfilePicture, removeProfilePicture };

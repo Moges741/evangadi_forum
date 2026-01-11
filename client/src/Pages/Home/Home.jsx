@@ -28,6 +28,7 @@ const Home = () => {
   // ===================== FETCH DATA =====================
   // Fetch questions from backend API (memoized)
   const fetchData = useCallback(async () => {
+    console.log("Token:", token); // Debug log
     if (!token) {
       setFetchError("No authentication token found. Please log in.");
       setLoading(false);
@@ -36,14 +37,18 @@ const Home = () => {
     setLoading(true);
     setFetchError("");
     try {
+      console.log("Fetching questions..."); // Debug log
       const { data } = await axios.get("/question", {
         headers: { Authorization: `Bearer ${token}` },
       });
+      console.log("Response data:", data); // Debug log
       const fetchedQuestions = data?.questions || data || []; // Fallback if direct array
+      console.log("Fetched questions:", fetchedQuestions); // Debug log
       setQuestions(fetchedQuestions);
       setSortedQuestions(fetchedQuestions);
     } catch (error) {
       console.error("Error fetching questions:", error);
+      console.error("Error response:", error.response); // Debug log
       if (error.response?.status === 401) {
         localStorage.removeItem("token"); // Clear invalid token
         navigate("/login");
@@ -228,7 +233,15 @@ const Home = () => {
                   <div className={classes["user-info"]}>
                     {/* User avatar + username */}
                     <div className={classes["user"]}>
-                      <IoIosContact size={80} aria-hidden="true" />
+                      {q.profile_picture ? (
+                        <img 
+                          src={`http://localhost:5501${q.profile_picture}`}
+                          alt={q.username}
+                          className={classes["user-avatar-img"]}
+                        />
+                      ) : (
+                        <IoIosContact size={80} aria-hidden="true" />
+                      )}
                       <p>{q.username}</p>
                     </div>
                     {/* Question title */}

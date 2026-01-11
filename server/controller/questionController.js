@@ -3,6 +3,7 @@ import { StatusCodes } from "http-status-codes";
 import xss from "xss";
 
 async function getAllQuestions(req, res) {
+  console.log("getAllQuestions called"); // Debug log
   try {
     // Get all questions from the database (updated to handle missing created_at column)
     const [questions] = await dbConnection.execute(
@@ -15,11 +16,14 @@ async function getAllQuestions(req, res) {
         u.username,
         u.firstname,
         u.lastname,
+        COALESCE(u.profile_picture, '') as profile_picture,
         NOW() as created_at
       FROM questions q 
       JOIN users u ON q.userid = u.userid 
       ORDER BY q.questionid DESC`
     );
+
+    console.log("Questions found:", questions.length); // Debug log
 
     // Check if the questions array is empty
     if (questions.length === 0) {
@@ -33,7 +37,7 @@ async function getAllQuestions(req, res) {
       questions: questions,
     });
   } catch (error) {
-    console.error(error);
+    console.error("Database error:", error); // Debug log
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
       message: "An unexpected error occurred",
       error: error.message,

@@ -51,6 +51,16 @@ const Header = () => {
               How it works
             </Link>
 
+            {user && (
+              <Link
+                to="/profile"
+                className={styles.navLink}
+                onClick={() => setIsOpen(false)}
+              >
+                Profile
+              </Link>
+            )}
+
             {user ? (
               <button className={styles.nav_butn} onClick={handleLogout}>
                 LOG OUT

@@ -21,19 +21,25 @@ section {
 }
 
 .ask-question-btn {
-  background-color: #007bff;
+  background-color: #0056b3;
   color: white;
-  padding: 10px 20px;
-  border-radius: 4px;
+  padding: 12px 24px;
+  border-radius: 8px;
   cursor: pointer;
   font-size: 16px;
+  font-weight: 500;
   text-decoration: none;
   text-align: center;
   margin-top: 45px;
+  border: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 123, 255, 0.2);
 }
 
 .ask-question-btn:hover {
-  background-color: #0056b3;
+  background-color: #ff6600ec;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
 }
 
 .welcome-message {
@@ -51,57 +57,77 @@ section {
 /* ===================== Search Bar ===================== */
 .search-bar {
   flex: 1;
+  margin-bottom: 20px;
 }
 
 .search-input {
   width: 60%;
-  height: 40px;
-  border: 2px solid #000;
-  padding: 0 12px;
-  font-size: 14px;
+  height: 45px;
+  border: 2px solid #e1e5e9;
+  border-radius: 8px;
+  padding: 0 16px;
+  font-size: 16px;
   outline: none;
   box-sizing: border-box;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  background-color: #fff;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
-/* Hover */
+/* Placeholder styling */
+.search-input::placeholder {
+  color: #6c757d;
+  font-style: italic;
+}
+
+/* Hover effect - moderate and smooth */
 .search-input:hover {
-  border-color: #333;
+  border-color: #007bff;
+  box-shadow: 0 4px 8px rgba(0, 123, 255, 0.15);
+  transform: translateY(-1px);
 }
 
-/* Focus */
+/* Focus effect */
 .search-input:focus {
-  border-color: #000;
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
+  border-color: #007bff;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25),
+    0 4px 12px rgba(0, 123, 255, 0.15);
+  transform: translateY(-1px);
 }
-
 
 /* ===================== sort dropdown ===================== */
 .sort-dropdown {
   display: flex;
   align-items: center;
+  margin-bottom: 20px;
 }
 
 .sort-select {
-  padding: 8px 12px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
+  padding: 12px 16px;
+  border: 2px solid #e1e5e9;
+  border-radius: 8px;
   background-color: #fff;
-  font-size: 14px;
+  font-size: 16px;
   cursor: pointer;
   outline: none;
-  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  min-width: 180px;
 }
 
 /* Hover effect */
 .sort-select:hover {
-  border-color: #888;
+  border-color: #007bff;
+  box-shadow: 0 4px 8px rgba(0, 123, 255, 0.15);
+  transform: translateY(-1px);
 }
 
 /* Focus effect */
 .sort-select:focus {
-  border-color: #2563eb; /* blue */
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+  border-color: #007bff;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25),
+    0 4px 12px rgba(0, 123, 255, 0.15);
+  transform: translateY(-1px);
 }
 
 /* ===================== Questions List ===================== */
@@ -174,19 +200,40 @@ section {
 .success-message {
   background-color: #28a745;
   color: white;
-  padding: 10px;
-  margin-bottom: 15px;
-  border-radius: 5px;
+  padding: 12px 16px;
+  margin-bottom: 20px;
+  border-radius: 8px;
   text-align: center;
+  box-shadow: 0 2px 4px rgba(40, 167, 69, 0.2);
 }
 
 .error-message {
   background-color: #dc3545;
   color: white;
-  padding: 10px;
-  margin-bottom: 15px;
-  border-radius: 5px;
+  padding: 12px 16px;
+  margin-bottom: 20px;
+  border-radius: 8px;
   text-align: center;
+  box-shadow: 0 2px 4px rgba(220, 53, 69, 0.2);
+}
+
+.retry-btn {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  margin-left: 10px;
+  transition: all 0.3s ease;
+}
+
+.retry-btn:hover {
+  background-color: #0056b3;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 123, 255, 0.3);
 }
 
 /* ===================== Home Layout ===================== */
@@ -342,4 +389,105 @@ section {
   .arrow {
     font-size: 16px;
   }
+}
+
+/* ===================== Action Icons & Confirmation ===================== */
+.action-icons {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.icon-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-btn:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+  transform: scale(1.1);
+}
+
+.confirmation-prompt {
+  background-color: #fff;
+  border: 2px solid #dc3545;
+  border-radius: 8px;
+  padding: 20px;
+  margin: 20px 0;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(220, 53, 69, 0.2);
+}
+
+.confirmation-prompt p {
+  margin-bottom: 16px;
+  font-size: 16px;
+  color: #333;
+}
+
+.confirmation-btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  margin: 0 8px;
+  transition: all 0.3s ease;
+}
+
+.confirmation-btn-danger {
+  background-color: #dc3545;
+  color: white;
+}
+
+.confirmation-btn-danger:hover {
+  background-color: #c82333;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(220, 53, 69, 0.3);
+}
+
+.confirmation-btn-secondary {
+  background-color: #6c757d;
+  color: white;
+}
+
+.confirmation-btn-secondary:hover {
+  background-color: #545b62;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(108, 117, 125, 0.3);
+}
+
+.info-and-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.timestamp {
+  font-size: 12px;
+  color: #6c757d;
+  font-style: italic;
+}
+/* Profile picture styles */
+.user-avatar-img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #e1e5e9;
+  transition: all 0.3s ease;
+}
+
+.user-avatar-img:hover {
+  border-color: #007bff;
+  transform: scale(1.05);
 }

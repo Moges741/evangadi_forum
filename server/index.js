@@ -1,12 +1,17 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
+import path from "path";
+import { fileURLToPath } from "url";
 import answerRoutes from "./routes/answerRoute.js";
 import userRoutes from "./routes/userRoutes.js";
 import questionRoutes from "./routes/questionRoute.js";
 import authMiddleware from "./middleware/authMiddleware.js";
 import chatRoutes from "./routes/chatRoutes.js";
 import dbconnection from "./DB/dbconfig.js";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 
@@ -24,6 +29,9 @@ app.use(
 );
 
 app.use(express.json());
+
+// Serve static files for uploaded images
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 dotenv.config();
 const PORT = process.env.PORT || 5500;

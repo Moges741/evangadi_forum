@@ -17,6 +17,7 @@
     "express": "^5.2.1",
     "http-status-codes": "^2.3.0",
     "jsonwebtoken": "^9.0.3",
+    "multer": "^2.0.2",
     "mysql2": "^3.16.0",
     "openai": "^6.15.0",
     "xss": "^1.0.15"

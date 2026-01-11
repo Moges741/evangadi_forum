@@ -9,6 +9,7 @@ import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import Askquestion from "../../Pages/Askquestion/Askquestion.jsx";
 import Answer from "../../Pages/Answer/Answer.jsx";
 import EditQuestion from "../../Pages/EditQuestion/EditQuestion.jsx";
+import Profile from "../../Pages/Profile/Profile.jsx";
 
 function Layout() {
   return (
@@ -57,6 +58,15 @@ function Layout() {
           element={
             <ProtectedRoute>
               <EditQuestion />
+            </ProtectedRoute>
+          }
+        />
+        {/* protected route for profile page */}
+        <Route
+          path="profile"
+          element={
+            <ProtectedRoute>
+              <Profile />
             </ProtectedRoute>
           }
         />
