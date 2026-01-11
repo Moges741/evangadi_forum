@@ -12,21 +12,15 @@ import authMiddleware from "./middleware/authMiddleware.js";
 const app = express();
 
 // CORS configuration
-app.use(
-  cors({
-    origin: [
-      "http://localhost:3000",
-      "http://localhost:5173",
-      "http://localhost:4173",
-      "http://localhost:5174",
-    ],
-    credentials: true,
-  })
-);
+app.use(cors());
 
 app.use(express.json());
 
 const PORT = process.env.PORT || 5500;
+
+app.get("/test", (req, res) => {
+  res.send("API is running");
+});
 
 // question routes middleware
 app.use("/api/question", authMiddleware, questionRoutes);
