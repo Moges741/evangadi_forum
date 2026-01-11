@@ -1,23 +1,28 @@
+/* ----------------------- Container ----------------------- */
 .container {
   max-width: 1150px;
   margin: 50px auto;
-  padding: 0 60px;
+  padding: 0 50px;
   font-family: "Inter", sans-serif;
   background-color: #fafafa;
 }
 
+/* ----------------------- Titles ----------------------- */
 .big_title {
   font-weight: 700;
   font-size: 30px;
   padding: 15px 0;
 }
 
+/* ----------------------- Question & Summary Wrapper ----------------------- */
 .question_summary_wrapper {
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
+  padding-top: 30px;
 }
 
+/* ----------------------- Question Section ----------------------- */
 .question_section {
   flex: 3;
 }
@@ -41,43 +46,39 @@
 }
 
 .description {
-  margin-top: 10px;
+  margin-top: 20px;
   font-size: 18px;
   color: #000;
+  padding-left: 40px;
 }
 
+/* ----------------------- Summary Section ----------------------- */
 .summary_section {
   flex: 2;
-  background: #d88b39;
+  background: #e9e7e5;
   border-radius: 8px;
   padding: 16px;
   position: sticky;
   top: 20px;
+  padding-top: 15px;
 }
 
 .summaryText {
   line-height: 1.5;
-}
-
-.collapsed {
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-.expanded {
-  display: block;
+  padding-top: 10px;
 }
 
 .readMore {
-  color: #506bed;
+  color: rgb(243, 161, 8);
   cursor: pointer;
   font-weight: 500;
   margin-top: 6px;
   display: inline-block;
+  text-align: right;
+  display: block;
 }
 
+/* ----------------------- Answers Section ----------------------- */
 .answers_section {
   margin-top: 20px;
 }
@@ -89,6 +90,7 @@
   padding: 12px 15px;
   border-bottom: 1px solid #ddd;
   gap: 10px;
+  border-radius: 6px; 
 }
 
 .user_info {
@@ -98,32 +100,21 @@
   gap: 4px;
 }
 
-.avatar {
-  width: 50px;
-  height: 50px;
-  background: #e5e7eb;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
 .content {
-  /* flex: 1; */
   font-size: 16px;
   color: #333;
   text-align: justify;
+  line-height: 1.5;
 }
 
 .answer_footer {
   display: flex;
   justify-content: flex-end;
-  /* align-self: flex-end; */
-  /* align-items: center; */
   width: 100%;
   gap: 10px;
 }
 
+/* ----------------------- Action Icons ----------------------- */
 .action_icons > * {
   transition: 0.2s ease;
 }
@@ -140,6 +131,7 @@
   cursor: pointer;
 }
 
+/* ----------------------- Answer Form ----------------------- */
 .answer_form {
   margin-top: 20px;
   display: flex;
@@ -177,6 +169,7 @@
   cursor: not-allowed;
 }
 
+/* ----------------------- Messages ----------------------- */
 .error {
   color: #dc2626;
   margin-bottom: 10px;
@@ -188,6 +181,7 @@
   font-weight: 500;
 }
 
+/* ----------------------- Confirm Delete Box ----------------------- */
 .confirm_box {
   position: fixed;
   top: 50%;
@@ -218,7 +212,7 @@
   color: #2c3e50;
 }
 
-/* Responsive */
+/* ----------------------- Responsive ----------------------- */
 @media (max-width: 900px) {
   .question_summary_wrapper {
     flex-direction: column;
