@@ -20,18 +20,18 @@ function Landing() {
       <div className={style.containerContent}>
         <div className={style.sliderContainer}>
           <div
-            className={style.sliderWrapper}
+            className={`${style.sliderWrapper} ${isSignup ? style.signup : style.login}`}
             style={{
               transform: isSignup ? "translateX(-50%)" : "translateX(0)",
             }}
           >
             <div className={style.formPane} aria-hidden={isSignup}>
               <Login />
-              
+
             </div>
             <div className={style.formPane} aria-hidden={!isSignup}>
               <Register />
-              
+
             </div>
           </div>
         </div>
@@ -40,7 +40,7 @@ function Landing() {
         </div>
       </div>
     </section>
-  );
+    );
 }
 
 export default Landing;

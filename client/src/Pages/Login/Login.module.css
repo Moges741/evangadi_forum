@@ -1,6 +1,5 @@
 .login_container {
-   width: 400px;
-  margin: 7rem auto 5rem;
+   width:90%;
   padding: 1.5rem;
   background: #fff;
   border-radius: 8px;
@@ -47,6 +46,8 @@
   top: 50%;
   transform: translateY(-50%);
   cursor: pointer;
+  color: #9ca3af;
+
 }
 
 .forgot {

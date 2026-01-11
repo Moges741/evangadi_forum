@@ -3,6 +3,8 @@ import dbConnection from "../DB/dbconfig.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
+import crypto from "crypto";
+import nodemailer from "nodemailer";
 dotenv.config();
 
 async function register(req, res) {
@@ -103,4 +105,99 @@ const checkUser = async (req, res) => {
     .status(StatusCodes.OK)
     .json({ message: "valid user", username, userid });
 };
-export { login, checkUser, register };
+const forgotPassword = async (req, res) => {
+  const { email } = req.body;
+
+  try {
+    //check if user exists
+    const [users] = await dbConnection.query(
+      "SELECT userid FROM users WHERE email = ?",
+      [email]
+    );
+
+    if (users.length === 0) {
+      return res.status(StatusCodes.OK).json({
+        message:
+          "If an account exists with this email, a reset link has been sent!",
+      });
+    }
+
+    // Generate a unique token for password reset
+    const resetToken = crypto.randomBytes(32).toString("hex");
+    const hashedToken = crypto
+      .createHash("sha256")
+      .update(resetToken)
+      .digest("hex");
+
+    const expires = new Date(Date.now() + 15 * 60 * 1000); // 15 minutes
+
+    // Save the token and expiry in the database for that user in the db
+    await dbConnection.query(
+      "UPDATE users SET reset_token=?, reset_token_expires=? WHERE email=?",
+      [hashedToken, expires, email]
+    );
+
+
+    // Send email using Nodemailer
+    const transporter = nodemailer.createTransport({
+      service: "Gmail", // or any SMTP
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
+      },
+    });
+
+    const resetLink = `http://localhost:5173/reset-password/${resetToken}`;
+
+    await transporter.sendMail({
+      from: '"Evangadi Forum" <noreply@yourapp.com>',
+      to: email,
+      subject: "Password Reset Request",
+      html: `
+        <h3>Password Reset Request</h3>
+        <p>Click the link below to reset your password:</p>
+        <a href="${resetLink}">${resetLink}</a>
+        <p>This link will expire in 1 hour.</p>
+      `,
+    });
+
+    res.status(StatusCodes.OK).json({ message: "Password reset link sent" });
+  } catch (error) {
+    console.error(error);
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: "Something went wrong" });
+  }
+};
+
+const resetPassword = async (req, res) => {
+  const { token } = req.params;
+  const { newPassword } = req.body;
+  console.log("BODY:", req.body);
+  console.log("newPassword:", newPassword);
+
+  const hashedToken = crypto.createHash("sha256").update(token).digest("hex");
+
+  const [users] = await dbConnection.query(
+    `SELECT userid FROM users
+     WHERE reset_token=? AND reset_token_expires > NOW()`,
+    [hashedToken]
+  );
+
+  if (users.length === 0) {
+    return res
+      .status(StatusCodes.BAD_REQUEST)
+      .json({ message: "Invalid or expired token" });
+  }
+
+  const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+  await dbConnection.query(
+    `UPDATE users
+     SET password=?, reset_token=NULL, reset_token_expires=NULL
+     WHERE userid=?`,
+    [hashedPassword, users[0].userid]
+  );
+
+  res.json({ message: "Password reset successful" });
+};
+
+export { login, checkUser, register, forgotPassword, resetPassword };

@@ -15,7 +15,7 @@ function App() {
 
   async function checkUser() {
     if (!token) {
-      navigate("/signin");
+      // navigate("/signin");
       return;
     }
 

@@ -1,18 +1,13 @@
 * {
   margin: 0;
 }
-/* 
-.registerPage {
-  margin-top: 100px;
-  } */
 .registerPage {
   margin-top: 2rem;
   background-color: transparent;
-  width: 100%;
+
 }
 /* PAGE SECTION */
 .registerSection {
-  min-height: 100vh;
   display: flex;
   align-items: center;
   background-color: transparent;
@@ -26,7 +21,7 @@
 }
 
 .form_container {
-  width: 420px;
+  /* width: 420px; */
   background: #ffffff;
   border-radius: 12px;
   padding: 35px 30px;
