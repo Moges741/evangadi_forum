@@ -110,7 +110,7 @@ const checkUser = async (req, res) => {
       "SELECT COALESCE(profile_picture, '') as profile_picture FROM users WHERE userid = ?",
       [userid]
     );
-    
+
     const profile_picture = users[0]?.profile_picture || "";
 
     return res
@@ -136,7 +136,12 @@ const storage = multer.diskStorage({
   },
   filename: (req, file, cb) => {
     const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
-    cb(null, `profile-${req.user.userid}-${uniqueSuffix}${path.extname(file.originalname)}`);
+    cb(
+      null,
+      `profile-${req.user.userid}-${uniqueSuffix}${path.extname(
+        file.originalname
+      )}`
+    );
   },
 });
 
@@ -147,7 +152,9 @@ const upload = multer({
   },
   fileFilter: (req, file, cb) => {
     const allowedTypes = /jpeg|jpg|png|gif/;
-    const extname = allowedTypes.test(path.extname(file.originalname).toLowerCase());
+    const extname = allowedTypes.test(
+      path.extname(file.originalname).toLowerCase()
+    );
     const mimetype = allowedTypes.test(file.mimetype);
 
     if (mimetype && extname) {
@@ -184,7 +191,9 @@ const uploadProfilePicture = async (req, res) => {
 
     // Delete old profile picture file if it exists
     if (currentUser[0]?.profile_picture) {
-      const oldFilePath = `uploads/profile-pictures/${path.basename(currentUser[0].profile_picture)}`;
+      const oldFilePath = `uploads/profile-pictures/${path.basename(
+        currentUser[0].profile_picture
+      )}`;
       if (fs.existsSync(oldFilePath)) {
         fs.unlinkSync(oldFilePath);
       }
@@ -222,7 +231,9 @@ const removeProfilePicture = async (req, res) => {
 
     // Delete profile picture file if it exists
     if (currentUser[0]?.profile_picture) {
-      const filePath = `uploads/profile-pictures/${path.basename(currentUser[0].profile_picture)}`;
+      const filePath = `uploads/profile-pictures/${path.basename(
+        currentUser[0].profile_picture
+      )}`;
       if (fs.existsSync(filePath)) {
         fs.unlinkSync(filePath);
       }
@@ -271,7 +282,6 @@ const forgotPassword = async (req, res) => {
       [hashedToken, expires, email]
     );
 
-
     // Send email using Nodemailer
     const transporter = nodemailer.createTransport({
       service: "Gmail", // or any SMTP
@@ -298,7 +308,9 @@ const forgotPassword = async (req, res) => {
     res.status(StatusCodes.OK).json({ message: "Password reset link sent" });
   } catch (error) {
     console.error(error);
-    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: "Something went wrong" });
+    res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json({ message: "Something went wrong" });
   }
 };
 
@@ -330,8 +342,16 @@ const resetPassword = async (req, res) => {
      WHERE userid=?`,
     [hashedPassword, users[0].userid]
   );
-
   res.json({ message: "Password reset successful" });
 };
 
-export { login, checkUser, register, forgotPassword, resetPassword };
+export {
+  login,
+  checkUser,
+  register,
+  forgotPassword,
+  resetPassword,
+  uploadProfilePicture,
+  removeProfilePicture,
+  upload,
+};

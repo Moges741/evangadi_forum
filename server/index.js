@@ -2,7 +2,6 @@ import dotenv from "dotenv";
 dotenv.config();
 import express from "express";
 import cors from "cors";
-import dotenv from "dotenv";
 import path from "path";
 import { fileURLToPath } from "url";
 import answerRoutes from "./routes/answerRoute.js";
@@ -25,7 +24,6 @@ app.use(express.json());
 // Serve static files for uploaded images
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-dotenv.config();
 const PORT = process.env.PORT || 5500;
 
 app.get("/test", (req, res) => {
