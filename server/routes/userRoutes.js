@@ -3,6 +3,9 @@ import authMiddleware from "../middleware/authMiddleware.js";
 import {
   login,
   register,
+  upload, 
+  uploadProfilePicture, 
+  removeProfilePicture,
   checkUser,
   upload,
   uploadProfilePicture,

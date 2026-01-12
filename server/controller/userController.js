@@ -3,7 +3,7 @@ import dbConnection from "../DB/dbconfig.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
-import multer from "multer";
+import multer from "multer"; 
 import path from "path";
 import fs from "fs";
 import crypto from "crypto";
@@ -357,14 +357,4 @@ const resetPassword = async (req, res) => {
   res.json({ message: "Password reset successful" });
 };
 
-export {
-  login,
-  checkUser,
-  register,
-  forgotPassword,
-  resetPassword,
-  uploadProfilePicture,
-  getProfilePicture,
-  removeProfilePicture,
-  upload,
-};
+export { login, checkUser, register, forgotPassword,removeProfilePicture, resetPassword , upload, uploadProfilePicture};

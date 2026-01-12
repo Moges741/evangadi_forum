@@ -3,7 +3,7 @@ import { useParams, Navigate } from "react-router-dom";
 import style from "./Landing.module.css";
 import Register from "../Register/Register";
 import Login from "../Login/Login";
-import About from '../About/About'
+import About from '../About/About';
 
 function Landing() {
   const { mode } = useParams();

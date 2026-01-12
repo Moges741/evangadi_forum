@@ -1,7 +1,8 @@
 import dotenv from "dotenv";
-dotenv.config();
+
 import express from "express";
 import cors from "cors";
+
 import path from "path";
 import { fileURLToPath } from "url";
 import answerRoutes from "./routes/answerRoute.js";
@@ -13,7 +14,7 @@ import authMiddleware from "./middleware/authMiddleware.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-
+dotenv.config();
 const app = express();
 
 // CORS configuration
