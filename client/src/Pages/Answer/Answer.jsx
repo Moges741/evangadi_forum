@@ -182,7 +182,7 @@ function Answer() {
         {error && <p className={styles.error}>{error}</p>}
         {!answersLoading && answers.length === 0 && <p>No answers yet!</p>}
 
-        {confirmDeleteAnswerId && (
+        {/* {confirmDeleteAnswerId && (
           <div className={styles.confirm_box}>
             <p>Delete this answer?</p>
             <button onClick={handleConfirmDeleteAnswer}>Yes</button>
@@ -190,13 +190,48 @@ function Answer() {
               Cancel
             </button>
           </div>
+        )} */}
+
+        {confirmDeleteAnswerId !== null && (
+          <div className={styles.confirmation_overlay}>
+            <div
+              className={styles.confirmation_prompt}
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="confirm-delete-label"
+            >
+              <p id="confirm-delete-label">
+                Are you sure you want to delete this answer?
+              </p>
+
+              <button
+                type="button"
+                className={`${styles.confirmation_btn} ${styles.confirmation_btn_danger}`}
+                onClick={handleConfirmDeleteAnswer}
+              >
+                Yes, Delete
+              </button>
+
+              <button
+                type="button"
+                className={`${styles.confirmation_btn} ${styles.confirmation_btn_secondary}`}
+                onClick={() => setConfirmDeleteAnswerId(null)}
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
         )}
 
         {answers.map((ans) => (
           <div key={ans.answer_id} className={styles.answer_card}>
             <div className={styles.user_info}>
               <div className={styles.avatar}>
-                <IoIosContact size={80} />
+                {ans.user_name
+                  ?.split(" ")
+                  .map((n) => n[0])
+                  .join("")
+                  .toUpperCase()}
               </div>
               <span>{ans.user_name}</span>
             </div>
@@ -206,9 +241,16 @@ function Answer() {
             <div className={styles.answer_footer}>
               <span className={styles.timestamp}>
                 {new Date(ans.created_at).toLocaleDateString("en-US", {
+                  weekday: "short",
                   year: "numeric",
                   month: "short",
                   day: "numeric",
+                })}{" "}
+                at{" "}
+                {new Date(ans.created_at).toLocaleTimeString("en-US", {
+                  hour: "2-digit",
+                  minute: "2-digit",
+                  hour12: true,
                 })}
               </span>
 
@@ -217,11 +259,13 @@ function Answer() {
                   <MdEdit
                     size={22}
                     color="blue"
+                    title="Edit"
                     onClick={() => navigate(`/edit-answer/${ans.answer_id}`)}
                   />
                   <MdDelete
                     size={22}
                     color="red"
+                    title="Delete"
                     onClick={() => setConfirmDeleteAnswerId(ans.answer_id)}
                   />
                 </div>
@@ -243,9 +287,20 @@ function Answer() {
           }}
           disabled={posting}
         />
-        <button type="submit" disabled={posting}>
-          {posting ? "Posting..." : "Post Answer"}
-        </button>
+        <div className={styles.form_actions}>
+          <button type="submit" disabled={posting}>
+            {posting ? "Posting..." : "Post Answer"}
+          </button>
+
+          <button
+            type="button"
+            onClick={() => navigate(-1)}
+            className={styles.cancel}
+            // disabled={loading}
+          >
+            Back to Home
+          </button>
+        </div>
       </form>
     </div>
   );

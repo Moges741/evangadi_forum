@@ -1,4 +1,4 @@
-import axios from "../../axiosConfig";
+import axios from "../../Api/axiosConfig.js";
 import styles from "./register.module.css";
 import { useState, useRef, useContext } from "react";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
@@ -14,7 +14,7 @@ const Register = () => {
   const lastNameDom = useRef();
   const emailDom = useRef();
   const passwordDom = useRef();
-  const {setUser} = useContext(AppState);
+  const { setUser } = useContext(AppState);
 
   const navigate = useNavigate();
 
@@ -86,7 +86,7 @@ const Register = () => {
             <input
               className={styles.input_field}
               type="text"
-              placeholder="username"
+              placeholder="Username"
               ref={userNameDom}
             />
           </div>
@@ -96,7 +96,7 @@ const Register = () => {
               <input
                 className={styles.input_field}
                 type="text"
-                placeholder="first name"
+                placeholder="First Name"
                 ref={firstNameDom}
               />
             </div>
@@ -104,7 +104,7 @@ const Register = () => {
               <input
                 className={styles.input_field}
                 type="text"
-                placeholder="last name"
+                placeholder="Last Name"
                 ref={lastNameDom}
               />
             </div>
@@ -115,7 +115,7 @@ const Register = () => {
             <input
               className={styles.input_field}
               type="email"
-              placeholder="email"
+              placeholder="Email"
               ref={emailDom}
             />
           </div>

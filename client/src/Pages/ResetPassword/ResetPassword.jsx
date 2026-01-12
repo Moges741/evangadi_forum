@@ -11,8 +11,8 @@ const ResetPassword = () => {
   const navigate = useNavigate();
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
- const [showNewPassword, setShowNewPassword] = useState(false);
- const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -22,10 +22,9 @@ const ResetPassword = () => {
     }
 
     try {
-      const res = await axios.post(
-        `http://localhost:5500/api/user/reset-password/${token}`,
-        { newPassword }
-      );
+      const res = await axios.post(`/user/reset-password/${token}`, {
+        newPassword,
+      });
 
       toast.success(res.data.message);
       navigate("/signin");

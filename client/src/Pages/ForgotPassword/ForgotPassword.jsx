@@ -15,7 +15,7 @@ const ForgotPassword = () => {
 
     try {
       await axios.post(
-        "http://localhost:5500/api/user/forgot-password",
+        "/user/forgot-password",
         { email },
         { headers: { "Content-Type": "application/json" } }
       );

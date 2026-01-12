@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import axios from "axios";
+import axios from "../Api/axiosConfig.js";
 import popSound from "../assets/sounds/pop.mp3";
 import notificationSound from "../assets/sounds/notification.mp3";
 
@@ -16,25 +16,21 @@ export const useChatbot = () => {
   const [historyLoadingError, setHistoryLoadingError] = useState("");
   const [error, setError] = useState("");
 
-
   useEffect(() => {
     const loadHistory = async () => {
       const token = localStorage.getItem("token");
       if (!token) return;
 
       try {
-        const { data } = await axios.get(
-          "http://localhost:5501/api/chat/history",
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          }
-        );
+        const { data } = await axios.get("/chat/history", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
         setMessages(data.history);
       } catch (err) {
         console.error("Could not load history", err.message);
         const errorMessage =
           err.response?.data?.message || err.message || "Something went wrong";
-        setHistoryLoadingError(errorMessage)
+        setHistoryLoadingError(errorMessage);
       } finally {
         setIsLoadingHistory(false);
       }
@@ -55,7 +51,7 @@ export const useChatbot = () => {
     const controller = new AbortController();
     abortControllerRef.current = controller;
 
-    const messageId = Date.now(); 
+    const messageId = Date.now();
     const token = localStorage.getItem("token");
 
     // Obtimstic update
@@ -68,7 +64,7 @@ export const useChatbot = () => {
 
     // Play sound with a catch block to prevent "Autoplay" browser errors
     try {
-      popAudio.play().catch(err => {
+      popAudio.play().catch((err) => {
         console.log("Audio play failed:", err.message);
       });
     } catch (err) {
@@ -77,7 +73,7 @@ export const useChatbot = () => {
 
     try {
       const { data } = await axios.post(
-        "http://localhost:5501/api/chat",
+        "/chat",
         { prompt },
         {
           headers: { Authorization: `Bearer ${token}` },
@@ -86,7 +82,7 @@ export const useChatbot = () => {
       );
 
       try {
-        notificationAudio.play().catch(err => {
+        notificationAudio.play().catch((err) => {
           console.log("Notification audio play failed:", err.message);
         });
       } catch (err) {

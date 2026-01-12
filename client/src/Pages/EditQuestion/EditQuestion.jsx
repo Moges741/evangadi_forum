@@ -31,7 +31,7 @@ function EditQuestion() {
       const { data } = await axios.get(`/question/${questionid}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      
+
       const question = data.question;
       setTitle(question.title);
       setDescription(question.description);
@@ -142,6 +142,7 @@ function EditQuestion() {
 
         <form onSubmit={handleSubmit}>
           <div className={styles.form_group}>
+            <h4>Titile</h4>
             <input
               id="title"
               type="text"
@@ -164,6 +165,7 @@ function EditQuestion() {
           </div>
 
           <div className={styles.form_group}>
+            <h4>Description</h4>
             <textarea
               id="description"
               placeholder="Question detail..."
@@ -188,7 +190,7 @@ function EditQuestion() {
           </div>
 
           <div className={styles.form_group}>
-            <label htmlFor="tag">Tag</label>
+            <label htmlFor="tag"><h4>Tag</h4></label>
             <input
               id="tag"
               type="text"

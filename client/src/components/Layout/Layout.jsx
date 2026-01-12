@@ -45,6 +45,14 @@ function Layout() {
             </ProtectedRoute>
           }
         />
+        <Route
+          path="edit-answer/:answerid"
+          element={
+            <ProtectedRoute>
+              <EditAnswer />
+            </ProtectedRoute>
+          }
+        />
         {/* protected route for edit question page */}
         <Route
           path="edit-question/:questionid"
@@ -65,20 +73,20 @@ function Layout() {
         />
         {/* Landing page for signin/signup */}
         <Route path=":mode" element={<Landing />} />
-    
+
         {/* Public page */}
         <Route path="howitworks" element={<HowItWorks />} />
-        
+
         {/* forgot password  */}
         <Route path="forgot-password" element={<ForgotPassword />} />
 
         {/* reset password route */}
-      <Route path="/reset-password/:token" element={<ResetPassword />} />
+        <Route path="/reset-password/:token" element={<ResetPassword />} />
 
         {/* catch-all redirect for any unknown route */}
         <Route path="*" element={<Navigate to="/404" replace />} />
       </Route>
-      
+
       <Route
         path="/edit-question/:id"
         element={

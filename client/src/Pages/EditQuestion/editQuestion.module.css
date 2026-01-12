@@ -17,6 +17,7 @@
   border-radius: 8px;
   padding: 30px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  margin-top: 40px;
 }
 
 .question_title {
@@ -41,6 +42,11 @@
 
 .form_group {
   margin-bottom: 20px;
+}
+.form_group h4{
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #333;
 }
 
 .form_group label {

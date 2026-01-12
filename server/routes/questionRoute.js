@@ -11,14 +11,14 @@ import {
 const router = Router();
 
 // GET all questions
-router.get("/", getAllQuestions);
+router.get("/", authMiddleware, getAllQuestions);
 
 // POST a new question
 router.post("/", authMiddleware, postQuestion);
 
 // GET a single question
 router.get("/:questionid", getSingleQuestion);
-router.put("/:questionid", authMiddleware, updateQuestion);
+router.put("/:questionid", authMiddleware, editQuestion);
 router.delete("/:questionid", authMiddleware, deleteQuestion);
 
 // EDIT a question

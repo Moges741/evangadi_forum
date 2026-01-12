@@ -104,24 +104,9 @@ const checkUser = async (req, res) => {
   const username = req.user.username;
   const userid = req.user.userid;
 
-  try {
-    // Get user profile picture from database
-    const [users] = await dbConnection.query(
-      "SELECT COALESCE(profile_picture, '') as profile_picture FROM users WHERE userid = ?",
-      [userid]
-    );
-    
-    const profile_picture = users[0]?.profile_picture || "";
-
-    return res
-      .status(StatusCodes.OK)
-      .json({ message: "valid user", username, userid, profile_picture });
-  } catch (error) {
-    console.error("Error fetching user data:", error);
-    return res
-      .status(StatusCodes.OK)
-      .json({ message: "valid user", username, userid, profile_picture: "" });
-  }
+  return res
+    .status(StatusCodes.OK)
+    .json({ message: "valid user", username, userid });
 };
 
 // Configure multer for file uploads
@@ -136,7 +121,12 @@ const storage = multer.diskStorage({
   },
   filename: (req, file, cb) => {
     const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
-    cb(null, `profile-${req.user.userid}-${uniqueSuffix}${path.extname(file.originalname)}`);
+    cb(
+      null,
+      `profile-${req.user.userid}-${uniqueSuffix}${path.extname(
+        file.originalname
+      )}`
+    );
   },
 });
 
@@ -147,7 +137,9 @@ const upload = multer({
   },
   fileFilter: (req, file, cb) => {
     const allowedTypes = /jpeg|jpg|png|gif/;
-    const extname = allowedTypes.test(path.extname(file.originalname).toLowerCase());
+    const extname = allowedTypes.test(
+      path.extname(file.originalname).toLowerCase()
+    );
     const mimetype = allowedTypes.test(file.mimetype);
 
     if (mimetype && extname) {
@@ -184,7 +176,9 @@ const uploadProfilePicture = async (req, res) => {
 
     // Delete old profile picture file if it exists
     if (currentUser[0]?.profile_picture) {
-      const oldFilePath = `uploads/profile-pictures/${path.basename(currentUser[0].profile_picture)}`;
+      const oldFilePath = `uploads/profile-pictures/${path.basename(
+        currentUser[0].profile_picture
+      )}`;
       if (fs.existsSync(oldFilePath)) {
         fs.unlinkSync(oldFilePath);
       }
@@ -222,7 +216,9 @@ const removeProfilePicture = async (req, res) => {
 
     // Delete profile picture file if it exists
     if (currentUser[0]?.profile_picture) {
-      const filePath = `uploads/profile-pictures/${path.basename(currentUser[0].profile_picture)}`;
+      const filePath = `uploads/profile-pictures/${path.basename(
+        currentUser[0].profile_picture
+      )}`;
       if (fs.existsSync(filePath)) {
         fs.unlinkSync(filePath);
       }
@@ -271,17 +267,21 @@ const forgotPassword = async (req, res) => {
       [hashedToken, expires, email]
     );
 
-
     // Send email using Nodemailer
     const transporter = nodemailer.createTransport({
-      service: "Gmail", // or any SMTP
+      host: "mail.birhann.com",
+      port: 465,
+      secure: true, // MUST be true for 465
       auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS,
+        user: process.env.EMAIL_USER, // e.g support@yourdomain.com
+        pass: process.env.EMAIL_PASS, // cPanel email password
+      },
+      tls: {
+        rejectUnauthorized: false, // CRITICAL for shared hosting
       },
     });
 
-    const resetLink = `http://localhost:5173/reset-password/${resetToken}`;
+    const resetLink = `https://evangadiforum.birhann.com/reset-password/${resetToken}`;
 
     await transporter.sendMail({
       from: '"Evangadi Forum" <noreply@yourapp.com>',
@@ -291,25 +291,23 @@ const forgotPassword = async (req, res) => {
         <h3>Password Reset Request</h3>
         <p>Click the link below to reset your password:</p>
         <a href="${resetLink}">${resetLink}</a>
-        <p>This link will expire in 1 hour.</p>
+        <p>This link will expire in 15 minutes.</p>
       `,
     });
 
     res.status(StatusCodes.OK).json({ message: "Password reset link sent" });
   } catch (error) {
     console.error(error);
-    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: "Something went wrong" });
+    res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json({ message: "Something went wrong" });
   }
 };
 
 const resetPassword = async (req, res) => {
   const { token } = req.params;
   const { newPassword } = req.body;
-  console.log("BODY:", req.body);
-  console.log("newPassword:", newPassword);
-
   const hashedToken = crypto.createHash("sha256").update(token).digest("hex");
-
   const [users] = await dbConnection.query(
     `SELECT userid FROM users
      WHERE reset_token=? AND reset_token_expires > NOW()`,
@@ -330,8 +328,16 @@ const resetPassword = async (req, res) => {
      WHERE userid=?`,
     [hashedPassword, users[0].userid]
   );
-
   res.json({ message: "Password reset successful" });
 };
 
-export { login, checkUser, register, forgotPassword, resetPassword };
+export {
+  login,
+  checkUser,
+  register,
+  forgotPassword,
+  resetPassword,
+  uploadProfilePicture,
+  removeProfilePicture,
+  upload,
+};

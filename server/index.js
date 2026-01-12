@@ -2,7 +2,6 @@ import dotenv from "dotenv";
 dotenv.config();
 import express from "express";
 import cors from "cors";
-import dotenv from "dotenv";
 import path from "path";
 import { fileURLToPath } from "url";
 import answerRoutes from "./routes/answerRoute.js";
@@ -18,25 +17,18 @@ const __dirname = path.dirname(__filename);
 const app = express();
 
 // CORS configuration
-app.use(
-  cors({
-    origin: [
-      "http://localhost:3000",
-      "http://localhost:5173",
-      "http://localhost:4173",
-      "http://localhost:5174",
-    ],
-    credentials: true,
-  })
-);
+app.use(cors());
 
 app.use(express.json());
 
 // Serve static files for uploaded images
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-dotenv.config();
 const PORT = process.env.PORT || 5500;
+
+app.get("/test", (req, res) => {
+  res.send("API is running");
+});
 
 // question routes middleware
 app.use("/api/question", authMiddleware, questionRoutes);
