@@ -7,7 +7,9 @@ import styles from "./profile.module.css";
 
 function Profile() {
   const { user, setUser } = useContext(AppState);
-  const [profilePicture, setProfilePicture] = useState(user?.profile_picture || "");
+  const [profilePicture, setProfilePicture] = useState(
+    user?.profile_picture || ""
+  );
   const [uploading, setUploading] = useState(false);
   const [previewUrl, setPreviewUrl] = useState("");
   const fileInputRef = useRef(null);
@@ -46,25 +48,30 @@ function Profile() {
   // Upload profile picture
   const uploadProfilePicture = async (file) => {
     setUploading(true);
-    
+
     try {
       const formData = new FormData();
       formData.append("profilePicture", file);
 
-      const response = await axios.post("/user/upload-profile-picture", formData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const response = await axios.post(
+        "/user/upload-profile-picture",
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      console.log(response.data);
 
       const newProfilePictureUrl = response.data.profilePictureUrl;
       setProfilePicture(newProfilePictureUrl);
-      
+
       // Update user context
-      setUser(prev => ({
+      setUser((prev) => ({
         ...prev,
-        profile_picture: newProfilePictureUrl
+        profile_picture: newProfilePictureUrl,
       }));
 
       toast.success("Profile picture updated successfully!");
@@ -91,11 +98,11 @@ function Profile() {
 
       setProfilePicture("");
       setPreviewUrl("");
-      
+
       // Update user context
-      setUser(prev => ({
+      setUser((prev) => ({
         ...prev,
-        profile_picture: ""
+        profile_picture: "",
       }));
 
       toast.success("Profile picture removed successfully!");
@@ -111,19 +118,19 @@ function Profile() {
     <div className={styles.container}>
       <div className={styles.profileCard}>
         <h2>Profile Settings</h2>
-        
+
         <div className={styles.profilePictureSection}>
           <div className={styles.pictureContainer}>
             {previewUrl ? (
-              <img 
-                src={previewUrl} 
-                alt="Preview" 
+              <img
+                src={previewUrl}
+                alt="Preview"
                 className={styles.profileImage}
               />
             ) : profilePicture ? (
-              <img 
-                src={profilePicture} 
-                alt="Profile" 
+              <img
+                src={profilePicture}
+                alt="Profile"
                 className={styles.profileImage}
               />
             ) : (
@@ -131,7 +138,7 @@ function Profile() {
                 <IoIosContact size={120} />
               </div>
             )}
-            
+
             <div className={styles.uploadOverlay}>
               <button
                 className={styles.uploadButton}
@@ -153,7 +160,9 @@ function Profile() {
           />
 
           <div className={styles.profileInfo}>
-            <h3>{user?.firstname} {user?.lastname}</h3>
+            <h3>
+              {user?.firstname} {user?.lastname}
+            </h3>
             <p>@{user?.username}</p>
             <p>{user?.email}</p>
           </div>
@@ -166,7 +175,7 @@ function Profile() {
             >
               {uploading ? "Uploading..." : "Upload New Photo"}
             </button>
-            
+
             {profilePicture && (
               <button
                 className={styles.removeBtn}

@@ -73,6 +73,7 @@
     width: 100%;
     max-width: 400px;
     margin: 20px 0;
+    flex: 1 1 50px;
   }
 
   .social_icons_container {

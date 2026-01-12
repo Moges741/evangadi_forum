@@ -86,7 +86,7 @@ const Register = () => {
             <input
               className={styles.input_field}
               type="text"
-              placeholder="username"
+              placeholder="Username"
               ref={userNameDom}
             />
           </div>
@@ -96,7 +96,7 @@ const Register = () => {
               <input
                 className={styles.input_field}
                 type="text"
-                placeholder="first name"
+                placeholder="First Name"
                 ref={firstNameDom}
               />
             </div>
@@ -104,7 +104,7 @@ const Register = () => {
               <input
                 className={styles.input_field}
                 type="text"
-                placeholder="last name"
+                placeholder="Last Name"
                 ref={lastNameDom}
               />
             </div>
@@ -115,7 +115,7 @@ const Register = () => {
             <input
               className={styles.input_field}
               type="email"
-              placeholder="email"
+              placeholder="Email"
               ref={emailDom}
             />
           </div>

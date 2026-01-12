@@ -104,24 +104,9 @@ const checkUser = async (req, res) => {
   const username = req.user.username;
   const userid = req.user.userid;
 
-  try {
-    // Get user profile picture from database
-    const [users] = await dbConnection.query(
-      "SELECT COALESCE(profile_picture, '') as profile_picture FROM users WHERE userid = ?",
-      [userid]
-    );
-
-    const profile_picture = users[0]?.profile_picture || "";
-
-    return res
-      .status(StatusCodes.OK)
-      .json({ message: "valid user", username, userid, profile_picture });
-  } catch (error) {
-    console.error("Error fetching user data:", error);
-    return res
-      .status(StatusCodes.OK)
-      .json({ message: "valid user", username, userid, profile_picture: "" });
-  }
+  return res
+    .status(StatusCodes.OK)
+    .json({ message: "valid user", username, userid });
 };
 
 // Configure multer for file uploads
@@ -284,14 +269,19 @@ const forgotPassword = async (req, res) => {
 
     // Send email using Nodemailer
     const transporter = nodemailer.createTransport({
-      service: "Gmail", // or any SMTP
+      host: "mail.birhann.com",
+      port: 465,
+      secure: true, // MUST be true for 465
       auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS,
+        user: process.env.EMAIL_USER, // e.g support@yourdomain.com
+        pass: process.env.EMAIL_PASS, // cPanel email password
+      },
+      tls: {
+        rejectUnauthorized: false, // CRITICAL for shared hosting
       },
     });
 
-    const resetLink = `http://localhost:5173/reset-password/${resetToken}`;
+    const resetLink = `https://evangadiforum.birhann.com/reset-password/${resetToken}`;
 
     await transporter.sendMail({
       from: '"Evangadi Forum" <noreply@yourapp.com>',
@@ -301,7 +291,7 @@ const forgotPassword = async (req, res) => {
         <h3>Password Reset Request</h3>
         <p>Click the link below to reset your password:</p>
         <a href="${resetLink}">${resetLink}</a>
-        <p>This link will expire in 1 hour.</p>
+        <p>This link will expire in 15 minutes.</p>
       `,
     });
 
@@ -317,11 +307,7 @@ const forgotPassword = async (req, res) => {
 const resetPassword = async (req, res) => {
   const { token } = req.params;
   const { newPassword } = req.body;
-  console.log("BODY:", req.body);
-  console.log("newPassword:", newPassword);
-
   const hashedToken = crypto.createHash("sha256").update(token).digest("hex");
-
   const [users] = await dbConnection.query(
     `SELECT userid FROM users
      WHERE reset_token=? AND reset_token_expires > NOW()`,
