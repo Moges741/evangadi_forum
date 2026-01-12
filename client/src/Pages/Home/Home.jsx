@@ -219,29 +219,26 @@ const Home = () => {
 
         {/* Delete confirmation prompt */}
         {confirmDeleteId !== null && (
-          <div
-            className={classes["confirmation-prompt"]}
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="confirm-delete-label"
-          >
-            <p id="confirm-delete-label">
-              Are you sure you want to delete this question?
-            </p>
-            <button
-              type="button"
-              className={`${classes["confirmation-btn"]} ${classes["confirmation-btn-danger"]}`}
-              onClick={handleConfirmDelete}
-            >
-              Yes, Delete
-            </button>
-            <button
-              type="button"
-              className={`${classes["confirmation-btn"]} ${classes["confirmation-btn-secondary"]}`}
-              onClick={() => setConfirmDeleteId(null)}
-            >
-              Cancel
-            </button>
+         <div className={classes["confirmation_overlay"]}>
+            <div className={classes["confirmation-prompt"]} role="dialog" aria-modal="true" aria-labelledby="confirm-delete-label">
+              <p id="confirm-delete-label">
+                Are you sure you want to delete this question?
+              </p>
+              <button
+                type="button"
+                className={`${classes["confirmation-btn"]} ${classes["confirmation-btn-danger"]}`}
+                onClick={handleConfirmDelete}
+              >
+                Yes, Delete
+              </button>
+              <button
+                type="button"
+                className={`${classes["confirmation-btn"]} ${classes["confirmation-btn-secondary"]}`}
+                onClick={() => setConfirmDeleteId(null)}
+              >
+                Cancel
+              </button>
+            </div>
           </div>
         )}
 
@@ -317,7 +314,7 @@ const Home = () => {
                         className={classes["icon-btn"]}
                         aria-label="Edit question"
                       >
-                        <MdEdit size={20} color="blue" />
+                        <MdEdit size={20} color="blue" title="Edit" />
                       </button>
                       <button
                         type="button"
@@ -329,7 +326,7 @@ const Home = () => {
                         className={classes["icon-btn"]}
                         aria-label="Delete question"
                       >
-                        <MdDelete size={20} color="red" />
+                        <MdDelete size={20} color="red" title="Delete" />
                       </button>
                     </div>
                   )}

@@ -14,10 +14,12 @@ const EditQuestion = () => {
   const [description, setDescription] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [loading, setLoading] = useState(false);
 
   // Fetch the question details
   useEffect(() => {
     const fetchQuestion = async () => {
+      setLoading(true);
       try {
         const { data } = await axios.get(`/question/${id}`, {
           headers: { Authorization: `Bearer ${token}` },
@@ -43,8 +45,8 @@ const EditQuestion = () => {
         { title, description },
         { headers: { Authorization: `Bearer ${token}` } }
       );
-    //   setSuccessMessage("Question updated successfully!");
-        toast.success("Question updated Successfully!");
+      //   setSuccessMessage("Question updated successfully!");
+      toast.success("Question updated Successfully!");
       setTimeout(() => {
         setSuccessMessage("");
         navigate("/"); // Redirect to home
@@ -88,8 +90,20 @@ const EditQuestion = () => {
           required
         />
 
-        <button type="submit" className={classes["submit-btn"]}>
+        {/* <button type="submit" className={classes["submit-btn"]}>
           Update Question
+        </button> */}
+
+        <button type="submit" disabled={loading}>
+          {loading ? "updating..." : "Update question"}
+        </button>
+        <button
+          type="button"
+          onClick={() => navigate(-1)}
+          className={classes.cancel}
+          disabled={loading}
+        >
+         Back to home
         </button>
       </form>
     </div>
