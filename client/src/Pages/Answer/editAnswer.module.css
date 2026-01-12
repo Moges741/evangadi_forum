@@ -25,6 +25,7 @@ h2 {
   display: flex;
   justify-content: space-between;
   margin-top: 20px;
+  width: 38%;
 }
 
 button {

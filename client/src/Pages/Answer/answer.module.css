@@ -258,6 +258,12 @@
   font-style: italic;
 }
 
+.form_actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+  width: 25%;
+}
 /* ----------------------- Responsive ----------------------- */
 @media (max-width: 900px) {
   .question_summary_wrapper {

@@ -190,7 +190,7 @@ function EditQuestion() {
           </div>
 
           <div className={styles.form_group}>
-            <label htmlFor="tag">Tag</label>
+            <label htmlFor="tag"><h4>Tag</h4></label>
             <input
               id="tag"
               type="text"

@@ -43,6 +43,11 @@
 .form_group {
   margin-bottom: 20px;
 }
+.form_group h4{
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #333;
+}
 
 .form_group label {
   display: block;

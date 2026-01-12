@@ -54,13 +54,19 @@
   border-radius: 4px;
   background-color: #2C87C3;
   color: #fff;
-  padding: 8px 65px;
   font-weight: 600;
   cursor: pointer;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 16px;
+  text-decoration: none;
+  text-align: center;
+  border: none;
+  box-shadow: 0 2px 4px rgba(0, 123, 255, 0.2);
 }
 
 .nav_butn:hover {
-  background-color: #F6BA74;
+  background-color: #FF8500;
   transition: 0.3s;
 }
 

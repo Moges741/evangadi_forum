@@ -287,9 +287,20 @@ function Answer() {
           }}
           disabled={posting}
         />
-        <button type="submit" disabled={posting}>
-          {posting ? "Posting..." : "Post Answer"}
-        </button>
+        <div className={styles.form_actions}>
+          <button type="submit" disabled={posting}>
+            {posting ? "Posting..." : "Post Answer"}
+          </button>
+
+          <button
+            type="button"
+            onClick={() => navigate(-1)}
+            className={styles.cancel}
+            // disabled={loading}
+          >
+            Back to Home
+          </button>
+        </div>
       </form>
     </div>
   );
