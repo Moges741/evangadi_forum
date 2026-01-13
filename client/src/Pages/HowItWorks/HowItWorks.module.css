@@ -1,60 +1,106 @@
 .container {
-  padding: 20px;
+  padding: 24px;
   background-color: #f9f9f9;
   min-height: 100vh;
-  margin-top: 3rem;
 }
 
 .content {
   max-width: 800px;
   margin: 0 auto;
-  background-color: #fff;
-  padding: 30px;
+  background-color: #ffffff;
+  padding: 50px 28px;
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .heading {
   font-size: 36px;
   text-align: center;
-  margin-bottom: 20px;
-  color: #333;
+  margin-bottom: 40px;
+  color: #4b456f;
+}
+
+.headerRow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.iconWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 22px;
+}
+
+.icon {
+  color: #f48024;
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+}
+
+.section {
+  text-align: center;
+  padding: 10px 10px !important;
 }
 
 .subHeading {
-  font-size: 24px;
-  margin-bottom: 10px;
-  color: #007bff;
-}
-
-.list {
-  list-style-type: none;
-  padding-left: 0;
-}
-
-.list li {
-  margin-bottom: 10px;
-  padding-left: 15px;
-  position: relative;
-}
-
-.list li::before {
-  content: "✔";
-  position: absolute;
-  left: 0;
-  color: #007bff;
-  font-size: 18px;
-  line-height: 1.2;
+  font-size: 22px;
+  font-weight: 600;
+  color: #0066ff;
+  line-height: 1;
+  margin: 0;
 }
 
 p {
-  line-height: 1.6;
-  color: #555;
+  line-height: 1.7;
+  color: #444;
+  margin-bottom: 12px;
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 20px auto;
+  max-width: 520px;
+}
+
+.list li {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 10px;
+  margin-bottom: 10px;
+  text-align: left;
+}
+
+.list li::before {
+  content: none;
 }
 
 .closingMessage {
   font-size: 18px;
   text-align: center;
-  margin-top: 20px;
+  margin-top: 40px;
   color: #333;
+}
+
+@media (max-width: 760px) {
+  .content {
+    padding: 28px 18px;
+  }
+
+  .heading {
+    font-size: 28px;
+  }
+
+  .subHeading {
+    font-size: 20px;
+  }
+
+  .headerRow {
+    gap: 6px;
+  }
 }

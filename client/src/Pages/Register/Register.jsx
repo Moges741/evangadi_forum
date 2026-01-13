@@ -36,7 +36,13 @@ const Register = () => {
       setError("All fields are required");
       return;
     }
-
+if (
+  userNameValue.length > 8
+)
+{
+  setError("username should be < 9 chars! ");
+  return;
+}
     try {
       await axios.post("/user/register", {
         username: userNameValue,

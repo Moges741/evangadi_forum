@@ -16,7 +16,8 @@ async function getAllQuestions(req, res) {
         u.username,
         u.firstname,
         u.lastname,
-        created_at
+        created_at,
+        u.profile_picture
       FROM questions q 
       JOIN users u ON q.userid = u.userid 
       ORDER BY q.questionid DESC`

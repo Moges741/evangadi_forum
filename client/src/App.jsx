@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "./Api/axiosConfig";
 import { ToastContainer } from "react-toastify";
 import AppRouter from "./routes/AppRouter";
+import styles from "./App.module.css"; 
 
 export const AppState = createContext();
 
@@ -21,17 +22,13 @@ function App() {
 
     try {
       const { data: user } = await axios.get("/user/check", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        headers: { Authorization: `Bearer ${token}` },
       });
 
       // Fetch Profile Picture
       try {
         const { data: picData } = await axios.get("/user/profile-picture", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          headers: { Authorization: `Bearer ${token}` },
         });
 
         if (picData.profilePicture) {
@@ -55,7 +52,13 @@ function App() {
     checkUser();
   }, [token]);
 
-  if (loadingUser) return <p>Loading user info...</p>;
+  if (loadingUser) {
+    return (
+      <div className={styles.loaderContainer}>
+        <div className={styles.loader}></div>
+      </div>
+    );
+  }
 
   return (
     <AppState.Provider value={{ user, setUser }}>

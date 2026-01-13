@@ -5,28 +5,30 @@ import React, {
   useMemo,
   useCallback,
 } from "react";
+
 import { AppState } from "../../App";
-import { Link, useNavigate } from "react-router-dom"; 
-import axios from "../../Api/axiosConfig"; 
+import { Link, useNavigate } from "react-router-dom";
+import axios from "../../Api/axiosConfig";
 import classes from "./home.module.css";
 import { MdEdit, MdDelete } from "react-icons/md";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight"; 
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { API_BASE_URL } from "../../Data/data";
 
 const Home = () => {
-  const { user } = useContext(AppState); 
-  const navigate = useNavigate(); 
+  const { user } = useContext(AppState);
+  const navigate = useNavigate();
 
-  const [questions, setQuestions] = useState([]); 
-  const [sortedQuestions, setSortedQuestions] = useState([]); 
-  const [searchQuery, setSearchQuery] = useState(""); 
+  const [questions, setQuestions] = useState([]);
+  const [sortedQuestions, setSortedQuestions] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
   const [debouncedSearchQuery, setDebouncedSearchQuery] = useState(""); // Debounced for performance
-  const [sortOption, setSortOption] = useState("Most Recent"); 
-  const [successMessage, setSuccessMessage] = useState(""); 
-  const [errorMessage, setErrorMessage] = useState(""); 
-  const [fetchError, setFetchError] = useState(""); 
-  const [confirmDeleteId, setConfirmDeleteId] = useState(null); 
+  const [sortOption, setSortOption] = useState("Most Recent");
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [fetchError, setFetchError] = useState("");
+  const [confirmDeleteId, setConfirmDeleteId] = useState(null);
   const [loading, setLoading] = useState(true);
 
   const token = localStorage.getItem("token");
@@ -44,7 +46,7 @@ const Home = () => {
       const { data } = await axios.get("/question", {
         headers: { Authorization: `Bearer ${token}` },
       });
-      
+
       const fetchedQuestions = data?.questions || data || []; // Fallback if direct array
       setQuestions(fetchedQuestions);
       setSortedQuestions(fetchedQuestions);
@@ -141,11 +143,6 @@ const Home = () => {
     }
   };
 
-  // ===================== EDIT NAVIGATION =====================
-  // const handleEdit = (id) => {
-  //   navigate(`/edit-question/${id}`);
-  // };
-
   // ===================== UI =====================
   return (
     <section>
@@ -157,7 +154,9 @@ const Home = () => {
           </Link>
           <div className={classes["welcome-message"]}>
             Welcome:{" "}
-            <span className={classes["username"]}>{user?.username.toUpperCase()}</span>
+            <span className={classes["username"]}>
+              {user?.username.toUpperCase()}
+            </span>
           </div>
         </div>
 
@@ -211,8 +210,13 @@ const Home = () => {
 
         {/* Delete confirmation prompt */}
         {confirmDeleteId !== null && (
-         <div className={classes["confirmation_overlay"]}>
-            <div className={classes["confirmation-prompt"]} role="dialog" aria-modal="true" aria-labelledby="confirm-delete-label">
+          <div className={classes["confirmation_overlay"]}>
+            <div
+              className={classes["confirmation-prompt"]}
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="confirm-delete-label"
+            >
               <p id="confirm-delete-label">
                 Are you sure you want to delete this question?
               </p>
@@ -249,11 +253,11 @@ const Home = () => {
                   <div className={classes["user-info"]}>
                     {/* User avatar + username */}
                     <div className={classes["user"]}>
-                      {q.profile_picture ? (
+                      {q?.profile_picture ? (
                         <img
-                          src={`http://localhost:5501${q.profile_picture}`}
-                          alt={q.username}
-                          className={classes["user-avatar-img"]}
+                          src={`${API_BASE_URL}${q?.profile_picture}`}
+                          alt="Profile"
+                          className={classes.profile_image}
                         />
                       ) : (
                         <div className={classes.avatar}>
@@ -261,6 +265,7 @@ const Home = () => {
                           {q?.lastname[0].toUpperCase()}
                         </div>
                       )}
+
                       <p>{q.username}</p>
                     </div>
                     {/* Question title */}

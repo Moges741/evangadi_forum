@@ -4,10 +4,11 @@ import axios from "../../Api/axiosConfig";
 import { toast } from "react-toastify";
 import { IoIosContact, IoMdCamera } from "react-icons/io";
 import styles from "./profile.module.css";
-
-const API_BASE_URL = "http://localhost:5500";
+import { useNavigate } from "react-router-dom";
+import { API_BASE_URL } from "../../Data/data";
 
 function Profile() {
+  const navigate = useNavigate();
   const { user, setUser } = useContext(AppState);
 
   const [profilePicture, setProfilePicture] = useState("");
@@ -88,6 +89,7 @@ function Profile() {
       }));
 
       toast.success("Profile picture updated!");
+      navigate("/");
     } catch (error) {
       console.error(error);
       toast.error(error.response?.data?.message || "Upload failed");
@@ -96,7 +98,6 @@ function Profile() {
       setUploading(false);
     }
   };
-
 
   const removeProfilePicture = async () => {
     try {
@@ -120,7 +121,6 @@ function Profile() {
       toast.error("Failed to remove profile picture");
     }
   };
-
 
   const renderProfileImage = () => {
     if (previewUrl) {

@@ -1,15 +1,17 @@
 /* ----------------------- Container ----------------------- */
 .container {
   max-width: 1150px;
-  margin: 50px auto;
-  padding: 0 50px;
+  margin: 90px auto 50px;
+  padding: 0px 50px 20px;
   font-family: "Inter", sans-serif;
-  background-color: #fafafa;
+  background-color: #f7f5f5;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1), 0 2px 6px rgba(0, 0, 0, 0.06);
 }
 
 /* ----------------------- Titles ----------------------- */
 .big_title {
-  font-weight: 700;
+  font-weight: 600;
   font-size: 30px;
   padding: 15px 0;
 }
@@ -31,7 +33,6 @@
   display: flex;
   align-items: center;
   font-size: 18px;
-  font-weight: bold;
 }
 
 .arrow {
@@ -86,19 +87,31 @@
 
 .answer_card {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
   padding: 12px 15px;
   border-bottom: 1px solid #ddd;
   gap: 10px;
   border-radius: 6px;
 }
+.answer_main {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 15px;
+}
 
 .user_info {
   display: flex;
   flex-direction: column;
-  /* align-items: center; */
+  align-items: center;
   gap: 4px;
+  width: 80px;
+}
+.profile_image {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
 }
 .avatar {
   width: 40px;
@@ -111,10 +124,20 @@
   font-weight: bold;
 }
 .content {
-  font-size: 16px;
+  font-size: 18px;
   color: #333;
   text-align: justify;
   line-height: 1.5;
+  padding: 10px 10px 10px 20px;
+}
+.readMores {
+  color: rgb(8, 243, 102);
+  cursor: pointer;
+  font-weight: 500;
+  margin-top: 6px;
+  display: inline-block;
+  text-align: right;
+  display: block;
 }
 
 .answer_footer {
@@ -122,6 +145,7 @@
   justify-content: flex-end;
   align-items: center;
   width: 100%;
+  margin-top: 6px;
   gap: 10px;
 }
 
@@ -254,68 +278,99 @@
   box-shadow: 0 2px 8px rgba(108, 117, 125, 0.3);
 }
 .timestamp {
-  font-size: 15px;
+  font-size: 17px;
   color: #6c757d;
   font-style: italic;
 }
 
 .form_actions {
   display: flex;
-  justify-content: space-between;
-  margin-top: 20px;
-  width: 25%;
+  gap: 1rem;
+  justify-content: flex-start;
+  flex-wrap: nowrap;
+  margin-top: 1.5rem;
+  width: 400px;
 }
+
+.form_actions button {
+  padding: 0.7rem 1rem;
+  font-size: 1rem;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 48%;
+}
+
+/* Primary button */
+.form_actions button[type="submit"] {
+  background-color: #0078d4;
+  color: #fff;
+}
+
+.form_actions button[type="submit"]:hover:enabled {
+  background-color: #005a9e;
+}
+
+/* Cancel button */
+.form_actions .cancel {
+  background-color: #605f5f;
+  color: white;
+}
+
+.form_actions .cancel:hover {
+  background-color: #e0e0e0;
+  color: #333;
+}
+
 /* ----------------------- Responsive ----------------------- */
 @media (max-width: 900px) {
   .question_summary_wrapper {
     flex-direction: column;
     gap: 15px;
   }
-}
-
-@media (max-width: 620px) {
-  .container {
-    padding: 0 15px;
+  .form_actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    width: 30%;
+    gap: 20px;
   }
-
-  .description {
-    padding-left: 0;
-    font-size: 16px;
-  }
-
-  .big_title {
-    font-size: 24px;
-  }
-
-  .question {
-    font-size: 20px;
-  }
-
-  .summary_section {
-    position: relative;
-    top: auto;
-  }
-
-  .answer_card {
+  .answer_main {
+    display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
+    align-items: center;
+    gap: 15px;
   }
-
-  .answer_footer {
-    justify-content: flex-start;
-    gap: 12px;
-    font-size: 13px;
+}
+@media screen and (max-width: 768px) {
+  .form_actions {
+    width: 50%;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    gap: 15px;
   }
-
+  .answer_main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+  }
   .form_actions {
     flex-direction: column;
-    align-items: stretch;
-    gap: 10px;
-    width: 100%;
   }
 
-  .answer_form button {
-    width: 100%;
+  .form_actions button {
+    width: 150%;
+  }
+}
+@media screen and (max-width: 1400px) {
+  .form_actions {
+    width: 30%;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    gap: 15px;
   }
 }

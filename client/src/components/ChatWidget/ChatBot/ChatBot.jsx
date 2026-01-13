@@ -16,6 +16,7 @@ function ChatBot({ onClose }) {
     sendMessage,
     retryLastMessage,
     historyLoadingError,
+    setMessages,
   } = useChatbot();
 
   // >=> Auto-scroll to bottom whenever messages or typing state changes
@@ -43,7 +44,7 @@ function ChatBot({ onClose }) {
             </div>
           ) : (
             <>
-              <ChatMessages messages={messages} />
+              <ChatMessages messages={messages} setMessages={setMessages} />
 
               {/* Show error with the retry logic */}
               {error && <ChatError onRetry={retryLastMessage} />}
@@ -55,7 +56,10 @@ function ChatBot({ onClose }) {
         </div>
 
         {/* Input area handles sending and disabling itself while bot types */}
-        <ChatInput onSubmit={sendMessage} isBotTyping={isBotTyping || historyLoadingError} />
+        <ChatInput
+          onSubmit={sendMessage}
+          isBotTyping={isBotTyping || historyLoadingError}
+        />
       </div>
     </div>
   );

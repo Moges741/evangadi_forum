@@ -4,8 +4,7 @@ import { AppState } from "../../App";
 import logo from "../../assets/EvangadiLogo.jpeg";
 import { IoIosContact } from "react-icons/io";
 import styles from "./header.module.css";
-
-const API_BASE_URL = "http://localhost:5500";
+import { API_BASE_URL } from "../../Data/data.js";
 
 const Header = () => {
   const { user, setUser } = useContext(AppState);
@@ -31,10 +30,7 @@ const Header = () => {
           </div>
 
           {/* Hamburger */}
-          <div
-            className={styles.hamburger}
-            onClick={() => setIsOpen(!isOpen)}
-          >
+          <div className={styles.hamburger} onClick={() => setIsOpen(!isOpen)}>
             <div className={styles.bar}></div>
             <div className={styles.bar}></div>
             <div className={styles.bar}></div>

@@ -83,3 +83,20 @@ export const getChatHistory = async (req, res) => {
     res.status(500).json({ error: "Failed to fetch history" });
   }
 };
+
+export const deleteChatHistory = async (req, res) => {
+  const { userid } = req.user;
+
+  try {
+    await db.execute("DELETE FROM chat_history WHERE userid = ?", [userid]);
+
+    res.status(200).json({
+      message: "Chat history cleared successfully",
+    });
+  } catch (error) {
+    console.error("Delete Chat History Error:", error);
+    res.status(500).json({
+      error: "Failed to delete chat history",
+    });
+  }
+};

@@ -35,7 +35,8 @@ const getAnswers = async (req, res) => {
         a.answer AS content,
         u.username AS user_name,
         a.created_at,
-        a.userid
+        a.userid,
+        u.profile_picture
     FROM answers a
     JOIN users u ON a.userid = u.userid
     WHERE a.questionid = ?`,
@@ -118,6 +119,7 @@ const getAnswerSummary = async (req, res) => {
     // 3. Request AI Summary
     const completion = await client.chat.completions.create({
       model: "llama-3.3-70b-versatile",
+      // model:"openai/gpt-oss-20b",
       messages,
       temperature: 0.3, // Lower temperature for more factual summaries
     });

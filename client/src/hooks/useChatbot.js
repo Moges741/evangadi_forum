@@ -138,5 +138,6 @@ export const useChatbot = () => {
     error,
     sendMessage,
     retryLastMessage,
+    setMessages,
   };
 };
