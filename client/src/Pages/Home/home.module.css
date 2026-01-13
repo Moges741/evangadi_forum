@@ -5,7 +5,7 @@ section {
 }
 
 .main-container {
-  max-width: 1000px;
+  max-width: 1250px;
   margin: 0 auto;
   padding: 20px;
 }
@@ -53,6 +53,12 @@ section {
   display: flex;
   flex-direction: column;
   gap: 0;
+}
+.profile_image {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
 }
 .avatar {
   width: 40px;

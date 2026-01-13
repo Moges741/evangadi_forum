@@ -1,0 +1,21 @@
+.loaderContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* full screen height */
+    background-color: #f8f9fa; /* light background */
+  }
+  
+  .loader {
+    border: 6px solid #e0e0e0; /* light gray */
+    border-top: 6px solid #516cf0; /* main color */
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: spin 1s linear infinite;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }

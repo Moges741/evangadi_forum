@@ -1,15 +1,17 @@
 /* ----------------------- Container ----------------------- */
 .container {
-  max-width: 1150px;
-  margin: 50px auto;
-  padding: 0 50px;
+  max-width: 1250px;
+  margin: 90px auto 50px;
+  padding: 0px 50px 20px;
   font-family: "Inter", sans-serif;
-  background-color: #fafafa;
+  background-color: #f7f5f5; 
+  border-radius: 10px;       
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1), 0 2px 6px rgba(0, 0, 0, 0.06);
 }
 
 /* ----------------------- Titles ----------------------- */
 .big_title {
-  font-weight: 700;
+  font-weight: 600;
   font-size: 30px;
   padding: 15px 0;
 }
@@ -31,7 +33,7 @@
   display: flex;
   align-items: center;
   font-size: 18px;
-  font-weight: bold;
+  
 }
 
 .arrow {
@@ -86,7 +88,7 @@
 
 .answer_card {
   display: flex;
-  flex-direction: column;   /* stack rows */
+  flex-direction: column;  
   padding: 12px 15px;
   border-bottom: 1px solid #ddd;
   gap: 10px;
@@ -103,8 +105,15 @@
 .user_info {
   display: flex;
   flex-direction: column;
-  /* align-items: center; */
+  align-items: center;
   gap: 4px;
+  width: 80px;
+}
+.profile_image {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
 }
 .avatar {
   width: 40px;
@@ -279,12 +288,14 @@
 }
 
 
+
 .form_actions {
   display: flex;
   gap: 1rem;
   justify-content: flex-start;
-  flex-wrap: nowrap; /* allows buttons to stack on smaller screens */
+  flex-wrap: nowrap; 
   margin-top: 1.5rem;
+  width: 400px;
 }
 
 .form_actions button {
@@ -294,6 +305,7 @@
   border: none;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  width: 48%;
 }
 
 /* Primary button */
@@ -308,12 +320,13 @@
 
 /* Cancel button */
 .form_actions .cancel {
-  background-color: #f3f3f3;
-  color: #333;
+  background-color: #605f5f;
+  color: white;
 }
 
 .form_actions .cancel:hover {
   background-color: #e0e0e0;
+  color: #333;
 }
 
 
@@ -357,7 +370,7 @@
   }
 
   .form_actions button {
-    width: 100%; /* full width on small screens */
+    width: 150%; 
   }
 }
 @media screen and (max-width: 1400px) {
