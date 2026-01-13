@@ -3,23 +3,14 @@ import react from '@vitejs/plugin-react'
 
 export default defineConfig({
   plugins: [react()],
-  // Add base URL if deploying to subpath
-  base: '/',
-  // Optimize for production
   build: {
+    minify: 'esbuild',  // Use esbuild instead of terser
+    target: 'es2020',
     outDir: 'dist',
-    sourcemap: false,
-    minify: 'terser',
     rollupOptions: {
       output: {
-        manualChunks: {
-          vendor: ['react', 'react-dom', 'react-router-dom'],
-        }
+        manualChunks: undefined  // Simplify for now
       }
     }
-  },
-  server: {
-    // Only for development
-    port: 3000,
   }
 })
