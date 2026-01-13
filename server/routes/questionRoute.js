@@ -20,6 +20,7 @@ router.post("/", authMiddleware, postQuestion);
 router.get("/:questionid", getSingleQuestion);
 router.put("/:questionid", authMiddleware, editQuestion);
 //router.put("/:questionid", authMiddleware, updateQuestion);
+// router.put("/:questionid", authMiddleware, updateQuestion);
 router.delete("/:questionid", authMiddleware, deleteQuestion);
 
 // EDIT a question

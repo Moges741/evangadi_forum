@@ -5,9 +5,9 @@ CREATE TABLE users (
     lastname VARCHAR(20) NOT NULL,
     email VARCHAR(40) NOT NULL,
     password VARCHAR(250) NOT NULL,
-     reset_token VARCHAR(255),
-     profile_picture VARCHAR(250) 
- reset_token_expires DATETIME;
+    reset_token VARCHAR(255),
+    profile_picture VARCHAR(250) 
+    reset_token_expires DATETIME;
     PRIMARY KEY (userid)
 );
 
@@ -47,8 +47,3 @@ CREATE TABLE chat_history (
     PRIMARY KEY (chatid),
     FOREIGN KEY (userid) REFERENCES users(userid) ON DELETE CASCADE
 );
-
-
-
-
-password = Z_EZqcheqDsXajL@
