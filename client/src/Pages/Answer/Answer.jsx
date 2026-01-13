@@ -15,9 +15,13 @@ function Answer() {
 
   const [question, setQuestion] = useState(null);
   const [answers, setAnswers] = useState([]);
-  const [summary, setSummary] = useState("");
-  const [summaryExpanded, setSummaryExpanded] = useState(false);
+  const [summary, setSummary] = useState(""); 
   const [answerText, setAnswerText] = useState("");
+  const [summaryExpanded, setSummaryExpanded] = useState(false);
+
+  const [expandedAnswerId, setExpandedAnswerId] = useState(null);
+
+
 
   const [answersLoading, setAnswersLoading] = useState(true);
   const [posting, setPosting] = useState(false);
@@ -37,7 +41,22 @@ function Answer() {
       ? summary.slice(0, MAX_LENGTH) + "..."
       : summary;
   };
+  
+  const ANSWER_LIMIT = 250;
 
+  const getAnswerText = (text, answerId) => {
+    if (expandedAnswerId === answerId) return text;
+
+    return text.length > ANSWER_LIMIT
+      ? text.slice(0, ANSWER_LIMIT) + "..."
+      : text;
+  };
+
+  const shouldShowAnswerReadMore = (text) => {
+    return text.length > ANSWER_LIMIT;
+  };
+  
+  
   /* ---------------- AUTH CHECK ---------------- */
 
   useEffect(() => {
@@ -236,7 +255,24 @@ function Answer() {
               <span>{ans.user_name}</span>
             </div>
 
-            <div className={styles.content}>{ans.content}</div>
+            <div className={styles.content}>
+              {getAnswerText(ans.content, ans.answer_id)}
+
+              {shouldShowAnswerReadMore(ans.content) && (
+                <span
+                  className={styles.readMores}
+                  onClick={() =>
+                    setExpandedAnswerId(
+                      expandedAnswerId === ans.answer_id ? null : ans.answer_id
+                    )
+                  }
+                >
+                  {expandedAnswerId === ans.answer_id
+                    ? " Show less"
+                    : " Read more..."}
+                </span>
+              )}
+            </div>
 
             <div className={styles.answer_footer}>
               <span className={styles.timestamp}>
