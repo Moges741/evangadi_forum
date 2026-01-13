@@ -7,29 +7,28 @@ import React, {
 } from "react";
 
 import { AppState } from "../../App";
-import { Link, useNavigate } from "react-router-dom"; 
-import axios from "../../Api/axiosConfig"; 
+import { Link, useNavigate } from "react-router-dom";
+import axios from "../../Api/axiosConfig";
 import classes from "./home.module.css";
 import { MdEdit, MdDelete } from "react-icons/md";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight"; 
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { API_BASE_URL } from "../../Data/data";
 
-
-const API_BASE_URL = "http://localhost:5500";
 const Home = () => {
-  const { user } = useContext(AppState); 
-  const navigate = useNavigate(); 
+  const { user } = useContext(AppState);
+  const navigate = useNavigate();
 
-  const [questions, setQuestions] = useState([]); 
-  const [sortedQuestions, setSortedQuestions] = useState([]); 
-  const [searchQuery, setSearchQuery] = useState(""); 
+  const [questions, setQuestions] = useState([]);
+  const [sortedQuestions, setSortedQuestions] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
   const [debouncedSearchQuery, setDebouncedSearchQuery] = useState(""); // Debounced for performance
-  const [sortOption, setSortOption] = useState("Most Recent"); 
-  const [successMessage, setSuccessMessage] = useState(""); 
-  const [errorMessage, setErrorMessage] = useState(""); 
-  const [fetchError, setFetchError] = useState(""); 
-  const [confirmDeleteId, setConfirmDeleteId] = useState(null); 
+  const [sortOption, setSortOption] = useState("Most Recent");
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [fetchError, setFetchError] = useState("");
+  const [confirmDeleteId, setConfirmDeleteId] = useState(null);
   const [loading, setLoading] = useState(true);
 
   const token = localStorage.getItem("token");
@@ -47,7 +46,7 @@ const Home = () => {
       const { data } = await axios.get("/question", {
         headers: { Authorization: `Bearer ${token}` },
       });
-      
+
       const fetchedQuestions = data?.questions || data || []; // Fallback if direct array
       setQuestions(fetchedQuestions);
       setSortedQuestions(fetchedQuestions);
@@ -143,7 +142,6 @@ const Home = () => {
       }, 3000);
     }
   };
-
 
   // ===================== UI =====================
   return (

@@ -297,13 +297,13 @@ const forgotPassword = async (req, res) => {
     const transporter = nodemailer.createTransport({
       host: "mail.birhann.com",
       port: 465,
-      secure: true, // MUST be true for 465
+      secure: true,
       auth: {
-        user: process.env.EMAIL_USER, // e.g support@yourdomain.com
-        pass: process.env.EMAIL_PASS, // cPanel email password
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
       },
       tls: {
-        rejectUnauthorized: false, // CRITICAL for shared hosting
+        rejectUnauthorized: false,
       },
     });
 
