@@ -6,6 +6,6 @@
 body {
   font-family: "Poppins", sans-serif;
 }
-:root {
-  --toastify-toast-padding: 0px;
+.Toastify {
+  padding: 0px;
 }

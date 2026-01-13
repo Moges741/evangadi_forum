@@ -1,0 +1,22 @@
+/* toastify-overrides.css */
+.Toastify__toast {
+  padding: 0 !important; /* Remove all padding */
+  margin: 0 !important;  /* Remove margins if needed */
+  border-radius: 4px !important; /* Optional: custom radius */
+  min-height: auto !important; /* Remove minimum height */
+}
+
+/* Target specific toast types */
+.Toastify__toast--success {
+  background: #10b981 !important;
+}
+
+.Toastify__toast--error {
+  background: #ef4444 !important;
+}
+
+.Toastify__toast-body {
+  padding: 12px 16px !important; /* Your custom padding */
+  margin: 0 !important;
+  font-family: inherit !important;
+}
